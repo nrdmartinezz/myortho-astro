@@ -82,18 +82,18 @@ export interface SiteConfig {
 }
 
 export const site: SiteConfig = {
-  url: 'https://example.com',
+  url: 'https://myorthodontistnc.com/',
   name: 'MyOrthodontistNC',
   legalName: 'MyOrthodontistNC',
-  tagline: 'Straightforward work, done right the first time.',
+  tagline: 'Delivering high-quality orthodontic care across North Carolina',
   description:
-    'Demo Business is a placeholder used by the starter template. Replace this copy during project setup.',
+    'MyOrthodontist is a network of family-owned orthodontic offices serving communities throughout North Carolina and South Virginia. Call 1-800-MY-ORTHO.',
   locale: 'en-US',
 
   business: {
     schemaType: 'LocalBusiness',
-    phone: '(555) 010-4477',
-    phoneHref: '+15550104477',
+    phone: '1-800-MY-ORTHO',
+    phoneHref: '+18006967846',
     email: 'hello@example.com',
     address: {
       street: '1200 Market Street, Suite 400',
