@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
-import Button from '../ui/Button.astro';
+import ActionButton from './ActionButton.astro';
 import { Icon } from 'astro-icon/components';
 import type { BlockProps, BlockAction } from './types';
 
@@ -87,9 +87,7 @@ const {
         actions.length > 0 && (
           <div class="flex flex-wrap gap-3">
             {actions.map((action) => (
-              <Button href={action.href} variant={action.variant ?? 'primary'}>
-                {action.label}
-              </Button>
+              <ActionButton action={action} size="lg" defaultVariant="primary" />
             ))}
           </div>
         )

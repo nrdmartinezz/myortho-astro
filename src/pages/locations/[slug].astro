@@ -1,0 +1,91 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Prose from '../../components/ui/Prose.astro';
+import Card from '../../components/ui/Card.astro';
+import MapEmbed from '../../components/blocks/MapEmbed.astro';
+import { getPublished, related, type Entry } from '../../lib/locations';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const entries = await getPublished();
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, all: entries },
+  }));
+};
+
+interface Props {
+  entry: Entry;
+  all: Entry[];
+}
+
+const { entry, all } = Astro.props;
+const { Content } = await render(entry);
+const nearby = related(all, entry);
+---
+
+<BaseLayout
+  title={entry.data.seoTitle}
+  description={entry.data.seoDescription}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Locations', href: '/locations/' },
+    { name: entry.data.name, href: `/locations/${entry.id}/` },
+  ]}
+>
+  <Section background="muted" spacing="md">
+    <Container width="narrow" gap="sm">
+      <p class="text-ink-muted text-sm">{entry.data.region}</p>
+      <Heading level={1}>{entry.data.name}</Heading>
+      <p class="text-ink-muted text-lg">
+        {entry.data.addressLine}, {entry.data.cityStateZip}
+      </p>
+      <p class="text-ink-muted">
+        <a href={`tel:${entry.data.phone}`} class="text-ink-brand">{entry.data.phone}</a>
+        {entry.data.fax && <span> · Fax: {entry.data.fax}</span>}
+        {' · '}
+        <a href={`mailto:${entry.data.email}`} class="text-ink-brand">{entry.data.email}</a>
+      </p>
+      <p class="text-ink-muted text-sm">{entry.data.hours}</p>
+    </Container>
+  </Section>
+
+  <MapEmbed query={`${entry.data.addressLine}, ${entry.data.cityStateZip}`} />
+
+  <Section background="base" spacing="md">
+    <Container width="narrow">
+      <Prose>
+        <Content />
+      </Prose>
+    </Container>
+  </Section>
+
+  {
+    nearby.length > 0 && (
+      <Section background="muted" spacing="md">
+        <Container gap="lg">
+          <Heading level={2}>Nearby locations</Heading>
+          <ul class="grid w-full gap-6 sm:grid-cols-3">
+            {nearby.map((item) => (
+              <Card as="li" variant="outlined">
+                <Heading level={3} size="sm">
+                  <a
+                    href={`/locations/${item.id}/`}
+                    class="text-ink-base no-underline hover:underline"
+                  >
+                    {item.data.name}
+                  </a>
+                </Heading>
+                <p class="text-ink-muted text-sm">{item.data.cityStateZip}</p>
+              </Card>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    )
+  }
+</BaseLayout>

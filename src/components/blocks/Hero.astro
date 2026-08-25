@@ -4,7 +4,8 @@ import { Image } from 'astro:assets';
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
-import Button from '../ui/Button.astro';
+import ActionButton from './ActionButton.astro';
+import PillButton from './PillButton.astro';
 import { Icon } from 'astro-icon/components';
 import type { BlockProps, BlockAction } from './types';
 
@@ -16,6 +17,17 @@ interface Props extends Omit<BlockProps, 'titleLevel'> {
   /** Places the image first on desktop; small screens always stack image-first. */
   reverse?: boolean;
   bullets?: string[];
+  backgroundImage?: ImageMetadata;
+  backgroundImageAlt?: string;
+  /** Dark scrim over the background image so text stays readable; pass false to disable. */
+  overlay?: boolean;
+  pills?: HeroPill[];
+}
+
+interface HeroPill{
+  label:string;
+  href:string;
+  icon?:string;
 }
 
 const {
@@ -31,23 +43,65 @@ const {
   imageAlt = '',
   reverse = false,
   bullets = [],
+  backgroundImage,
+  backgroundImageAlt = '',
+  overlay = true,
+  pills = [],
 } = Astro.props;
+
+const isInverse = background === 'inverse' || background === 'brand';
+
+// Chunked (not wrapped) so the row count stays fixed at 3 regardless of pill widths.
+const pillChunkSize = Math.ceil(pills.length / 3);
+const pillRows: HeroPill[][] = [
+  pills.slice(0, pillChunkSize),
+  pills.slice(pillChunkSize, pillChunkSize * 2),
+  pills.slice(pillChunkSize * 2),
+].filter((row) => row.length > 0);
 ---
 
-<Section background={background} spacing={spacing}>
+<Section
+  background={background}
+  spacing={spacing}
+  clip={Boolean(backgroundImage)}
+  class={backgroundImage ? 'relative isolate' : undefined}
+>
+  {
+    backgroundImage && (
+      <>
+        <Image
+          src={backgroundImage}
+          alt={backgroundImageAlt}
+          widths={[640, 1024, 1600, 2048]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        {overlay && <div class="bg-linear-65 from-brand-800/100 to-brand-700/40 absolute inset-0 -z-10" aria-hidden="true" />}
+      </>
+    )
+  }
   <Container width={width} layout={image ? 'row' : 'stack'} align={align} gap="lg">
     <div
       class:list={['flex flex-col items-start gap-6', image && 'md:w-1/2', reverse && 'md:order-2']}
     >
       {
         eyebrow && (
-          <p class="text-ink-brand text-sm font-semibold tracking-wide uppercase">{eyebrow}</p>
+          <p
+            class:list={[
+              'text-xs font-normal tracking-wide uppercase',
+              isInverse ? 'text-accent-500' : 'text-ink-brand',
+            ]}
+          >
+            {eyebrow}
+          </p>
         )
       }
 
-      <Heading class="font-bold" level={1}>{title}</Heading>
+      <Heading class="font-bold" level={1} set:html={title} />
 
-      {body && <p class="max-w-reading text-lg opacity-90">{body}</p>}
+      {body && <p class="max-w-reading text-sm opacity-90">{body}</p>}
 
       {
         bullets.length > 0 && (
@@ -65,18 +119,29 @@ const {
           </ul>
         )
       }
+      {pills?.length > 0 && (
+        <div class="flex flex-col gap-2">
+          {pillRows.map((row) => (
+            <ul class="flex gap-2">
+              {row.map((pill) => (
+                <li>
+                  <PillButton label={pill.label} href={pill.href} icon={pill.icon} inverse={isInverse} />
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      )}
 
-      {
-        actions.length > 0 && (
-          <div class="flex flex-wrap gap-3">
-            {actions.map((action) => (
-              <Button href={action.href} variant={action.variant ?? 'primary'} size="lg">
-                {action.label}
-              </Button>
-            ))}
-          </div>
-        )
-      }
+     {
+  actions.length > 0 && (
+    <div class="flex flex-wrap gap-3">
+      {actions.map((action) => (
+        <ActionButton action={action} size="md" />
+      ))}
+    </div>
+  )
+}
     </div>
 
     {

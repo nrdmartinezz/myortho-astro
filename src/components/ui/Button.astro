@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'inverse';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'inverse' | 'ghost-white';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 type Props = {
@@ -17,10 +17,11 @@ const { variant = 'primary', size = 'md', href, class: className, ...rest } = As
 const Tag = href ? 'a' : 'button';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-accent-500 rounded-xl font-bold text-neutral-100 hover:bg-accent-600 border-transparent',
-  secondary: 'bg-transparent text-ink-brand border-accent-500 hover:bg-accent-600',
-  ghost: 'bg-transparent text-ink-base border-transparent hover:bg-neutral-100',
+  primary: 'bg-accent-500 text-white hover:bg-accent-600 border-transparent',
+  secondary: 'bg-transparent text-white border-white hover:bg-white hover:text-accent-500',
+  ghost: 'bg-transparent text-ink-base border-transparent hover:bg-white',
   inverse: 'bg-neutral-0 text-ink-brand border-transparent hover:bg-brand-50',
+  'ghost-white': 'bg-transparent text-white border-transparent hover:bg-brand-500',
 };
 
 // min-h keeps every size above the 44px touch target on small screens.
@@ -34,8 +35,8 @@ const sizes: Record<ButtonSize, string> = {
 <Tag
   href={href}
   class:list={[
-    'inline-flex items-center justify-center gap-2 rounded-md border font-medium',
-    'no-underline transition-colors duration-150',
+    'inline-flex items-center uppercase font-medium justify-center gap-2 rounded-4xl border tracking-wide font-sans',
+    'no-underline transition-colors duration-300',
     'disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
     sizes[size],

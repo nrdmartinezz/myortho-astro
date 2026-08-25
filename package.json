@@ -42,11 +42,10 @@
   },
   "allowScripts": {
     "@bundled-es-modules/glob@10.4.2": true,
-    "esbuild@0.25.12": true,
-    "esbuild@0.27.7": true,
     "puppeteer@24.43.1": true,
     "sharp@0.34.5": true,
     "style-dictionary@4.4.0": true,
-    "fsevents@2.3.3": true
+    "fsevents@2.3.3": true,
+    "esbuild@0.28.2": true
   }
 }

@@ -2,7 +2,7 @@
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
-import Button from '../ui/Button.astro';
+import ActionButton from './ActionButton.astro';
 import type { BlockProps, BlockAction } from './types';
 
 interface Props extends BlockProps {
@@ -34,9 +34,7 @@ const defaultVariant = background === 'brand' || background === 'inverse' ? 'inv
     <div class:list={['flex flex-wrap gap-3', align === 'center' && 'justify-center']}>
       {
         actions.map((action) => (
-          <Button href={action.href} variant={action.variant ?? defaultVariant} size="lg">
-            {action.label}
-          </Button>
+          <ActionButton action={action} size="lg" defaultVariant={defaultVariant} />
         ))
       }
     </div>

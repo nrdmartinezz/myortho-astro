@@ -1,0 +1,111 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Prose from '../../components/ui/Prose.astro';
+import Card from '../../components/ui/Card.astro';
+import { getPublished, related, type Entry } from '../../lib/doctors';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const entries = await getPublished();
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, all: entries },
+  }));
+};
+
+interface Props {
+  entry: Entry;
+  all: Entry[];
+}
+
+const { entry, all } = Astro.props;
+const { Content } = await render(entry);
+const colleagues = related(all, entry);
+---
+
+<BaseLayout
+  title={entry.data.seoTitle}
+  description={entry.data.seoDescription}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Doctors', href: '/doctors/' },
+    { name: entry.data.name, href: `/doctors/${entry.id}/` },
+  ]}
+>
+  <Section background="muted" spacing="md">
+    <Container width="narrow" layout={entry.data.photo ? 'row' : 'stack'} gap="lg">
+      {
+        entry.data.photo && (
+          <img
+            src={entry.data.photo}
+            alt=""
+            class="aspect-4/5 w-full max-w-48 shrink-0 rounded-lg object-cover"
+          />
+        )
+      }
+      <div class="flex flex-col gap-2">
+        <Heading level={1}>{entry.data.name}</Heading>
+        {
+          (entry.data.credentials || entry.data.role) && (
+            <p class="text-ink-muted text-sm">
+              {[entry.data.credentials, entry.data.role].filter(Boolean).join(' · ')}
+            </p>
+          )
+        }
+        {entry.data.shortBio && <p class="text-ink-muted text-lg">{entry.data.shortBio}</p>}
+
+        {
+          entry.data.specialties && entry.data.specialties.length > 0 && (
+            <ul class="flex flex-wrap gap-2">
+              {entry.data.specialties.map((specialty) => (
+                <li class="bg-brand-50 text-ink-brand rounded-full px-3 py-1 text-xs font-semibold">
+                  {specialty}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        {
+          entry.data.locations && entry.data.locations.length > 0 && (
+            <p class="text-ink-muted text-sm">Sees patients in: {entry.data.locations.join(', ')}</p>
+          )
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="base" spacing="md">
+    <Container width="narrow">
+      <Prose>
+        <Content />
+      </Prose>
+    </Container>
+  </Section>
+
+  {
+    colleagues.length > 0 && (
+      <Section background="muted" spacing="md">
+        <Container gap="lg">
+          <Heading level={2}>Other doctors</Heading>
+          <ul class="grid w-full gap-6 sm:grid-cols-3">
+            {colleagues.map((item) => (
+              <Card as="li" variant="outlined">
+                <Heading level={3} size="sm">
+                  <a href={`/doctors/${item.id}/`} class="text-ink-base no-underline hover:underline">
+                    {item.data.name}
+                  </a>
+                </Heading>
+                {item.data.role && <p class="text-ink-muted text-sm">{item.data.role}</p>}
+              </Card>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    )
+  }
+</BaseLayout>

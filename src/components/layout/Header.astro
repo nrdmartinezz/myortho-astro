@@ -13,6 +13,8 @@ import MobileNav from './MobileNav.astro';
 import { navigation } from '../../config/navigation';
 import { site } from '../../config/site';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import logo from '../../images/myorthodontist-logo.png';
 
 export type HeaderSticky = 'static' | 'sticky' | 'shrink' | 'hide-on-scroll';
 
@@ -43,7 +45,7 @@ const positioned = sticky !== 'static';
       {
         navigation.cta && (
           <Button href={navigation.cta.href} size="sm" class="font-bold max-md:hidden">
-            {navigation.cta.label}
+            Schedule Today
           </Button>
         )
       }
@@ -66,8 +68,7 @@ const positioned = sticky !== 'static';
     class="justify-between gap-4 py-4 group-data-[scrolled=true]/header:py-2"
   >
     <a href="/" class="text-ink-base flex items-center gap-2 font-semibold no-underline">
-      <Icon name="lucide:hexagon" class="text-brand-600 size-7" aria-hidden="true" />
-      <span>{site.name}</span>
+      <Image src={logo} alt={site.name} class="h-auto w-40" loading="eager" />
     </a>
 
     <MegaMenu currentPath={currentPath} />
@@ -75,7 +76,7 @@ const positioned = sticky !== 'static';
     <div class="flex items-center gap-2">
       <a
         href={`tel:${site.business.phoneHref}`}
-        class="text-ink-base hidden min-h-11 items-center gap-2 px-2 font-medium no-underline lg:inline-flex"
+        class="text-brand-800 hidden min-h-11 items-center gap-2 px-2 font-medium no-underline lg:inline-flex text-xs"
       >
         <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
         {site.business.phone}
@@ -83,7 +84,7 @@ const positioned = sticky !== 'static';
 
       {
         navigation.cta && (
-          <Button href={navigation.cta.href} size="sm" class="max-md:hidden">
+          <Button href={navigation.cta.href} size="sm" class="max-md:hidden text-xs">
             {navigation.cta.label}
           </Button>
         )

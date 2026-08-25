@@ -1,0 +1,24 @@
+---
+import Button, { type ButtonSize, type ButtonVariant } from '../ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import type { BlockAction } from './types';
+
+interface Props {
+  action: BlockAction;
+  size?: ButtonSize;
+  defaultVariant?: ButtonVariant;
+}
+
+const { action, size, defaultVariant = 'primary' } = Astro.props;
+const iconPosition = action.iconPosition ?? 'left';
+---
+
+<Button href={action.href} variant={action.variant ?? defaultVariant} size={size}>
+  {action.icon && iconPosition === 'left' && (
+    <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
+  )}
+  {action.label}
+  {action.icon && iconPosition === 'right' && (
+    <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
+  )}
+</Button>

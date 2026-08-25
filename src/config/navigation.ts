@@ -97,7 +97,7 @@ export const navigation: NavigationConfig = {
           { label: 'Our Story', href: '/about/' },
           { label: 'Why Choose Us', href: '/about/what-sets-us-apart/' },
           { label: 'Our Foundation', href: '/about/foundation/' },
-          { label: 'Meet the Doctors', href: '/about/our-doctors/' },
+          { label: 'Meet the Doctors', href: '/doctors/' },
           { label: 'Meet Dr. Moray', href: '/about/dr-moray/' },
         ],
       },

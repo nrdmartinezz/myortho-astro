@@ -12,6 +12,8 @@ import Testimonials from '../components/blocks/Testimonials.astro';
 import FAQ from '../components/blocks/FAQ.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
 import { site } from '../config/site';
+import heroBackground from '../images/hero-bg.jpg';
+import { getPublished } from '../lib/locations';
 
 const faqs = [
   {
@@ -27,21 +29,24 @@ const faqs = [
     answer: 'Typically within two hours across the metro area, and same-day everywhere else.',
   },
 ];
+
+const locations = await getPublished();
+
 ---
 
 <BaseLayout faqs={faqs}>
   <Hero
-    eyebrow={`${site.business.address.locality}, ${site.business.address.region}`}
-    title={site.tagline}
-    body={site.description}
-    bullets={[
-      'Licensed and insured',
-      'Upfront pricing, no surprises',
-      'Work guaranteed for 12 months',
-    ]}
+    eyebrow={`- North Carolina Premier Orthodontist`}
+    background="inverse"
+    backgroundImage={heroBackground}
+    spacing="md"
+    title={`Reveal the <br/><span class="text-accent-500 font-bold">Beautiful Smile</span> <br/>You Were Always<br/> Meant to Have`}
+    body={"A leading North Carolina orthodontic practice with 14 convenient locations across the state — serving families with braces, clear aligners, and advanced orthodontic care."}
+    pills={locations.map((location) => ({ label: location.data.name, href: `/locations/${location.data.slug}/`, icon: 'lucide:map-pin' }))}
     actions={[
-      { label: 'Request a quote', href: '/contact/' },
-      { label: site.business.phone, href: `tel:${site.business.phoneHref}`, variant: 'secondary' },
+      { icon:"lucide:calendar", label: 'Book a FREE Consult', href: 'https://forms.formlync.com/myorthodontist/register' },
+      { icon:"lucide:laptop", label: 'Virtual Consult', href: '/request-consult/', variant:"secondary"},
+      { icon:"lucide:phone", label: site.business.phone, href: `tel:${site.business.phoneHref}`, variant: 'ghost-white' },
     ]}
   />
 

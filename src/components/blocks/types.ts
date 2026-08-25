@@ -21,5 +21,7 @@ export interface BlockProps {
 export interface BlockAction {
   label: string;
   href: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse';
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse' | 'ghost-white';
 }
