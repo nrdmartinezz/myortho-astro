@@ -39,5 +39,13 @@
     "start-server-and-test": "^2.1.2",
     "style-dictionary": "^4.4.0",
     "typescript": "^5.9.3"
+  },
+  "allowScripts": {
+    "@bundled-es-modules/glob@10.4.2": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
+    "puppeteer@24.43.1": true,
+    "sharp@0.34.5": true,
+    "style-dictionary@4.4.0": true
   }
 }

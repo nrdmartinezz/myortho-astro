@@ -52,52 +52,41 @@ export const navigation: NavigationConfig = {
   primary: [
     { label: 'Home', href: '/' },
     {
-      label: 'Services',
+      label: 'Treatments',
       href: '/services/',
       panel: {
         kind: 'mega',
         columns: [
           {
-            heading: 'Residential',
+            heading: 'Braces',
             links: [
-              {
-                label: 'Repairs & Maintenance',
-                href: '/services/repairs/',
-                description: 'Fast turnaround on everyday problems.',
-                icon: 'lucide:wrench',
-              },
-              {
-                label: 'Installations',
-                href: '/services/installations/',
-                description: 'New systems, fitted and tested.',
-                icon: 'lucide:hammer',
-              },
+              { label: 'Types of Braces', href: '/types-of-braces/' },
+              { label: 'Adult Braces', href: '/braces-for-adults/' },
+              { label: 'Teen Braces', href: '/braces-for-teens/' },
+              { label: 'Children Braces', href: '/braces-for-children/' },
             ],
           },
           {
-            heading: 'Commercial',
+            heading: 'Invisalign',
             links: [
-              {
-                label: 'Service Contracts',
-                href: '/services/contracts/',
-                description: 'Scheduled upkeep with priority response.',
-                icon: 'lucide:clipboard-check',
-              },
-              {
-                label: 'Emergency Callout',
-                href: '/services/emergency/',
-                description: 'Around-the-clock cover.',
-                icon: 'lucide:siren',
-              },
+              { label: 'How Invisalign Works', href: '/types-of-invisalign/' },
+              { label: 'Adult Invisalign', href: '/invisalign-for-adults/' },
+              { label: 'Teen Invisalign', href: '/invisalign-for-teens/' },
+              { label: 'Children Invisalign', href: '/invisalign-for-children/' },
+            ],
+          },
+          {
+            heading: 'More Options',
+            links: [
+              { label: 'Retainers', href: '/retainers/' },
+              { label: 'Teeth Whitening', href: '/teeth-whitening/' },
+              { label: 'Dental Pain Eraser', href: '/dental-pain-eraser/' },
+              { label: 'Carrier Motion', href: '/carrier-motion/' },
+              { label: 'Virtual Care', href: '/virtual-care/' },
             ],
           },
         ],
-        featured: {
-          title: 'Not sure what you need?',
-          body: 'Tell us what is going on and we will point you at the right service.',
-          href: '/contact/',
-          cta: 'Talk to us',
-        },
+        // featured section removed for links panel
       },
     },
     {
@@ -106,15 +95,51 @@ export const navigation: NavigationConfig = {
         kind: 'links',
         links: [
           { label: 'Our Story', href: '/about/' },
-          { label: 'The Team', href: '/about/team/' },
-          { label: 'Service Area', href: '/about/service-area/' },
+          { label: 'Why Choose Us', href: '/about/what-sets-us-apart/' },
+          { label: 'Our Foundation', href: '/about/foundation/' },
+          { label: 'Meet the Doctors', href: '/about/our-doctors/' },
+          { label: 'Meet Dr. Moray', href: '/about/dr-moray/' },
         ],
       },
     },
-    { label: 'Contact', href: '/contact/' },
+    {
+      label: 'Resources',
+      href: '/resources/',
+      panel: {
+        kind: 'mega',
+        columns: [
+          {
+            heading: 'Patient Resources',
+            links: [
+              { label: 'Insurance & Financing Info', href: '/insurance/' },
+              { label: 'Orthodontic FAQs', href: '/faqs/' },
+              { label: 'Patient Portal', href: '/patient-portal/' },
+              { label: 'Office Policies', href: '/office-policies/' },
+              { label: 'Orthodontic Emergencies', href: '/orthodontic-emergencies/' },
+            ],
+          },
+          {
+            heading: 'New Patient Info',
+            links: [
+              { label: 'New Patient Info', href: '/patient/' },
+              { label: 'Your First Visit', href: '/your-first-visit/' },
+              { label: 'Special Offers', href: '/special-offers/' },
+            ],
+          },
+          {
+            heading: 'Contact Us',
+            links: [
+              { label: 'Contact', href: '/contact/' },
+              { label: 'Locations', href: '/locations/' },
+              { label: 'Careers', href: '/careers/' },
+            ]
+          }
+        ],
+      },
+    },
   ],
 
-  cta: { label: 'Request a Quote', href: '/contact/' },
+  cta: { label: 'Book Appointment', href: '/book-appointment/' },
 
   footer: [
     {

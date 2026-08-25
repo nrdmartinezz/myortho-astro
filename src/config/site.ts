@@ -83,8 +83,8 @@ export interface SiteConfig {
 
 export const site: SiteConfig = {
   url: 'https://example.com',
-  name: 'Demo Business',
-  legalName: 'Demo Business LLC',
+  name: 'MyOrthodontistNC',
+  legalName: 'MyOrthodontistNC',
   tagline: 'Straightforward work, done right the first time.',
   description:
     'Demo Business is a placeholder used by the starter template. Replace this copy during project setup.',

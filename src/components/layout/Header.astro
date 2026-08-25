@@ -25,7 +25,19 @@ const { sticky = 'sticky' } = Astro.props;
 const currentPath = Astro.url.pathname;
 const positioned = sticky !== 'static';
 ---
-
+<div class="utility">
+  <div class="container">
+    <span class="utility__message">Delivering high-quality orthodontic care across North Carolina</span>
+    <div class="utility__links">
+      <a href="/locations/">
+        <Icon name="lucide:map-pin" class="size-4" aria-hidden="true" />Find a Location
+      </a>
+      <a href="tel:18006967846"> 
+        <Icon name="lucide:phone" class="size-4" aria-hidden="true" />1-800-MY-ORTHO
+      </a>
+    </div>
+  </div>
+</div>
 <header
   data-sticky={sticky}
   class:list={[
@@ -75,6 +87,24 @@ const positioned = sticky !== 'static';
     transition:
       transform 200ms ease,
       padding 150ms ease;
+  }
+
+  .utility {
+    background-color: var(--color-brand-700);
+    border-bottom: 1px solid var(--color-line-base);
+  }
+
+  .utility__message {
+    font-weight: 500;
+  }
+
+  .utility__links a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: var(--color-neutral-300);
+    display: flex;
+    flex-direction: row;
+    gap:9px;
   }
 
   header[data-hidden='true'] {
