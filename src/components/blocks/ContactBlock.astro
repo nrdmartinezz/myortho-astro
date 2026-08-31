@@ -20,7 +20,11 @@ import type { BlockProps } from './types';
 
 interface Props extends BlockProps {
   subject?: string;
+  /** Values for the optional select field (services, locations, etc.). */
   services?: string[];
+  /** Label for the select field when `services` is non-empty. */
+  selectLabel?: string;
+  selectName?: string;
   showDetails?: boolean;
 }
 
@@ -34,6 +38,8 @@ const {
   titleLevel = 2,
   subject = `New enquiry from ${site.name}`,
   services = [],
+  selectLabel = 'What do you need?',
+  selectName = 'service',
   showDetails = true,
 } = Astro.props;
 
@@ -78,11 +84,11 @@ const thankYou = new URL('/thank-you/', site.url).href;
           {
             services.length > 0 && (
               <Field
-                name="service"
-                label="What do you need?"
+                name={selectName}
+                label={selectLabel}
                 type="select"
                 options={[
-                  { label: 'Select a service', value: '' },
+                  { label: `Select ${selectLabel.toLowerCase()}`, value: '' },
                   ...services.map((service) => ({ label: service, value: service })),
                 ]}
               />

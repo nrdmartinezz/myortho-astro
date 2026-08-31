@@ -132,8 +132,8 @@ export const navigation: NavigationConfig = {
               { label: 'Contact', href: '/contact/' },
               { label: 'Locations', href: '/locations/' },
               { label: 'Careers', href: '/careers/' },
-            ]
-          }
+            ],
+          },
         ],
       },
     },
@@ -143,18 +143,31 @@ export const navigation: NavigationConfig = {
 
   footer: [
     {
-      heading: 'Services',
+      heading: 'Treatments',
       links: [
-        { label: 'Repairs & Maintenance', href: '/services/repairs/' },
-        { label: 'Installations', href: '/services/installations/' },
-        { label: 'Service Contracts', href: '/services/contracts/' },
+        { label: 'Types of Braces', href: '/types-of-braces/' },
+        { label: 'Invisalign / Aligners', href: '/types-of-invisalign/' },
+        { label: 'Virtual Care', href: '/virtual-care/' },
+        { label: 'Retainers', href: '/retainers/' },
       ],
     },
     {
       heading: 'Company',
       links: [
         { label: 'About', href: '/about/' },
+        { label: 'Meet the Doctors', href: '/doctors/' },
+        { label: 'Locations', href: '/locations/' },
         { label: 'Contact', href: '/contact/' },
+        { label: 'Happy Tooth Foundation', href: '/about/foundation/' },
+      ],
+    },
+    {
+      heading: 'Patients',
+      links: [
+        { label: 'Insurance & Financing', href: '/insurance/' },
+        { label: 'FAQs', href: '/faqs/' },
+        { label: 'New Patient Info', href: '/patient/' },
+        { label: 'Your First Visit', href: '/your-first-visit/' },
       ],
     },
   ],

@@ -82,7 +82,7 @@ export interface SiteConfig {
 }
 
 export const site: SiteConfig = {
-  url: 'https://myorthodontistnc.com/',
+  url: 'https://myorthodontistnc.com',
   name: 'MyOrthodontistNC',
   legalName: 'MyOrthodontistNC',
   tagline: 'Delivering high-quality orthodontic care across North Carolina',
@@ -91,19 +91,19 @@ export const site: SiteConfig = {
   locale: 'en-US',
 
   business: {
-    schemaType: 'LocalBusiness',
+    schemaType: 'Dentist',
     phone: '1-800-MY-ORTHO',
     phoneHref: '+18006967846',
-    email: 'hello@example.com',
+    email: 'info@myorthodontistnc.com',
     address: {
-      street: '1200 Market Street, Suite 400',
-      locality: 'Columbus',
-      region: 'OH',
-      postalCode: '43215',
+      street: '2501 Atrium Drive, Suite 301',
+      locality: 'Raleigh',
+      region: 'NC',
+      postalCode: '27607',
       country: 'US',
     },
-    geo: { latitude: 39.9612, longitude: -82.9988 },
-    hours: ['Mo-Fr 08:00-17:00', 'Sa 09:00-13:00'],
+    geo: { latitude: 35.8026, longitude: -78.7033 },
+    hours: ['Mo-Fr 08:00-17:00'],
     priceRange: '$$',
   },
 
