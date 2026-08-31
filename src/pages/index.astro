@@ -64,23 +64,36 @@ const insuranceLogos = [
 
 <BaseLayout title="North Carolina Premier Orthodontist" description={site.description}>
   <Hero
-    eyebrow="- North Carolina Premier Orthodontist"
+    eyebrow={`- North Carolina Premier Orthodontist`}
     background="inverse"
     backgroundImage={heroBackground}
     spacing="md"
     title={`Reveal the <br/><span class="text-accent-500 font-bold">Beautiful Smile</span> <br/>You Were Always<br/> Meant to Have`}
-    body="A leading North Carolina orthodontic practice with 14 convenient locations across the state — serving families with braces, clear aligners, and advanced orthodontic care."
+    body={'A leading North Carolina orthodontic practice with 14 convenient locations across the state — serving families with braces, clear aligners, and advanced orthodontic care.'}
     pills={locations.map((location) => ({
       label: location.data.name,
-      href: `/locations/${location.data.slug ?? location.id}/`,
+      href: `/locations/${location.data.slug}/`,
       icon: 'lucide:map-pin',
     }))}
     actions={[
-      { icon: 'lucide:calendar', label: 'Complimentary Consult', href: bookHref },
-      { icon: 'lucide:laptop', label: 'Virtual Consult', href: virtualHref, variant: 'secondary' },
-      { ...phoneAction, variant: 'ghost-white' },
+      {
+        icon: 'lucide:calendar',
+        label: 'Book a FREE Consult',
+        href: 'https://forms.formlync.com/myorthodontist/register',
+      },
+      {
+        icon: 'lucide:laptop',
+        label: 'Virtual Consult',
+        href: '/request-consult/',
+        variant: 'secondary',
+      },
+      {
+        icon: 'lucide:phone',
+        label: site.business.phone,
+        href: `tel:${site.business.phoneHref}`,
+        variant: 'ghost-white',
+      },
     ]}
-    bullets={['Board Certified Orthodontists', 'In-Network Insurance', 'Free Consultations']}
   />
 
   <Stats
