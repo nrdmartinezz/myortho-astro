@@ -67,7 +67,7 @@ const onDark =
         items.map((item) => (
           <Card
             as="li"
-            variant={onDark ? 'inverse' : 'outlined'}
+            variant={onDark ? 'inverse' : 'plain'}
             padded={!item.image}
           >
             {item.image && (
@@ -84,7 +84,7 @@ const onDark =
               {item.icon && !item.image && (
                 <Icon
                   name={item.icon}
-                  class:list={['size-8', !onDark && 'text-brand-600']}
+                  class:list={[!onDark && 'text-brand-600']}
                   data-slot="icon"
                   aria-hidden="true"
                 />

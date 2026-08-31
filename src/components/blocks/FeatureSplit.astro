@@ -33,6 +33,19 @@ const {
 } = Astro.props;
 
 const hasMediaSlot = Astro.slots.has('media');
+
+const BULLETS_PER_COLUMN = 5;
+const COLUMNS_PER_ROW = 3;
+
+function chunk<T>(items: T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    chunks.push(items.slice(i, i + size));
+  }
+  return chunks;
+}
+
+const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
 ---
 
 <Section background={background} spacing={spacing}>
@@ -74,18 +87,26 @@ const hasMediaSlot = Astro.slots.has('media');
 
       {
         bullets.length > 0 && (
-          <ul class="flex flex-col gap-2">
-            {bullets.map((bullet) => (
-              <li class="flex items-start gap-3">
-                <Icon
-                  name="lucide:circle-check"
-                  class="text-accent-500 mt-1 size-5 shrink-0"
-                  aria-hidden="true"
-                />
-                <span>{bullet}</span>
-              </li>
+          <div class="flex w-full flex-col gap-6">
+            {bulletRows.map((row) => (
+              <div class="flex w-full gap-6 max-md:flex-col">
+                {row.map((column) => (
+                  <ul class="flex min-w-0 flex-1 flex-col gap-2">
+                    {column.map((bullet) => (
+                      <li class="flex items-start gap-3">
+                        <Icon
+                          name="lucide:circle-check"
+                          class="text-accent-500 mt-1 size-5 shrink-0"
+                          aria-hidden="true"
+                        />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
             ))}
-          </ul>
+          </div>
         )
       }
 

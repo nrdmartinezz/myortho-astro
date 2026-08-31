@@ -19,7 +19,7 @@ const {
 } = Astro.props;
 
 const variants: Record<CardVariant, string> = {
-  plain: 'bg-transparent',
+  plain: 'bg-[#F9FAFB] border-line-base border',
   outlined: 'border-line-base bg-surface-base border',
   elevated: 'bg-surface-base shadow-md',
   inverse: 'card-inverse border',
@@ -92,6 +92,19 @@ const variants: Record<CardVariant, string> = {
     z-index: 1;
   }
 
+  .card :global([data-slot='icon']) {
+    box-sizing: content-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    padding: 9px;
+    border-radius: 10px;
+    color: var(--color-brand-800);
+    background-color: #002a4e33;
+    border: 1px solid #002a4e4d;
+  }
+
   .card-inverse .card-face {
     background-color: #ffffff1a;
   }
@@ -102,14 +115,9 @@ const variants: Record<CardVariant, string> = {
   }
 
   .card-inverse :global([data-slot='icon']) {
-    box-sizing: content-box;
-    display: inline-flex;
-    flex-shrink: 0;
-    padding: 9px;
     color: var(--color-accent-500);
     background-color: #a1b82926;
-    border: 1px solid rgba(161, 184, 41, 0.3);
-    border-radius: 10px;
+    border-color: rgba(161, 184, 41, 0.3);
   }
 
   .card-inverse :global(h3),
