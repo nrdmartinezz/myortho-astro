@@ -15,10 +15,10 @@ const { label, href, icon, inverse = false } = Astro.props;
 <a
   href={href}
   class:list={[
-    'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs no-underline transition-colors',
+    'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs no-underline transition-colors',
     inverse
       ? 'border-white/20 bg-white/10 text-white hover:bg-white/20'
-      : 'border-brand-100 bg-brand-50 text-ink-brand hover:bg-brand-100',
+      : 'border-line-base bg-surface-base text-ink-brand hover:bg-surface-muted',
   ]}
 >
   {icon && <Icon name={icon} class="size-3.5 shrink-0" aria-hidden="true" />}

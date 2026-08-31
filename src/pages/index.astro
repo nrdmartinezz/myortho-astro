@@ -19,6 +19,7 @@ import heroBackground from '../images/hero-bg.jpg';
 import aboutPractice from '../images/about-practice-care.webp';
 import virtualConsult from '../images/foundation/virtual-consult.jpg';
 import happyTooth from '../images/foundation/happy-tooth.jpg';
+import consultationCta from '../images/consultation-cta.jpg';
 
 import metalCeramic from '../images/services/metal-ceramic-braces.jpg';
 import sparkAligners from '../images/services/spark-clear-aligners.jpg';
@@ -97,21 +98,22 @@ const insuranceLogos = [
   />
 
   <Stats
-    background="base"
+    background="gradient"
     align="center"
+    spacing="sm"
     items={[
-      { value: '14+', label: 'Locations Across NC' },
-      { value: '25+', label: 'Years of Excellence' },
-      { value: '100K+', label: 'Smiles Transformed' },
-      { value: '100%', label: 'Free Consultations' },
+      { value: '<em>14</em>+', label: 'Locations Across NC' },
+      { value: '<em>25</em>+', label: 'Years of Excellence' },
+      { value: '<em>100</em>K+', label: 'Smiles Transformed' },
+      { value: '<em>100</em>%', label: 'Free Consultations' },
     ]}
   />
 
   <ServicesGrid
-    background="muted"
+    background="inverse"
     align="center"
     eyebrow="Why MyOrthodontist"
-    title="3 Reasons Why People Choose MyOrthodontist"
+    title="3 Reasons Why People<br/><em>Choose MyOrthodontist</em>"
     body="MyOrthodontist is the premier orthodontic provider in North Carolina. Here's what sets us apart from the rest."
     columns={3}
     items={[
@@ -134,7 +136,7 @@ const insuranceLogos = [
   />
 
   <CTABanner
-    background="base"
+    background="inverse"
     spacing="sm"
     title=""
     actions={[
@@ -144,10 +146,10 @@ const insuranceLogos = [
   />
 
   <ServicesGrid
-    background="base"
+    background="muted"
     align="center"
     eyebrow="Our Services"
-    title="Crafting Smiles With Innovation"
+    title="Crafting Smiles With<br/><em>Innovation</em>"
     body="Explore our full suite of orthodontic services — from classic braces to cutting-edge clear aligner technology."
     columns={3}
     items={[
@@ -209,9 +211,9 @@ const insuranceLogos = [
   />
 
   <FeatureSplit
-    background="muted"
+    background="base"
     eyebrow="Our Services"
-    title="We Accept Your Insurance"
+    title="We Accept<br/><em>Your Insurance</em>"
     body="At MyOrthodontist, we are dedicated to making your insurance work in your favor. Our experienced staff navigates the complex rules of orthodontic insurance so you don't have to."
     image={aboutPractice}
     imageAlt="Orthodontic care at MyOrthodontist"
@@ -223,12 +225,12 @@ const insuranceLogos = [
     ]}
     actions={[
       { label: 'Book an Appointment', href: bookHref },
-      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'secondary' },
+      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'outline' },
     ]}
   />
 
   <Stats
-    background="muted"
+    background="base"
     eyebrow="Why Our Patients Love Us"
     align="center"
     items={[
@@ -245,22 +247,22 @@ const insuranceLogos = [
     background="muted"
     reverse
     eyebrow="We're Everywhere You Are"
-    title="Walk Into Our Offices or Schedule a Virtual Consult"
+    title="Walk Into Our Offices<br/>or Schedule a <em>Virtual<br/>Consult</em>"
     body="With 14 locations across North Carolina and state-of-the-art virtual care technology, getting the smile you deserve has never been more convenient."
     image={virtualConsult}
     imageAlt="Virtual orthodontic consultation"
     bullets={locations.map((location) => location.data.name)}
     actions={[
       { label: 'Book an Appointment', href: bookHref },
-      { label: 'Virtual Appointment', href: virtualHref, variant: 'secondary' },
+      { label: 'Virtual Appointment', href: virtualHref, variant: 'outline' },
     ]}
   />
 
   <ServicesGrid
-    background="base"
+    background="brand"
     align="center"
     eyebrow="For Our Patients"
-    title="Everything You Need In One Place"
+    title="Everything You Need<br/><em>In One Place</em>"
     columns={4}
     items={[
       {
@@ -295,10 +297,10 @@ const insuranceLogos = [
   />
 
   <Testimonials
-    background="muted"
+    background="alt"
     align="center"
     eyebrow="Patient Stories"
-    title="What Our Patients Are Saying"
+    title="What Our Patients<br/><em>Are Saying</em>"
     body="4.9 / 5.0 Google Reviews"
     items={[
       {
@@ -326,8 +328,10 @@ const insuranceLogos = [
   />
 
   <CTABanner
-    background="brand"
-    title="What Our Patients Are Saying"
+    background="inverse"
+    backgroundImage={consultationCta}
+    backgroundImageAlt="Orthodontic consultation"
+    title="What Our Patients<br/><em>Are Saying</em>"
     body="Join over 100,000 North Carolinians who have transformed their smiles with MyOrthodontist. Your complimentary consultation is free — always."
     actions={[
       { label: 'Schedule Free Consultation', href: bookHref },
@@ -338,7 +342,7 @@ const insuranceLogos = [
   <FeatureSplit
     background="base"
     eyebrow="Community Initiative · The Happy Tooth Foundation"
-    title="Giving Back to Our Communities"
+    title="Giving Back to<br/>Our Communities"
     body="Our mission is to help underserved youth build self-esteem and confidence through healthy living, teamwork, and sports. We deliver a percentage of every dollar spent in our offices to the Happy Tooth Foundation — so every smile you create helps another child thrive."
     image={happyTooth}
     imageAlt="Happy Tooth Foundation youth community sports event"
@@ -349,7 +353,7 @@ const insuranceLogos = [
     background="muted"
     align="center"
     eyebrow="The Tooth Wisdom Blog"
-    title="Latest Posts & Smile Tips"
+    title="Latest Posts &<br/><em>Smile Tips</em>"
     columns={3}
     items={[
       {
@@ -378,9 +382,9 @@ const insuranceLogos = [
 
   <div id="contact">
     <ContactBlock
-      background="base"
+      background="alt"
       eyebrow="Get in Touch"
-      title="Contact Us"
+      title="Contact <em>Us</em>"
       body="Ready to start your smile journey? Reach out to your nearest location or fill out the form below."
       services={locationNames}
       selectLabel="Preferred Location"

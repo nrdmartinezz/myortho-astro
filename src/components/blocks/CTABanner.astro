@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
@@ -7,10 +9,12 @@ import type { BlockProps, BlockAction } from './types';
 
 interface Props extends BlockProps {
   actions: BlockAction[];
+  backgroundImage?: ImageMetadata;
+  backgroundImageAlt?: string;
 }
 
 const {
-  background = 'brand',
+  background = 'inverse',
   spacing = 'md',
   align = 'center',
   width = 'narrow',
@@ -19,17 +23,50 @@ const {
   body,
   titleLevel = 2,
   actions,
+  backgroundImage,
+  backgroundImageAlt = '',
 } = Astro.props;
 
-// On a coloured band the default primary button disappears into the surface.
-const defaultVariant = background === 'brand' || background === 'inverse' ? 'inverse' : 'primary';
+const defaultVariant =
+  background === 'brand' || background === 'inverse' || background === 'gradient'
+    ? 'inverse'
+    : 'primary';
 ---
 
-<Section background={background} spacing={spacing}>
+<Section
+  background={background}
+  spacing={spacing}
+  clip={Boolean(backgroundImage)}
+  class={backgroundImage ? 'relative isolate' : undefined}
+>
+  {
+    backgroundImage && (
+      <>
+        <Image
+          src={backgroundImage}
+          alt={backgroundImageAlt}
+          widths={[640, 1024, 1600]}
+          sizes="100vw"
+          loading="lazy"
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        <div
+          class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(0_28_52/0.95)_0%,rgb(0_59_106/0.75)_100%)]"
+          aria-hidden="true"
+        />
+      </>
+    )
+  }
   <Container width={width} align={align} gap="md">
-    {eyebrow && <p class="text-sm font-semibold tracking-wide uppercase opacity-80">{eyebrow}</p>}
-    {title && <Heading level={titleLevel}>{title}</Heading>}
-    {body && <p class="max-w-reading text-lg opacity-90">{body}</p>}
+    {
+      eyebrow && (
+        <p class="block-eyebrow text-accent-300 tracking-eyebrow text-xs font-light uppercase">
+          {eyebrow}
+        </p>
+      )
+    }
+    {title && <Heading level={titleLevel} set:html={title} />}
+    {body && <p class="block-body max-w-reading text-lg">{body}</p>}
 
     <div class:list={['flex flex-wrap gap-3', align === 'center' && 'justify-center']}>
       {

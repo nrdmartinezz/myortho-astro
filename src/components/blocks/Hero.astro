@@ -24,10 +24,10 @@ interface Props extends Omit<BlockProps, 'titleLevel'> {
   pills?: HeroPill[];
 }
 
-interface HeroPill{
-  label:string;
-  href:string;
-  icon?:string;
+interface HeroPill {
+  label: string;
+  href: string;
+  icon?: string;
 }
 
 const {
@@ -78,7 +78,12 @@ const pillRows: HeroPill[][] = [
           fetchpriority="high"
           class="absolute inset-0 -z-10 h-full w-full object-cover"
         />
-        {overlay && <div class="bg-linear-65 from-brand-800/100 to-brand-700/40 absolute inset-0 -z-10" aria-hidden="true" />}
+        {overlay && (
+          <div
+            class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_42_78/0.98)_8%,rgb(10_77_133/0.43)_100%)]"
+            aria-hidden="true"
+          />
+        )}
       </>
     )
   }
@@ -90,8 +95,8 @@ const pillRows: HeroPill[][] = [
         eyebrow && (
           <p
             class:list={[
-              'text-xs font-normal tracking-wide uppercase',
-              isInverse ? 'text-accent-500' : 'text-ink-brand',
+              'block-eyebrow tracking-eyebrow text-xs font-light uppercase',
+              isInverse ? 'text-accent-300' : 'text-ink-subtle',
             ]}
           >
             {eyebrow}
@@ -99,9 +104,9 @@ const pillRows: HeroPill[][] = [
         )
       }
 
-      <Heading class="font-bold" level={1} set:html={title} />
+      <Heading class="text-ink-inverse font-bold" level={1} set:html={title} />
 
-      {body && <p class="max-w-reading text-sm opacity-90">{body}</p>}
+      {body && <p class="max-w-reading text-sm text-white/70">{body}</p>}
 
       {
         bullets.length > 0 && (
@@ -119,29 +124,36 @@ const pillRows: HeroPill[][] = [
           </ul>
         )
       }
-      {pills?.length > 0 && (
-        <div class="flex flex-col gap-2">
-          {pillRows.map((row) => (
-            <ul class="flex gap-2">
-              {row.map((pill) => (
-                <li>
-                  <PillButton label={pill.label} href={pill.href} icon={pill.icon} inverse={isInverse} />
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      )}
+      {
+        pills?.length > 0 && (
+          <div class="flex flex-col gap-2">
+            {pillRows.map((row) => (
+              <ul class="flex gap-2">
+                {row.map((pill) => (
+                  <li>
+                    <PillButton
+                      label={pill.label}
+                      href={pill.href}
+                      icon={pill.icon}
+                      inverse={isInverse}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        )
+      }
 
-     {
-  actions.length > 0 && (
-    <div class="flex flex-wrap gap-3">
-      {actions.map((action) => (
-        <ActionButton action={action} size="md" />
-      ))}
-    </div>
-  )
-}
+      {
+        actions.length > 0 && (
+          <div class="flex flex-wrap gap-3">
+            {actions.map((action) => (
+              <ActionButton action={action} size="md" />
+            ))}
+          </div>
+        )
+      }
     </div>
 
     {

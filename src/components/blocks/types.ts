@@ -23,5 +23,5 @@ export interface BlockAction {
   href: string;
   icon?: string;
   iconPosition?: 'left' | 'right';
-  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse' | 'ghost-white';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'inverse' | 'ghost-white';
 }

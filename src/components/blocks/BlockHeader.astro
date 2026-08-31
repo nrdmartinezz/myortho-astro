@@ -17,10 +17,12 @@ const { eyebrow, title, body, level = 2, centered = false } = Astro.props;
   (eyebrow || title || body) && (
     <div class:list={['flex w-full flex-col gap-3', centered && 'items-center text-center']}>
       {eyebrow && (
-        <p class="text-ink-brand text-sm font-semibold tracking-wide uppercase">{eyebrow}</p>
+        <p class="block-eyebrow text-ink-subtle tracking-eyebrow text-xs font-semibold uppercase">
+          {eyebrow}
+        </p>
       )}
-      {title && <Heading level={level}>{title}</Heading>}
-      {body && <p class="max-w-reading text-ink-muted text-lg">{body}</p>}
+      {title && <Heading level={level} set:html={title} />}
+      {body && <p class="block-body max-w-reading text-ink-muted text-lg">{body}</p>}
     </div>
   )
 }

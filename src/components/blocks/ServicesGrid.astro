@@ -64,7 +64,7 @@ const columnClass = {
           <Card
             as="li"
             variant="outlined"
-            class={item.image ? 'gap-0 overflow-hidden p-0' : undefined}
+            class:list={['service-card', item.image && 'gap-0 overflow-hidden p-0']}
           >
             {item.image && (
               <Image
@@ -78,10 +78,15 @@ const columnClass = {
             )}
             <div class:list={['flex flex-col gap-3', item.image && 'p-6']}>
               {item.icon && !item.image && (
-                <Icon name={item.icon} class="text-brand-600 size-8" aria-hidden="true" />
+                <Icon
+                  name={item.icon}
+                  class="text-brand-600 size-8"
+                  data-slot="icon"
+                  aria-hidden="true"
+                />
               )}
               {item.eyebrow && (
-                <p class="text-ink-brand text-xs font-semibold tracking-wide uppercase">
+                <p class="text-ink-subtle tracking-eyebrow text-xs font-semibold uppercase">
                   {item.eyebrow}
                 </p>
               )}
@@ -98,7 +103,7 @@ const columnClass = {
               {item.href && item.ctaLabel && (
                 <a
                   href={item.href}
-                  class="text-brand-700 mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline hover:underline"
+                  class="text-brand-600 mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline hover:underline"
                 >
                   {item.ctaLabel}
                 </a>

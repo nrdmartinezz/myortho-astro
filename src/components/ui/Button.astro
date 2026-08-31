@@ -1,7 +1,8 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'inverse' | 'ghost-white';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'outline' | 'ghost' | 'inverse' | 'ghost-white';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 type Props = {
@@ -17,26 +18,28 @@ const { variant = 'primary', size = 'md', href, class: className, ...rest } = As
 const Tag = href ? 'a' : 'button';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-accent-500 text-white hover:bg-accent-600 border-transparent',
-  secondary: 'bg-transparent text-white border-white hover:bg-white hover:text-accent-500',
-  ghost: 'bg-transparent text-ink-base border-transparent hover:bg-white',
-  inverse: 'bg-neutral-0 text-ink-brand border-transparent hover:bg-brand-50',
-  'ghost-white': 'bg-transparent text-white border-transparent hover:bg-brand-500',
+  primary:
+    'border-transparent bg-[linear-gradient(180deg,var(--color-accent-400)_0%,var(--color-accent-600)_100%)] text-white hover:brightness-105',
+  secondary: 'border-white bg-transparent text-white hover:bg-white hover:text-brand-600',
+  outline: 'border-brand-600 bg-transparent text-brand-600 hover:bg-brand-600 hover:text-white',
+  ghost: 'border-transparent bg-transparent text-ink-base hover:bg-neutral-100',
+  inverse: 'border-transparent bg-white text-brand-600 hover:bg-neutral-100',
+  'ghost-white': 'border-transparent bg-transparent text-white hover:bg-white/10',
 };
 
 // min-h keeps every size above the 44px touch target on small screens.
 const sizes: Record<ButtonSize, string> = {
-  sm: 'min-h-11 px-4 text-sm',
-  md: 'min-h-12 px-6 text-base',
-  lg: 'min-h-14 px-8 text-lg',
+  sm: 'min-h-11 px-5 text-xs',
+  md: 'min-h-12 px-6 text-sm',
+  lg: 'min-h-14 px-8 text-base',
 };
 ---
 
 <Tag
   href={href}
   class:list={[
-    'inline-flex items-center uppercase font-medium justify-center gap-2 rounded-4xl border tracking-wide font-sans',
-    'no-underline transition-colors duration-300',
+    'inline-flex items-center justify-center gap-2 rounded-xl border font-sans font-semibold tracking-wide uppercase',
+    'no-underline transition-[filter,background-color,color] duration-300',
     'disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
     sizes[size],

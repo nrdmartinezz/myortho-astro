@@ -26,9 +26,10 @@ const {
 } = Astro.props;
 
 const columnClass = items.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3';
+const compact = !eyebrow && !title && !body;
 ---
 
-<Section background={background} spacing={spacing}>
+<Section background={background} spacing={compact ? 'sm' : spacing}>
   <Container width={width} align={align} gap="lg">
     <BlockHeader
       eyebrow={eyebrow}
@@ -41,12 +42,12 @@ const columnClass = items.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:g
     <dl class:list={['grid w-full gap-8', columnClass]}>
       {
         items.map((stat) => (
-          <div class="flex flex-col gap-1">
-            {/* Value reads first visually; DOM order keeps dt before dd. */}
-            <dt class="text-ink-muted order-2">{stat.label}</dt>
-            <dd class="text-ink-brand order-1 text-4xl font-semibold tracking-tight">
-              {stat.value}
-            </dd>
+          <div class="flex flex-col gap-1 text-center">
+            <dt class="stat-label text-ink-muted order-2 text-sm">{stat.label}</dt>
+            <dd
+              class="stat-value text-ink-heading order-1 text-3xl font-bold tracking-tight md:text-4xl"
+              set:html={stat.value}
+            />
           </div>
         ))
       }
