@@ -1,0 +1,160 @@
+---
+/**
+ * Opening band of a location page: the office identity, the numbers a patient
+ * needs to reach that office, and the doctor(s) who see patients there.
+ */
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Card from '../ui/Card.astro';
+import { Icon } from 'astro-icon/components';
+import type { BlockProps } from './types';
+
+export interface LocationDoctor {
+  name: string;
+  credentials?: string;
+  role?: string;
+  /** Site-relative path to the headshot; a monogram stands in when absent. */
+  photo?: string;
+  href?: string;
+}
+
+interface Props extends Pick<BlockProps, 'background' | 'spacing' | 'width'> {
+  name: string;
+  region?: string;
+  addressLine: string;
+  cityStateZip: string;
+  phone: string;
+  fax?: string;
+  email?: string;
+  hours?: string;
+  doctors?: LocationDoctor[];
+}
+
+const {
+  background = 'muted',
+  spacing = 'md',
+  width = 'page',
+  name,
+  region,
+  addressLine,
+  cityStateZip,
+  phone,
+  fax,
+  email,
+  hours,
+  doctors = [],
+} = Astro.props;
+
+/** Content stores display numbers like "(919) 782-9588"; `tel:` wants E.164. */
+const telHref = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
+};
+
+const contacts = [
+  { label: 'Phone', icon: 'lucide:phone', value: phone, href: telHref(phone) },
+  fax && { label: 'Fax', icon: 'lucide:printer', value: fax },
+  email && { label: 'Email', icon: 'lucide:mail', value: email, href: `mailto:${email}` },
+].filter((contact): contact is { label: string; icon: string; value: string; href?: string } =>
+  Boolean(contact),
+);
+
+/** "Dr. Avery Morgan" reads as "AM" rather than "DA". */
+const monogram = (value: string) =>
+  value
+    .replace(/\b(dr|drs|mr|mrs|ms)\.?\s/gi, '')
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? '')
+    .join('');
+---
+
+<Section background={background} spacing={spacing}>
+  <Container width={width} gap="lg">
+    <div class="grid w-full gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+      <div class="flex flex-col gap-5">
+        {
+          region && (
+            <p class="text-ink-brand text-xs font-normal tracking-wide uppercase">{region}</p>
+          )
+        }
+
+        <Heading level={1}>{name}</Heading>
+
+        <p class="text-ink-muted max-w-reading text-lg">{addressLine}, {cityStateZip}</p>
+
+        <dl class="flex flex-wrap gap-x-10 gap-y-5">
+          {
+            contacts.map((contact) => (
+              <div class="flex items-start gap-3">
+                <Icon
+                  name={contact.icon}
+                  class="text-ink-brand mt-1 size-5 shrink-0"
+                  aria-hidden="true"
+                />
+                <div class="flex flex-col">
+                  <dt class="text-ink-muted text-xs tracking-wide uppercase">{contact.label}</dt>
+                  <dd class="font-medium">
+                    {contact.href ? (
+                      <a href={contact.href} class="text-ink-brand no-underline hover:underline">
+                        {contact.value}
+                      </a>
+                    ) : (
+                      contact.value
+                    )}
+                  </dd>
+                </div>
+              </div>
+            ))
+          }
+        </dl>
+
+        {hours && <p class="text-ink-muted text-sm">{hours}</p>}
+      </div>
+
+      {
+        doctors.length > 0 && (
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            {doctors.map((doctor) => (
+              <Card as="li" variant="elevated" class="items-center text-center">
+                {doctor.photo ? (
+                  <img
+                    src={doctor.photo}
+                    alt=""
+                    loading="lazy"
+                    class="border-line-base size-28 rounded-full border object-cover"
+                  />
+                ) : (
+                  <div
+                    class="bg-brand-50 text-ink-brand font-heading flex size-28 items-center justify-center rounded-full text-2xl"
+                    aria-hidden="true"
+                  >
+                    {monogram(doctor.name)}
+                  </div>
+                )}
+
+                <div class="flex flex-col gap-1">
+                  <Heading level={2} size="sm">
+                    {doctor.href ? (
+                      <a href={doctor.href} class="text-ink-base no-underline hover:underline">
+                        {doctor.name}
+                      </a>
+                    ) : (
+                      doctor.name
+                    )}
+                  </Heading>
+                  {(doctor.credentials || doctor.role) && (
+                    <p class="text-ink-muted text-sm">
+                      {[doctor.credentials, doctor.role].filter(Boolean).join(' · ')}
+                    </p>
+                  )}
+                </div>
+              </Card>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </Container>
+</Section>

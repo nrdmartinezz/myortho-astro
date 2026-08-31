@@ -1,0 +1,12 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 160 160"
+  width="160"
+  height="160"
+  role="img"
+  aria-label="Placeholder doctor headshot"
+>
+  <rect width="160" height="160" fill="#edf5fb" />
+  <circle cx="80" cy="62" r="26" fill="#aed3e9" />
+  <path d="M80 96c-26 0-46 16-50 40h100c-4-24-24-40-50-40Z" fill="#aed3e9" />
+</svg>
