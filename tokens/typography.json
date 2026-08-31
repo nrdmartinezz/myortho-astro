@@ -10,15 +10,15 @@
     }
   },
   "text": {
-    "xs": { "$value": "0.8125rem", "$type": "dimension" },
-    "sm": { "$value": "0.9375rem", "$type": "dimension" },
-    "base": { "$value": ".9753rem", "$type": "dimension" },
-    "lg": { "$value": "1.1875rem", "$type": "dimension" },
-    "xl": { "$value": "clamp(1.25rem, 0.25vw + 1.19rem, 1.375rem)", "$type": "dimension" },
-    "2xl": { "$value": "clamp(1.5rem, 0.6vw + 1.35rem, 1.875rem)", "$type": "dimension" },
-    "3xl": { "$value": "clamp(1.875rem, 1.2vw + 1.58rem, 2.5rem)", "$type": "dimension" },
-    "4xl": { "$value": "clamp(2.25rem, 2vw + 1.75rem, 3.25rem)", "$type": "dimension" },
-    "5xl": { "$value": "clamp(2.75rem, 3.2vw + 1.95rem, 4.25rem)", "$type": "dimension" }
+    "xs": { "$value": "0.75rem", "$type": "dimension" },
+    "sm": { "$value": "0.875rem", "$type": "dimension" },
+    "base": { "$value": "1rem", "$type": "dimension" },
+    "lg": { "$value": "1.125rem", "$type": "dimension" },
+    "xl": { "$value": "clamp(1.25rem, 0.25vw + 1.19rem, 1.5rem)", "$type": "dimension" },
+    "2xl": { "$value": "clamp(1.75rem, 0.8vw + 1.5rem, 2.25rem)", "$type": "dimension" },
+    "3xl": { "$value": "clamp(2rem, 1.2vw + 1.6rem, 3rem)", "$type": "dimension" },
+    "4xl": { "$value": "clamp(2.25rem, 1.8vw + 1.75rem, 3.75rem)", "$type": "dimension" },
+    "5xl": { "$value": "clamp(2.5rem, 2.5vw + 1.75rem, 3.75rem)", "$type": "dimension" }
   },
   "leading": {
     "tight": { "$value": "1.15", "$type": "number" },
@@ -28,6 +28,7 @@
   "tracking": {
     "tight": { "$value": "-0.02em", "$type": "dimension" },
     "normal": { "$value": "0em", "$type": "dimension" },
-    "wide": { "$value": "0.08em", "$type": "dimension" }
+    "wide": { "$value": "0.08em", "$type": "dimension" },
+    "eyebrow": { "$value": "0.125em", "$type": "dimension" }
   }
 }

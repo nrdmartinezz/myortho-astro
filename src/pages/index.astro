@@ -1,132 +1,395 @@
 ---
 /**
- * Demo home page, assembled entirely from blocks so it doubles as a working
- * example and a build smoke test. `npm run setup` clears this per project.
+ * MyOrthodontistNC home — flat assembly from live Elementor bands.
+ * Mapping lives in docs/HOME-PAGE-TRANSLATION.md.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/blocks/Hero.astro';
 import ServicesGrid from '../components/blocks/ServicesGrid.astro';
-import ProcessSteps from '../components/blocks/ProcessSteps.astro';
 import Stats from '../components/blocks/Stats.astro';
+import FeatureSplit from '../components/blocks/FeatureSplit.astro';
+import LogoCloud from '../components/blocks/LogoCloud.astro';
 import Testimonials from '../components/blocks/Testimonials.astro';
-import FAQ from '../components/blocks/FAQ.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
+import ContactBlock from '../components/blocks/ContactBlock.astro';
 import { site } from '../config/site';
-import heroBackground from '../images/hero-bg.jpg';
 import { getPublished } from '../lib/locations';
 
-const faqs = [
-  {
-    question: 'Do you offer emergency callouts?',
-    answer: 'Yes — we cover emergencies around the clock, including weekends and holidays.',
-  },
-  {
-    question: 'Are you licensed and insured?',
-    answer: 'Fully licensed and insured. We can supply certificates on request before work starts.',
-  },
-  {
-    question: 'How quickly can you get here?',
-    answer: 'Typically within two hours across the metro area, and same-day everywhere else.',
-  },
-];
+import heroBackground from '../images/hero-bg.jpg';
+import aboutPractice from '../images/about-practice-care.webp';
+import virtualConsult from '../images/foundation/virtual-consult.jpg';
+import happyTooth from '../images/foundation/happy-tooth.jpg';
+import consultationCta from '../images/consultation-cta.jpg';
+
+import metalCeramic from '../images/services/metal-ceramic-braces.jpg';
+import sparkAligners from '../images/services/spark-clear-aligners.jpg';
+import carriere from '../images/services/carriere.jpg';
+import brius from '../images/services/brius.jpg';
+import virtualMonitoring from '../images/services/virtual-dental-monitoring.jpg';
+import smile360 from '../images/services/smile-360.jpg';
+
+import logoAetna from '../images/insurance/Aetna.png';
+import logoAmeritas from '../images/insurance/Ameritas.png';
+import logoCigna from '../images/insurance/Cigna.png';
+import logoDelta from '../images/insurance/Delta-Dental.png';
+import logoDenteMax from '../images/insurance/DenteMax.png';
+import logoGuardian from '../images/insurance/Guardian.png';
+import logoHumana from '../images/insurance/Humana.png';
+import logoMetLife from '../images/insurance/MetLife.png';
+import logoPrincipal from '../images/insurance/Principal.png';
+import logoUnited from '../images/insurance/United-Healthcare.png';
 
 const locations = await getPublished();
+const locationNames = locations.map((location) => location.data.name);
+const bookHref = 'https://forms.formlync.com/myorthodontist/register';
+const virtualHref = '/request-consult/';
+const phoneAction = {
+  icon: 'lucide:phone' as const,
+  label: site.business.phone,
+  href: `tel:${site.business.phoneHref}`,
+};
 
+const insuranceLogos = [
+  { name: 'Aetna', image: logoAetna },
+  { name: 'Ameritas', image: logoAmeritas },
+  { name: 'Cigna', image: logoCigna },
+  { name: 'Delta Dental', image: logoDelta },
+  { name: 'DenteMax', image: logoDenteMax },
+  { name: 'Guardian', image: logoGuardian },
+  { name: 'Humana', image: logoHumana },
+  { name: 'MetLife', image: logoMetLife },
+  { name: 'Principal', image: logoPrincipal },
+  { name: 'United Healthcare', image: logoUnited },
+];
 ---
 
-<BaseLayout faqs={faqs}>
+<BaseLayout title="North Carolina Premier Orthodontist" description={site.description}>
   <Hero
     eyebrow={`- North Carolina Premier Orthodontist`}
     background="inverse"
     backgroundImage={heroBackground}
     spacing="md"
     title={`Reveal the <br/><span class="text-accent-500 font-bold">Beautiful Smile</span> <br/>You Were Always<br/> Meant to Have`}
-    body={"A leading North Carolina orthodontic practice with 14 convenient locations across the state — serving families with braces, clear aligners, and advanced orthodontic care."}
-    pills={locations.map((location) => ({ label: location.data.name, href: `/locations/${location.data.slug}/`, icon: 'lucide:map-pin' }))}
+    body={'A leading North Carolina orthodontic practice with 14 convenient locations across the state — serving families with braces, clear aligners, and advanced orthodontic care.'}
+    pills={locations.map((location) => ({
+      label: location.data.name,
+      href: `/locations/${location.data.slug}/`,
+      icon: 'lucide:map-pin',
+    }))}
     actions={[
-      { icon:"lucide:calendar", label: 'Book a FREE Consult', href: 'https://forms.formlync.com/myorthodontist/register' },
-      { icon:"lucide:laptop", label: 'Virtual Consult', href: '/request-consult/', variant:"secondary"},
-      { icon:"lucide:phone", label: site.business.phone, href: `tel:${site.business.phoneHref}`, variant: 'ghost-white' },
-    ]}
-  />
-
-  <ServicesGrid
-    eyebrow="Services"
-    title="What we do"
-    body="Straightforward work across residential and commercial properties."
-    items={[
       {
-        icon: 'lucide:wrench',
-        title: 'Repairs & Maintenance',
-        body: 'Same-week appointments for the problems that cannot wait.',
-        href: '/services/repairs/',
+        icon: 'lucide:calendar',
+        label: 'Book a FREE Consult',
+        href: 'https://forms.formlync.com/myorthodontist/register',
       },
       {
-        icon: 'lucide:hammer',
-        title: 'Installations',
-        body: 'New systems specified, fitted, and tested to code.',
-        href: '/services/installations/',
+        icon: 'lucide:laptop',
+        label: 'Virtual Consult',
+        href: '/request-consult/',
+        variant: 'secondary',
       },
       {
-        icon: 'lucide:clipboard-check',
-        title: 'Service Contracts',
-        body: 'Scheduled upkeep with priority response when something goes wrong.',
-        href: '/services/contracts/',
+        icon: 'lucide:phone',
+        label: site.business.phone,
+        href: `tel:${site.business.phoneHref}`,
+        variant: 'ghost-white',
       },
-    ]}
-  />
-
-  <ProcessSteps
-    background="muted"
-    eyebrow="Process"
-    title="How it works"
-    items={[
-      { title: 'Get in touch', body: 'Call or send a message describing the problem.' },
-      { title: 'We assess', body: 'A quick look in person, or from photos where that works.' },
-      { title: 'Fixed quote', body: 'Agreed before any work begins. No surprises later.' },
-      { title: 'Work completed', body: 'Guaranteed for twelve months from the day we finish.' },
     ]}
   />
 
   <Stats
-    title="By the numbers"
+    background="gradient"
+    align="center"
+    spacing="sm"
     items={[
-      { value: '18 yrs', label: 'Serving the region' },
-      { value: '4.9/5', label: 'Average review score' },
-      { value: '2 hrs', label: 'Typical callout response' },
+      { value: '<em>14</em>+', label: 'Locations Across NC' },
+      { value: '<em>25</em>+', label: 'Years of Excellence' },
+      { value: '<em>100</em>K+', label: 'Smiles Transformed' },
+      { value: '<em>100</em>%', label: 'Free Consultations' },
+    ]}
+  />
+
+  <ServicesGrid
+    background="inverse"
+    align="center"
+    eyebrow="Why MyOrthodontist"
+    title="3 Reasons Why People<br/><em>Choose MyOrthodontist</em>"
+    body="MyOrthodontist is the premier orthodontic provider in North Carolina. Here's what sets us apart from the rest."
+    columns={3}
+    items={[
+      {
+        icon: 'lucide:heart-handshake',
+        title: 'Patients Before Profits',
+        body: 'Every recommendation we make starts with what is best for you, not what is best for our bottom line. We take the time to understand your goals, answer your questions honestly, and develop a treatment plan that delivers outstanding results while respecting your budget.',
+      },
+      {
+        icon: 'lucide:user-round',
+        title: 'Exceptional Individualized Care',
+        body: 'No two smiles are the same, and neither are two financial situations. Whether you are exploring braces or clear aligners for yourself or your child, our team provides personalized attention at every step — customizing both your clinical care and your payment plan to fit your life.',
+      },
+      {
+        icon: 'lucide:users',
+        title: 'Working With the Community',
+        body: 'From our roots in North Carolina, we have built a practice that serves the communities around us — not just the patients in our chairs. We are committed to making orthodontic care accessible for every family, including those on Medicaid.',
+      },
+    ]}
+  />
+
+  <CTABanner
+    background="inverse"
+    spacing="sm"
+    title=""
+    actions={[
+      { label: 'Complimentary Consult', href: bookHref },
+      { label: 'Contact Us', href: '#contact', variant: 'secondary' },
+    ]}
+  />
+
+  <ServicesGrid
+    background="muted"
+    align="center"
+    eyebrow="Our Services"
+    title="Crafting Smiles With<br/><em>Innovation</em>"
+    body="Explore our full suite of orthodontic services — from classic braces to cutting-edge clear aligner technology."
+    columns={3}
+    items={[
+      {
+        eyebrow: '(Clear) Braces',
+        title: 'Metal & Ceramic Braces',
+        body: 'Tried and true, metal or ceramic braces are a great option for many of our patients. Durable, effective, and more affordable than ever.',
+        image: metalCeramic,
+        imageAlt: 'Patient smiling with braces',
+        href: '/types-of-braces/',
+        ctaLabel: 'Learn More',
+      },
+      {
+        eyebrow: 'Discreet & Comfortable',
+        title: 'Spark Clear Aligners',
+        body: 'The comfortable, discreet way to get a gorgeous smile. Spark aligners are virtually invisible and designed around your lifestyle.',
+        image: sparkAligners,
+        imageAlt: 'Spark clear aligners',
+        href: '/types-of-invisalign/',
+        ctaLabel: 'Learn More',
+      },
+      {
+        eyebrow: 'No More Headgear',
+        title: 'Carriere Appliance',
+        body: 'Say goodbye to bulky headgear and hello to the Carriere appliance — a discreet, effective solution for bite correction.',
+        image: carriere,
+        imageAlt: 'Carriere appliance',
+        href: '/carrier-motion/',
+        ctaLabel: 'Learn More',
+      },
+      {
+        eyebrow: 'Hidden Braces',
+        title: 'Brius Lingual Braces',
+        body: 'The fastest way to a beautiful smile. Brius lingual braces are placed behind the teeth, making them completely invisible from the front.',
+        image: brius,
+        imageAlt: 'Brius lingual braces',
+        href: '/types-of-braces/',
+        ctaLabel: 'Learn More',
+      },
+      {
+        eyebrow: 'Up to 50% Fewer Visits',
+        title: 'Virtual Dental Monitoring',
+        body: 'Virtual dental monitoring allows for up to 50% less in-office visits. Track your progress from the comfort of your home.',
+        image: virtualMonitoring,
+        imageAlt: 'Virtual dental monitoring on a phone',
+        href: '/virtual-care/',
+        ctaLabel: 'Learn More',
+      },
+      {
+        eyebrow: 'No Goopy Impressions',
+        title: 'Smile 360 3D Imaging',
+        body: 'Goopy impressions are a thing of the past with our Smile 360 3D Imaging technology — precise, fast, and comfortable.',
+        image: smile360,
+        imageAlt: 'Smile 360 3D imaging',
+        href: '/your-first-visit/',
+        ctaLabel: 'Learn More',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    background="base"
+    eyebrow="Our Services"
+    title="We Accept<br/><em>Your Insurance</em>"
+    body="At MyOrthodontist, we are dedicated to making your insurance work in your favor. Our experienced staff navigates the complex rules of orthodontic insurance so you don't have to."
+    image={aboutPractice}
+    imageAlt="Orthodontic care at MyOrthodontist"
+    bullets={[
+      'We file all paperwork and submit claims on your behalf',
+      'We verify your benefits directly with your insurance company',
+      'We maintain IN-NETWORK status with major carriers',
+      'We maximize your coverage so you pay less out-of-pocket',
+    ]}
+    actions={[
+      { label: 'Book an Appointment', href: bookHref },
+      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'outline' },
+    ]}
+  />
+
+  <Stats
+    background="base"
+    eyebrow="Why Our Patients Love Us"
+    align="center"
+    items={[
+      { value: '10+', label: 'Insurance Plans Accepted' },
+      { value: '0%', label: 'Interest Financing Available' },
+      { value: '$0', label: 'Down Payment Options' },
+      { value: 'Free', label: 'Initial Consultation' },
+    ]}
+  />
+
+  <LogoCloud background="base" label="In-Network with Major Carriers" items={insuranceLogos} />
+
+  <FeatureSplit
+    background="muted"
+    reverse
+    eyebrow="We're Everywhere You Are"
+    title="Walk Into Our Offices<br/>or Schedule a <em>Virtual<br/>Consult</em>"
+    body="With 14 locations across North Carolina and state-of-the-art virtual care technology, getting the smile you deserve has never been more convenient."
+    image={virtualConsult}
+    imageAlt="Virtual orthodontic consultation"
+    bullets={locations.map((location) => location.data.name)}
+    actions={[
+      { label: 'Book an Appointment', href: bookHref },
+      { label: 'Virtual Appointment', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    background="brand"
+    align="center"
+    eyebrow="For Our Patients"
+    title="Everything You Need<br/><em>In One Place</em>"
+    columns={4}
+    items={[
+      {
+        icon: 'lucide:file-text',
+        title: 'Patient Forms',
+        body: 'Download and complete your new patient forms before your first visit to save time at the office.',
+        href: '/patient/',
+        ctaLabel: 'Download Forms',
+      },
+      {
+        icon: 'lucide:wallet',
+        title: 'Financial Options',
+        body: 'We offer flexible payment plans and work with most major insurance providers to make treatment affordable.',
+        href: '/insurance/',
+        ctaLabel: 'Explore Options',
+      },
+      {
+        icon: 'lucide:video',
+        title: 'Virtual Appointments',
+        body: "Can't make it in? Schedule a virtual consultation and get expert orthodontic advice from anywhere.",
+        href: virtualHref,
+        ctaLabel: 'Book Virtual Visit',
+      },
+      {
+        icon: 'lucide:circle-help',
+        title: 'FAQs',
+        body: 'Have questions about braces, aligners, or treatment timelines? Browse our comprehensive FAQ section.',
+        href: '/faqs/',
+        ctaLabel: 'View FAQs',
+      },
     ]}
   />
 
   <Testimonials
-    eyebrow="Reviews"
-    title="What clients say"
+    background="alt"
+    align="center"
+    eyebrow="Patient Stories"
+    title="What Our Patients<br/><em>Are Saying</em>"
+    body="4.9 / 5.0 Google Reviews"
     items={[
       {
-        quote: 'Turned up when they said they would and fixed it on the first visit.',
-        name: 'Dana R.',
-        role: 'Homeowner',
+        quote:
+          "MyOrthodontist completely transformed my daughter's smile and her confidence. The staff at the Raleigh office are incredibly warm and professional. We couldn't be happier with the results!",
+        name: 'Sarah M.',
+        role: 'Raleigh, NC',
         rating: 5,
       },
       {
-        quote: 'Clear pricing, no upselling, and they cleaned up after themselves.',
-        name: 'Mark T.',
-        role: 'Office manager',
+        quote:
+          "I was nervous about getting braces as an adult, but the team made me feel completely at ease. The virtual monitoring feature meant I didn't have to take as much time off work. Highly recommend!",
+        name: 'James T.',
+        role: 'Fayetteville, NC',
         rating: 5,
       },
       {
-        quote: 'They handle all four of our sites now. Easiest contractor we work with.',
-        name: 'Priya S.',
-        role: 'Facilities lead',
+        quote:
+          "From the free consultation to the final retainer, every step was explained clearly. The insurance team saved us hundreds of dollars. The results speak for themselves — my son's smile is beautiful!",
+        name: 'Maria L.',
+        role: 'Chapel Hill, NC',
         rating: 5,
       },
     ]}
   />
 
-  <FAQ eyebrow="FAQ" title="Common questions" items={faqs} schema={false} />
-
   <CTABanner
-    title="Ready to get started?"
-    body="Tell us what you need and we will come back to you the same day."
-    actions={[{ label: 'Request a quote', href: '/contact/' }]}
+    background="inverse"
+    backgroundImage={consultationCta}
+    backgroundImageAlt="Orthodontic consultation"
+    title="What Our Patients<br/><em>Are Saying</em>"
+    body="Join over 100,000 North Carolinians who have transformed their smiles with MyOrthodontist. Your complimentary consultation is free — always."
+    actions={[
+      { label: 'Schedule Free Consultation', href: bookHref },
+      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'inverse' },
+    ]}
   />
+
+  <FeatureSplit
+    background="base"
+    eyebrow="Community Initiative · The Happy Tooth Foundation"
+    title="Giving Back to<br/>Our Communities"
+    body="Our mission is to help underserved youth build self-esteem and confidence through healthy living, teamwork, and sports. We deliver a percentage of every dollar spent in our offices to the Happy Tooth Foundation — so every smile you create helps another child thrive."
+    image={happyTooth}
+    imageAlt="Happy Tooth Foundation youth community sports event"
+    actions={[{ label: 'Get More Information', href: '/about/foundation/' }]}
+  />
+
+  <ServicesGrid
+    background="muted"
+    align="center"
+    eyebrow="The Tooth Wisdom Blog"
+    title="Latest Posts &<br/><em>Smile Tips</em>"
+    columns={3}
+    items={[
+      {
+        eyebrow: 'June 2, 2026',
+        title: 'Invisalign vs. Braces — A Practical Comparison',
+        body: 'At MyOrthodontist in Fayetteville, NC, we believe every patient deserves to reveal the beautiful smile they were always meant to have.',
+        href: 'https://site.myorthodontistnc.com/invisalign-vs-braces/',
+        ctaLabel: 'Read More',
+      },
+      {
+        eyebrow: 'May 15, 2026',
+        title: 'Life After Braces — Retention & Retainers',
+        body: "Congratulations! You've reached the exciting milestone of having your braces removed. Here's how to protect your new smile.",
+        href: 'https://site.myorthodontistnc.com/life-after-braces-retention-retainers/',
+        ctaLabel: 'Read More',
+      },
+      {
+        eyebrow: 'May 4, 2026',
+        title: "Orthodontics for Adults — It's Never Too Late",
+        body: 'At MyOrthodontist, we believe everyone deserves to reveal the beautiful smile they were always meant to have — at any age.',
+        href: 'https://site.myorthodontistnc.com/orthodontics-for-adults-why-its-never-too-late-to-straighten-your-teeth-and-improve-your-health/',
+        ctaLabel: 'Read More',
+      },
+    ]}
+  />
+
+  <div id="contact">
+    <ContactBlock
+      background="alt"
+      eyebrow="Get in Touch"
+      title="Contact <em>Us</em>"
+      body="Ready to start your smile journey? Reach out to your nearest location or fill out the form below."
+      services={locationNames}
+      selectLabel="Preferred Location"
+      selectName="location"
+      subject={`New enquiry from ${site.name}`}
+    />
+  </div>
 </BaseLayout>

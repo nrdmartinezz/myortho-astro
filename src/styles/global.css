@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 @import 'tailwindcss';
 @import './theme.css';
 
@@ -7,8 +7,10 @@
 @layer base {
   [data-bg='base'] + [data-bg='base'],
   [data-bg='muted'] + [data-bg='muted'],
+  [data-bg='alt'] + [data-bg='alt'],
   [data-bg='inverse'] + [data-bg='inverse'],
-  [data-bg='brand'] + [data-bg='brand'] {
+  [data-bg='brand'] + [data-bg='brand'],
+  [data-bg='gradient'] + [data-bg='gradient'] {
     padding-block-start: 0;
   }
 
@@ -24,6 +26,40 @@
     font-size: var(--text-base);
     line-height: var(--leading-normal);
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-ink-heading);
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+    line-height: var(--leading-tight);
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+  }
+
+  /* Live site uses <em> inside headings for the lime accent phrase. */
+  h1 em,
+  h2 em,
+  h3 em {
+    color: var(--color-accent-500);
+    font-style: normal;
   }
 
   :focus-visible {
@@ -43,5 +79,106 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+/* Inverse and gradient bands flip descendant text to light-on-dark. */
+@layer components {
+  [data-bg='inverse'] h1,
+  [data-bg='inverse'] h2,
+  [data-bg='inverse'] h3,
+  [data-bg='inverse'] h4,
+  [data-bg='gradient'] h1,
+  [data-bg='gradient'] h2,
+  [data-bg='gradient'] h3,
+  [data-bg='gradient'] h4 {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='inverse'] .block-eyebrow,
+  [data-bg='gradient'] .block-eyebrow {
+    color: var(--color-accent-300);
+    font-weight: 300;
+  }
+
+  [data-bg='inverse'] .block-body,
+  [data-bg='gradient'] .block-body {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  [data-bg='inverse'] .stat-value,
+  [data-bg='gradient'] .stat-value {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='inverse'] .stat-value em,
+  [data-bg='gradient'] .stat-value em {
+    color: var(--color-accent-300);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  [data-bg='inverse'] .stat-label,
+  [data-bg='gradient'] .stat-label {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  [data-bg='inverse'] .service-card,
+  [data-bg='gradient'] .service-card {
+    background: transparent;
+    border-color: rgb(255 255 255 / 0.12);
+  }
+
+  [data-bg='inverse'] .service-card h3,
+  [data-bg='gradient'] .service-card h3 {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='inverse'] .service-card p,
+  [data-bg='gradient'] .service-card p {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  [data-bg='inverse'] .service-card [data-slot='icon'],
+  [data-bg='gradient'] .service-card [data-slot='icon'] {
+    color: var(--color-accent-300);
+  }
+
+  [data-bg='base'] .stat-value,
+  [data-bg='muted'] .stat-value,
+  [data-bg='alt'] .stat-value {
+    color: var(--color-accent-500);
+    font-weight: 800;
+  }
+
+  [data-bg='brand'] h1,
+  [data-bg='brand'] h2,
+  [data-bg='brand'] h3,
+  [data-bg='brand'] h4 {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='brand'] .block-eyebrow {
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  [data-bg='brand'] .block-body,
+  [data-bg='brand'] .text-ink-muted {
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  [data-bg='brand'] .service-card {
+    background: rgb(255 255 255 / 0.12);
+    border-color: rgb(255 255 255 / 0.2);
+  }
+
+  [data-bg='brand'] .service-card h3 {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='base'] .stat-label,
+  [data-bg='muted'] .stat-label,
+  [data-bg='alt'] .stat-label {
+    color: var(--color-ink-muted);
   }
 }

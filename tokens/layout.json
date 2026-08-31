@@ -12,21 +12,23 @@
   },
   "spacing": {
     "gutter": { "$value": "clamp(1.25rem, 4vw, 2.5rem)", "$type": "dimension" },
-    "section": { "$value": "clamp(3.5rem, 7vw, 7rem)", "$type": "dimension" },
-    "section-sm": { "$value": "clamp(2.5rem, 5vw, 4.5rem)", "$type": "dimension" },
-    "section-lg": { "$value": "clamp(5rem, 10vw, 10rem)", "$type": "dimension" },
-    "block": { "$value": "clamp(1.75rem, 3vw, 3rem)", "$type": "dimension" }
+    "section": { "$value": "4rem", "$type": "dimension" },
+    "section-sm": { "$value": "2.25rem", "$type": "dimension" },
+    "section-lg": { "$value": "5rem", "$type": "dimension" },
+    "block": { "$value": "clamp(1.25rem, 2.5vw, 2.25rem)", "$type": "dimension" }
   },
   "radius": {
-    "sm": { "$value": "0.25rem", "$type": "dimension" },
-    "md": { "$value": "0.5rem", "$type": "dimension" },
-    "lg": { "$value": "0.875rem", "$type": "dimension" },
-    "xl": { "$value": "1.5rem", "$type": "dimension" },
+    "sm": { "$value": "0.5rem", "$type": "dimension" },
+    "md": { "$value": "0.75rem", "$type": "dimension" },
+    "lg": { "$value": "1rem", "$type": "dimension" },
+    "xl": { "$value": "1.125rem", "$type": "dimension" },
+    "2xl": { "$value": "1.125rem", "$type": "dimension" },
+    "pill": { "$value": "2.25rem", "$type": "dimension" },
     "full": { "$value": "9999px", "$type": "dimension" }
   },
   "shadow": {
-    "sm": { "$value": "0 1px 2px 0 rgb(15 18 24 / 0.06)", "$type": "shadow" },
-    "md": { "$value": "0 4px 12px -2px rgb(15 18 24 / 0.10)", "$type": "shadow" },
-    "lg": { "$value": "0 18px 40px -12px rgb(15 18 24 / 0.18)", "$type": "shadow" }
+    "sm": { "$value": "0 1px 2px 0 rgb(7 19 28 / 0.06)", "$type": "shadow" },
+    "md": { "$value": "0 4px 12px -2px rgb(7 19 28 / 0.10)", "$type": "shadow" },
+    "lg": { "$value": "0 18px 40px -12px rgb(7 19 28 / 0.14)", "$type": "shadow" }
   }
 }

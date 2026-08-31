@@ -60,10 +60,12 @@ const {
     >
       {
         eyebrow && (
-          <p class="text-ink-brand text-sm font-semibold tracking-wide uppercase">{eyebrow}</p>
+          <p class="block-eyebrow text-ink-subtle tracking-eyebrow text-xs font-semibold uppercase">
+            {eyebrow}
+          </p>
         )
       }
-      {title && <Heading level={titleLevel}>{title}</Heading>}
+      {title && <Heading level={titleLevel} set:html={title} />}
       {body && <p class="text-ink-muted max-w-reading">{body}</p>}
 
       {
