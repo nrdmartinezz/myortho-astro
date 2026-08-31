@@ -24,10 +24,10 @@
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/inter": "^5.2.8",
     "@iconify-json/lucide": "^1.2.72",
-    "@tailwindcss/vite": "^4.1.16",
+    "@tailwindcss/vite": "4.3.0",
     "astro": "^7.2.6",
     "astro-icon": "^1.1.5",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "4.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -39,6 +39,12 @@
     "start-server-and-test": "^2.1.2",
     "style-dictionary": "^4.4.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "tailwindcss": "4.3.0",
+    "@tailwindcss/vite": "4.3.0",
+    "@tailwindcss/node": "4.3.0",
+    "@tailwindcss/oxide": "4.3.0"
   },
   "allowScripts": {
     "@bundled-es-modules/glob@10.4.2": true,
