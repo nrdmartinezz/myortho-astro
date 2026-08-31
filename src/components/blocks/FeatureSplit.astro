@@ -13,7 +13,7 @@ interface Props extends BlockProps {
   imageAlt?: string;
   bullets?: string[];
   actions?: BlockAction[];
-  /** Image right on desktop by default; small screens always stack image-first. */
+  /** Media (image or `media` slot) sits on the right on desktop by default; small screens always stack media-first. */
   reverse?: boolean;
 }
 
@@ -31,13 +31,17 @@ const {
   actions = [],
   reverse = false,
 } = Astro.props;
+
+const hasMediaSlot = Astro.slots.has('media');
 ---
 
 <Section background={background} spacing={spacing}>
   <Container width={width} layout="row" gap="lg">
     <div class:list={['w-full md:w-1/2', reverse ? 'md:order-2' : 'md:order-1']}>
       {
-        image ? (
+        hasMediaSlot ? (
+          <slot name="media" />
+        ) : image ? (
           <Image
             src={image}
             alt={imageAlt}
@@ -74,8 +78,8 @@ const {
             {bullets.map((bullet) => (
               <li class="flex items-start gap-3">
                 <Icon
-                  name="lucide:check"
-                  class="text-brand-600 mt-1 size-5 shrink-0"
+                  name="lucide:circle-check"
+                  class="text-accent-500 mt-1 size-5 shrink-0"
                   aria-hidden="true"
                 />
                 <span>{bullet}</span>

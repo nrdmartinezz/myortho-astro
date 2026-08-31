@@ -1,0 +1,81 @@
+---
+import Card from '../ui/Card.astro';
+import type { Stat } from './Stats.astro';
+
+export type StatCardVariant = 'plain' | 'inverse';
+
+interface Props {
+  eyebrow?: string;
+  items: Stat[];
+  note?: string;
+  /** `plain` is a light gradient; `inverse` uses the brand gradient and light text. */
+  variant?: StatCardVariant;
+}
+
+const { eyebrow, items, note, variant = 'plain' } = Astro.props;
+const inverse = variant === 'inverse';
+---
+
+<Card
+  class:list={[
+    'h-full w-full',
+    inverse
+      ? 'bg-linear-to-r from-brand-500 to-brand-600'
+      : 'bg-linear-to-br from-surface-base to-surface-muted',
+  ]}
+  variant={inverse ? 'inverse' : 'plain'}
+>
+  <div class="flex w-full flex-col gap-6">
+    {
+      eyebrow && (
+        <p
+          class="tracking-eyebrow text-xs font-semibold uppercase"
+          data-slot="eyebrow"
+          set:html={eyebrow}
+        >
+         
+        </p>
+      )
+    }
+
+    <dl class="grid w-full grid-cols-2 gap-6">
+      {
+        items.map((stat) => (
+          <div class="font-heading flex flex-col gap-1">
+            <dd
+              class:list={[
+                'text-3xl font-bold tracking-tight md:text-4xl',
+                inverse ? 'text-ink-inverse' : 'text-ink-heading',
+              ]}
+              set:html={stat.value}
+            />
+            <dt
+              class:list={[
+                'text-sm',
+                inverse ? 'text-white/70' : 'text-ink-muted',
+              ]}
+            >
+              {stat.label}
+            </dt>
+          </div>
+        ))
+      }
+    </dl>
+
+    {
+      note && (
+        <>
+          <hr
+            class:list={[
+              'w-full',
+              inverse ? 'border-white/20' : 'border-line-base',
+            ]}
+          />
+          <p class:list={['text-sm', inverse ? 'text-white/70' : 'text-ink-muted']}>
+            {note}
+          </p>
+        </>
+      )
+    }
+  </div>
+</Card>

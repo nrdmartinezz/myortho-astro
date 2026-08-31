@@ -18,31 +18,119 @@ interface Props extends Omit<BlockProps, 'body' | 'eyebrow' | 'titleLevel'> {
 }
 
 const { background = 'base', spacing = 'sm', width = 'page', items, label } = Astro.props;
+
+const copies = [items, items];
 ---
 
 <Section background={background} spacing={spacing}>
   <Container width={width} align="center" gap="md">
     {label && <p class="text-ink-muted text-sm font-semibold tracking-wide uppercase">{label}</p>}
 
-    <ul class="flex w-full flex-wrap items-center justify-center gap-x-12 gap-y-8">
-      {
-        items.map((logo) => {
-          const mark = logo.image ? (
-            <Image
-              src={logo.image}
-              alt={logo.name}
-              widths={[160, 320]}
-              sizes="160px"
-              loading="lazy"
-              class="h-10 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
-            />
-          ) : (
-            <span class="text-ink-muted text-lg font-semibold">{logo.name}</span>
-          );
+    <div class="logo-cloud-viewport w-full">
+      <div class="logo-cloud-track">
+        {
+          copies.map((set, copy) => (
+            <ul
+              class="logo-cloud-group"
+              {...(copy === 1 ? { 'aria-hidden': 'true' as const, inert: true } : {})}
+            >
+              {set.map((logo) => {
+                const mark = logo.image ? (
+                  <Image
+                    src={logo.image}
+                    alt={logo.name}
+                    widths={[160, 320]}
+                    sizes="160px"
+                    loading="lazy"
+                    class="logo-cloud-mark opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
+                  />
+                ) : (
+                  <span class="logo-cloud-mark text-ink-muted text-sm font-semibold">{logo.name}</span>
+                );
 
-          return <li>{logo.href ? <a href={logo.href}>{mark}</a> : mark}</li>;
-        })
-      }
-    </ul>
+                return <li>{logo.href ? <a href={logo.href}>{mark}</a> : mark}</li>;
+              })}
+            </ul>
+          ))
+        }
+      </div>
+    </div>
   </Container>
 </Section>
+
+<style>
+  .logo-cloud-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .logo-cloud-track {
+    display: flex;
+    width: max-content;
+    animation: logo-cloud-scroll 45s linear infinite;
+  }
+
+  .logo-cloud-group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 3rem;
+    padding-inline-end: 3rem;
+  }
+
+  .logo-cloud-group li {
+    display: flex;
+    width: 8rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-cloud-group :global(.logo-cloud-mark) {
+    max-width: 100%;
+    max-height: 2.5rem;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @keyframes logo-cloud-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-cloud-viewport {
+      overflow: visible;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .logo-cloud-track {
+      animation: none;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .logo-cloud-group {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem 3rem;
+      padding-inline-end: 0;
+    }
+
+    .logo-cloud-group[aria-hidden='true'] {
+      display: none;
+    }
+  }
+</style>

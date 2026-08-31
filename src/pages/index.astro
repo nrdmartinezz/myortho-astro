@@ -7,6 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/blocks/Hero.astro';
 import ServicesGrid from '../components/blocks/ServicesGrid.astro';
 import Stats from '../components/blocks/Stats.astro';
+import StatCard from '../components/blocks/StatCard.astro';
 import FeatureSplit from '../components/blocks/FeatureSplit.astro';
 import LogoCloud from '../components/blocks/LogoCloud.astro';
 import Testimonials from '../components/blocks/Testimonials.astro';
@@ -212,11 +213,9 @@ const insuranceLogos = [
 
   <FeatureSplit
     background="base"
-    eyebrow="Our Services"
+    eyebrow="Insurance and Financing"
     title="We Accept<br/><em>Your Insurance</em>"
     body="At MyOrthodontist, we are dedicated to making your insurance work in your favor. Our experienced staff navigates the complex rules of orthodontic insurance so you don't have to."
-    image={aboutPractice}
-    imageAlt="Orthodontic care at MyOrthodontist"
     bullets={[
       'We file all paperwork and submit claims on your behalf',
       'We verify your benefits directly with your insurance company',
@@ -227,19 +226,20 @@ const insuranceLogos = [
       { label: 'Book an Appointment', href: bookHref },
       { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'outline' },
     ]}
-  />
-
-  <Stats
-    background="base"
-    eyebrow="Why Our Patients Love Us"
-    align="center"
-    items={[
-      { value: '10+', label: 'Insurance Plans Accepted' },
-      { value: '0%', label: 'Interest Financing Available' },
-      { value: '$0', label: 'Down Payment Options' },
-      { value: 'Free', label: 'Initial Consultation' },
-    ]}
-  />
+  >
+    <StatCard
+      slot="media"
+      variant="inverse"
+      eyebrow="We Accept Your Insurance"
+      items={[
+        { value: '10+', label: 'Insurance Plans Accepted' },
+        { value: '0%', label: 'Interest Financing Available' },
+        { value: '$0', label: 'Down Payment Options' },
+        { value: 'Free', label: 'Initial Consultation' },
+      ]}
+      note="Don't see your plan? Call us — we work with many more carriers."
+    />
+  </FeatureSplit>
 
   <LogoCloud background="base" label="In-Network with Major Carriers" items={insuranceLogos} />
 

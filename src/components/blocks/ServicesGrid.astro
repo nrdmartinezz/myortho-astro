@@ -106,7 +106,7 @@ const onDark =
                   item.title
                 )}
               </Heading>
-              <p class:list={[!onDark && 'text-ink-muted']}>{item.body}</p>
+              <p class:list={[!onDark && 'text-ink-muted' && 'text-sm']}>{item.body}</p>
               {item.href && item.ctaLabel && (
                 <a
                   href={item.href}
