@@ -1,5 +1,5 @@
 {
-  "name": "astro-business-starter",
+  "name": "myortho-astro",
   "type": "module",
   "version": "0.1.0",
   "private": true,
@@ -20,17 +20,17 @@
     "audit": "npm run audit:lh && npm run audit:a11y"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.8",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/mdx": "^4.3.6",
+    "@astrojs/sitemap": "^3.6.0",
     "@fontsource-variable/inter": "^5.2.8",
     "@iconify-json/lucide": "^1.2.72",
-    "@tailwindcss/vite": "4.3.0",
-    "astro": "^7.2.6",
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.15.6",
     "astro-icon": "^1.1.5",
-    "tailwindcss": "4.3.0"
+    "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.5",
     "@lhci/cli": "^0.15.1",
     "pa11y-ci": "^4.0.1",
     "prettier": "^3.6.2",
@@ -40,18 +40,12 @@
     "style-dictionary": "^4.4.0",
     "typescript": "^5.9.3"
   },
-  "overrides": {
-    "tailwindcss": "4.3.0",
-    "@tailwindcss/vite": "4.3.0",
-    "@tailwindcss/node": "4.3.0",
-    "@tailwindcss/oxide": "4.3.0"
-  },
   "allowScripts": {
     "@bundled-es-modules/glob@10.4.2": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
     "puppeteer@24.43.1": true,
     "sharp@0.34.5": true,
-    "style-dictionary@4.4.0": true,
-    "fsevents@2.3.3": true,
-    "esbuild@0.28.2": true
+    "style-dictionary@4.4.0": true
   }
 }
