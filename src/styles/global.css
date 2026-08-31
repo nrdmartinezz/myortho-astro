@@ -85,6 +85,14 @@
 
 /* Inverse and gradient bands flip descendant text to light-on-dark. */
 @layer components {
+  .block-eyebrow {
+    color: var(--color-ink-subtle);
+  }
+
+  .block-body {
+    color: var(--color-ink-muted);
+  }
+
   [data-bg='inverse'] h1,
   [data-bg='inverse'] h2,
   [data-bg='inverse'] h3,
@@ -92,14 +100,19 @@
   [data-bg='gradient'] h1,
   [data-bg='gradient'] h2,
   [data-bg='gradient'] h3,
-  [data-bg='gradient'] h4 {
+  [data-bg='gradient'] h4,
+  [data-bg='brand'] h1,
+  [data-bg='brand'] h2,
+  [data-bg='brand'] h3,
+  [data-bg='brand'] h4 {
     color: var(--color-ink-inverse);
+    font-weight: 700;
   }
 
   [data-bg='inverse'] .block-eyebrow,
-  [data-bg='gradient'] .block-eyebrow {
-    color: var(--color-accent-300);
-    font-weight: 300;
+  [data-bg='gradient'] .block-eyebrow,
+  [data-bg='brand'] .block-eyebrow {
+    color: var(--color-accent-500);
   }
 
   [data-bg='inverse'] .block-body,
@@ -110,13 +123,6 @@
   [data-bg='inverse'] .stat-value,
   [data-bg='gradient'] .stat-value {
     color: var(--color-ink-inverse);
-  }
-
-  [data-bg='inverse'] .stat-value em,
-  [data-bg='gradient'] .stat-value em {
-    color: var(--color-accent-300);
-    font-style: normal;
-    font-weight: 700;
   }
 
   [data-bg='inverse'] .stat-label,
@@ -131,8 +137,10 @@
   }
 
   [data-bg='inverse'] .service-card h3,
-  [data-bg='gradient'] .service-card h3 {
+  [data-bg='gradient'] .service-card h3,
+  [data-bg='brand'] .service-card h3 {
     color: var(--color-ink-inverse);
+    font-weight: 700;
   }
 
   [data-bg='inverse'] .service-card p,
@@ -152,17 +160,6 @@
     font-weight: 800;
   }
 
-  [data-bg='brand'] h1,
-  [data-bg='brand'] h2,
-  [data-bg='brand'] h3,
-  [data-bg='brand'] h4 {
-    color: var(--color-ink-inverse);
-  }
-
-  [data-bg='brand'] .block-eyebrow {
-    color: rgb(255 255 255 / 0.8);
-  }
-
   [data-bg='brand'] .block-body,
   [data-bg='brand'] .text-ink-muted {
     color: rgb(255 255 255 / 0.85);
@@ -171,10 +168,6 @@
   [data-bg='brand'] .service-card {
     background: rgb(255 255 255 / 0.12);
     border-color: rgb(255 255 255 / 0.2);
-  }
-
-  [data-bg='brand'] .service-card h3 {
-    color: var(--color-ink-inverse);
   }
 
   [data-bg='base'] .stat-label,

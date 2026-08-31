@@ -42,15 +42,36 @@ const compact = !eyebrow && !title && !body;
     <dl class:list={['grid w-full gap-8', columnClass]}>
       {
         items.map((stat) => (
-          <div class="flex flex-col gap-1 text-center">
-            <dt class="stat-label text-ink-muted order-2 text-sm">{stat.label}</dt>
+          <div class="font-heading flex flex-col gap-1 text-center">
             <dd
-              class="stat-value text-ink-heading order-1 text-3xl font-bold tracking-tight md:text-4xl"
+              class="stat-value text-3xl tracking-tight text-white md:text-4xl"
               set:html={stat.value}
             />
+            <dt class="stat-label text-sm font-extrabold text-[rgba(255,255,255,0.83)]">
+              {stat.label}
+            </dt>
           </div>
         ))
       }
     </dl>
   </Container>
 </Section>
+
+<style>
+  .stat-value {
+    color: #ffffff80;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-weight: 400;
+  }
+
+  /* set:html injects <em>; scoped selectors never match those nodes. */
+  .stat-value :global(em),
+  .stat-label :global(em) {
+    color: var(--color-ink-inverse);
+    font-style: normal;
+    font-weight: 700;
+  }
+</style>
