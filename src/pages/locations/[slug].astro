@@ -8,22 +8,37 @@ import Heading from '../../components/ui/Heading.astro';
 import Prose from '../../components/ui/Prose.astro';
 import Card from '../../components/ui/Card.astro';
 import MapEmbed from '../../components/blocks/MapEmbed.astro';
+import LocationHero, { type LocationDoctor } from '../../components/blocks/LocationHero.astro';
 import { getPublished, related, type Entry } from '../../lib/locations';
+import { atLocation, getPublished as getDoctors } from '../../lib/doctors';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getPublished();
+  const allDoctors = await getDoctors();
+
   return entries.map((entry) => ({
     params: { slug: entry.id },
-    props: { entry, all: entries },
+    props: {
+      entry,
+      all: entries,
+      doctors: atLocation(allDoctors, entry.data.name).map((doctor) => ({
+        name: doctor.data.name,
+        credentials: doctor.data.credentials,
+        role: doctor.data.role,
+        photo: doctor.data.photo,
+        href: `/doctors/${doctor.id}/`,
+      })),
+    },
   }));
 };
 
 interface Props {
   entry: Entry;
   all: Entry[];
+  doctors: LocationDoctor[];
 }
 
-const { entry, all } = Astro.props;
+const { entry, all, doctors } = Astro.props;
 const { Content } = await render(entry);
 const nearby = related(all, entry);
 ---
@@ -37,22 +52,17 @@ const nearby = related(all, entry);
     { name: entry.data.name, href: `/locations/${entry.id}/` },
   ]}
 >
-  <Section background="muted" spacing="md">
-    <Container width="narrow" gap="sm">
-      <p class="text-ink-muted text-sm">{entry.data.region}</p>
-      <Heading level={1}>{entry.data.name}</Heading>
-      <p class="text-ink-muted text-lg">
-        {entry.data.addressLine}, {entry.data.cityStateZip}
-      </p>
-      <p class="text-ink-muted">
-        <a href={`tel:${entry.data.phone}`} class="text-ink-brand">{entry.data.phone}</a>
-        {entry.data.fax && <span> · Fax: {entry.data.fax}</span>}
-        {' · '}
-        <a href={`mailto:${entry.data.email}`} class="text-ink-brand">{entry.data.email}</a>
-      </p>
-      <p class="text-ink-muted text-sm">{entry.data.hours}</p>
-    </Container>
-  </Section>
+  <LocationHero
+    name={entry.data.name}
+    region={entry.data.region}
+    addressLine={entry.data.addressLine}
+    cityStateZip={entry.data.cityStateZip}
+    phone={entry.data.phone}
+    fax={entry.data.fax}
+    email={entry.data.email}
+    hours={entry.data.hours}
+    doctors={doctors}
+  />
 
   <MapEmbed query={`${entry.data.addressLine}, ${entry.data.cityStateZip}`} />
 
