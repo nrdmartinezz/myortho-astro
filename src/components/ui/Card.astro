@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-export type CardVariant = 'plain' | 'outlined' | 'elevated';
+export type CardVariant = 'plain' | 'outlined' | 'elevated' | 'inverse';
 
 interface Props extends Omit<HTMLAttributes<'div'>, 'class'> {
   as?: 'div' | 'article' | 'li';
@@ -22,12 +22,104 @@ const variants: Record<CardVariant, string> = {
   plain: 'bg-transparent',
   outlined: 'border-line-base bg-surface-base border',
   elevated: 'bg-surface-base shadow-md',
+  inverse: 'card-inverse border',
 };
 ---
 
 <Tag
-  class:list={['flex flex-col rounded-2xl', variants[variant], padded && 'gap-3 p-6', className]}
+  class:list={['card', variants[variant], className]}
   {...rest}
 >
-  <slot />
+  <div class:list={['card-face', padded && 'card-padded gap-3 p-6']}>
+    <slot />
+  </div>
 </Tag>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-2xl);
+    text-align: start;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 40px -12px rgb(7 19 28 / 0.22);
+  }
+
+  .card-face {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .card-face :global(img:first-child) {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+
+  .card-padded :global(img:first-child) {
+    width: calc(100% + 3rem);
+    max-width: none;
+    margin-block-start: -1.5rem;
+    margin-inline: -1.5rem;
+  }
+
+  .card :global([data-slot='eyebrow']) {
+    color: var(--color-accent-500);
+  }
+
+  .card :global([data-slot='cta']) {
+    color: var(--color-accent-500);
+  }
+
+  .card :global([data-slot='cta'])::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .card-inverse .card-face {
+    background-color: #ffffff1a;
+  }
+
+  .card-inverse {
+    border-color: rgb(255 255 255 / 0.12);
+    color: var(--color-ink-inverse);
+  }
+
+  .card-inverse :global([data-slot='icon']) {
+    box-sizing: content-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 9px;
+    color: var(--color-accent-500);
+    background-color: #a1b82926;
+    border: 1px solid rgba(161, 184, 41, 0.3);
+    border-radius: 10px;
+  }
+
+  .card-inverse :global(h3),
+  .card-inverse :global(h4),
+  .card-inverse :global(h3 a),
+  .card-inverse :global(h4 a) {
+    color: var(--color-ink-inverse);
+  }
+
+  .card-inverse :global(p) {
+    color: rgb(255 255 255 / 0.72);
+  }
+</style>

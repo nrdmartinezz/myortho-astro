@@ -111,7 +111,6 @@ const insuranceLogos = [
 
   <ServicesGrid
     background="inverse"
-    align="center"
     eyebrow="Why MyOrthodontist"
     title="3 Reasons Why People<br/><em>Choose MyOrthodontist</em>"
     body="MyOrthodontist is the premier orthodontic provider in North Carolina. Here's what sets us apart from the rest."
@@ -140,12 +139,13 @@ const insuranceLogos = [
     spacing="sm"
     title=""
     actions={[
-      { label: 'Complimentary Consult', href: bookHref },
+      { label: 'Complimentary Consult', href: bookHref, variant: 'primary' },
       { label: 'Contact Us', href: '#contact', variant: 'secondary' },
     ]}
   />
 
   <ServicesGrid
+    headerLayout="split"
     background="muted"
     align="center"
     eyebrow="Our Services"

@@ -130,29 +130,6 @@
     color: rgb(255 255 255 / 0.72);
   }
 
-  [data-bg='inverse'] .service-card,
-  [data-bg='gradient'] .service-card {
-    background: transparent;
-    border-color: rgb(255 255 255 / 0.12);
-  }
-
-  [data-bg='inverse'] .service-card h3,
-  [data-bg='gradient'] .service-card h3,
-  [data-bg='brand'] .service-card h3 {
-    color: var(--color-ink-inverse);
-    font-weight: 700;
-  }
-
-  [data-bg='inverse'] .service-card p,
-  [data-bg='gradient'] .service-card p {
-    color: rgb(255 255 255 / 0.72);
-  }
-
-  [data-bg='inverse'] .service-card [data-slot='icon'],
-  [data-bg='gradient'] .service-card [data-slot='icon'] {
-    color: var(--color-accent-300);
-  }
-
   [data-bg='base'] .stat-value,
   [data-bg='muted'] .stat-value,
   [data-bg='alt'] .stat-value {
@@ -163,11 +140,6 @@
   [data-bg='brand'] .block-body,
   [data-bg='brand'] .text-ink-muted {
     color: rgb(255 255 255 / 0.85);
-  }
-
-  [data-bg='brand'] .service-card {
-    background: rgb(255 255 255 / 0.12);
-    border-color: rgb(255 255 255 / 0.2);
   }
 
   [data-bg='base'] .stat-label,

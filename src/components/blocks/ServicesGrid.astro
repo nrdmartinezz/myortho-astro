@@ -36,6 +36,7 @@ const {
   title,
   body,
   titleLevel = 2,
+  headerLayout,
   items,
   columns = 3,
 } = Astro.props;
@@ -46,6 +47,9 @@ const columnClass = {
   3: 'sm:grid-cols-2 lg:grid-cols-3',
   4: 'sm:grid-cols-2 lg:grid-cols-4',
 }[columns];
+
+const onDark =
+  background === 'inverse' || background === 'brand' || background === 'gradient';
 ---
 
 <Section background={background} spacing={spacing}>
@@ -55,7 +59,7 @@ const columnClass = {
       title={title}
       body={body}
       level={titleLevel}
-      centered={align === 'center'}
+      layout={headerLayout}
     />
 
     <ul class:list={['grid w-full gap-6', columnClass]}>
@@ -63,8 +67,8 @@ const columnClass = {
         items.map((item) => (
           <Card
             as="li"
-            variant="outlined"
-            class:list={['service-card', item.image && 'gap-0 overflow-hidden p-0']}
+            variant={onDark ? 'inverse' : 'outlined'}
+            padded={!item.image}
           >
             {item.image && (
               <Image
@@ -76,34 +80,38 @@ const columnClass = {
                 class="aspect-24/10 w-full object-cover"
               />
             )}
-            <div class:list={['flex flex-col gap-3', item.image && 'p-6']}>
+            <div class:list={['flex w-full flex-col gap-3', item.image && 'p-6']}>
               {item.icon && !item.image && (
                 <Icon
                   name={item.icon}
-                  class="text-brand-600 size-8"
+                  class:list={['size-8', !onDark && 'text-brand-600']}
                   data-slot="icon"
                   aria-hidden="true"
                 />
               )}
               {item.eyebrow && (
-                <p class="text-ink-subtle tracking-eyebrow text-xs font-semibold uppercase">
+                <p
+                  class="tracking-eyebrow text-xs font-semibold uppercase"
+                  data-slot="eyebrow"
+                >
                   {item.eyebrow}
                 </p>
               )}
               <Heading level={titleLevel === 2 ? 3 : 4} size="md">
                 {item.href && !item.ctaLabel ? (
-                  <a href={item.href} class="text-ink-base no-underline hover:underline">
+                  <a href={item.href} class="no-underline" data-slot="cta">
                     {item.title}
                   </a>
                 ) : (
                   item.title
                 )}
               </Heading>
-              <p class="text-ink-muted">{item.body}</p>
+              <p class:list={[!onDark && 'text-ink-muted']}>{item.body}</p>
               {item.href && item.ctaLabel && (
                 <a
                   href={item.href}
-                  class="text-brand-600 mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline hover:underline"
+                  class="mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline"
+                  data-slot="cta"
                 >
                   {item.ctaLabel}
                 </a>

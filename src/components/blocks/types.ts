@@ -16,6 +16,8 @@ export interface BlockProps {
   body?: string;
   /** Semantic level for `title`; visual size stays constant. */
   titleLevel?: 2 | 3;
+  /** `split` puts eyebrow+title opposite the body. Omit for a centered stack. */
+  headerLayout?: 'stack' | 'split';
 }
 
 export interface BlockAction {
