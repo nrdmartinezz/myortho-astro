@@ -28,7 +28,10 @@ const {
 } = Astro.props;
 
 const defaultVariant =
-  background === 'brand' || background === 'inverse' || background === 'gradient'
+  background === 'brand' ||
+  background === 'inverse' ||
+  background === 'gradient' ||
+  background === 'accent'
     ? 'inverse'
     : 'primary';
 ---

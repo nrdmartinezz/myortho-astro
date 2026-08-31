@@ -11,7 +11,8 @@
   [data-bg='alt'] + [data-bg='alt'],
   [data-bg='inverse'] + [data-bg='inverse'],
   [data-bg='brand'] + [data-bg='brand'],
-  [data-bg='gradient'] + [data-bg='gradient'] {
+  [data-bg='gradient'] + [data-bg='gradient'],
+  [data-bg='accent'] + [data-bg='accent'] {
     padding-block-start: 0;
   }
 
@@ -104,7 +105,11 @@
   [data-bg='brand'] h1,
   [data-bg='brand'] h2,
   [data-bg='brand'] h3,
-  [data-bg='brand'] h4 {
+  [data-bg='brand'] h4,
+  [data-bg='accent'] h1,
+  [data-bg='accent'] h2,
+  [data-bg='accent'] h3,
+  [data-bg='accent'] h4 {
     color: var(--color-ink-inverse);
     font-weight: 700;
   }
@@ -115,18 +120,31 @@
     color: var(--color-accent-500);
   }
 
+  [data-bg='accent'] .block-eyebrow {
+    color: var(--color-ink-inverse);
+  }
+
+  [data-bg='accent'] h1 em,
+  [data-bg='accent'] h2 em,
+  [data-bg='accent'] h3 em {
+    color: var(--color-ink-inverse);
+  }
+
   [data-bg='inverse'] .block-body,
-  [data-bg='gradient'] .block-body {
+  [data-bg='gradient'] .block-body,
+  [data-bg='accent'] .block-body {
     color: rgb(255 255 255 / 0.72);
   }
 
   [data-bg='inverse'] .stat-value,
-  [data-bg='gradient'] .stat-value {
+  [data-bg='gradient'] .stat-value,
+  [data-bg='accent'] .stat-value {
     color: var(--color-ink-inverse);
   }
 
   [data-bg='inverse'] .stat-label,
-  [data-bg='gradient'] .stat-label {
+  [data-bg='gradient'] .stat-label,
+  [data-bg='accent'] .stat-label {
     color: rgb(255 255 255 / 0.72);
   }
 
@@ -138,7 +156,8 @@
   }
 
   [data-bg='brand'] .block-body,
-  [data-bg='brand'] .text-ink-muted {
+  [data-bg='brand'] .text-ink-muted,
+  [data-bg='accent'] .text-ink-muted {
     color: rgb(255 255 255 / 0.85);
   }
 

@@ -8,6 +8,8 @@ interface Props extends Omit<HTMLAttributes<'div'>, 'class'> {
   variant?: CardVariant;
   padded?: boolean;
   class?: string;
+  /** Lift on hover. Pass `false` for interactive lists inside the card. */
+  hover?: boolean;
 }
 
 const {
@@ -15,6 +17,7 @@ const {
   variant = 'outlined',
   padded = true,
   class: className,
+  hover = true,
   ...rest
 } = Astro.props;
 
@@ -27,7 +30,7 @@ const variants: Record<CardVariant, string> = {
 ---
 
 <Tag
-  class:list={['card', variants[variant], className]}
+  class:list={['card', variants[variant], hover && 'card-lift', className]}
   {...rest}
 >
   <div class:list={['card-face', padded && 'card-padded gap-3 p-6']}>
@@ -47,8 +50,8 @@ const variants: Record<CardVariant, string> = {
       box-shadow 0.25s ease;
   }
 
-  .card:hover,
-  .card:focus-within {
+  .card-lift:hover,
+  .card-lift:focus-within {
     transform: translateY(-8px);
     box-shadow: 0 22px 40px -12px rgb(7 19 28 / 0.22);
   }

@@ -49,7 +49,10 @@ const columnClass = {
 }[columns];
 
 const onDark =
-  background === 'inverse' || background === 'brand' || background === 'gradient';
+  background === 'inverse' ||
+  background === 'brand' ||
+  background === 'gradient' ||
+  background === 'accent';
 ---
 
 <Section background={background} spacing={spacing}>

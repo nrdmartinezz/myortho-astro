@@ -35,7 +35,7 @@ export function getStaticPaths() {
   return enabled ? [{ params: { styleguide: 'styleguide' } }] : [];
 }
 
-const backgrounds: SectionBackground[] = ['base', 'muted', 'inverse', 'brand'];
+const backgrounds: SectionBackground[] = ['base', 'muted', 'inverse', 'brand', 'accent'];
 const spacings: SectionSpacing[] = ['none', 'sm', 'md', 'lg'];
 const buttonVariants = ['primary', 'secondary', 'ghost'] as const;
 const buttonSizes = ['sm', 'md', 'lg'] as const;

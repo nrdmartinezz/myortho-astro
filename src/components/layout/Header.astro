@@ -28,24 +28,26 @@ const currentPath = Astro.url.pathname;
 const positioned = sticky !== 'static';
 ---
 <div class="utility">
-  <div class="container">
-    <span class="utility-message text-xs text-neutral-300 font-medium">
+  <div class="container w-full px-gutter">
+    <span class="utility-message text-xs text-neutral-300 font-medium max-md:hidden">
       {site.tagline}
     </span>
     <div class="utility-links">
-
-      <div class="icon-links"
-      ><a href="/locations/">
-        <Icon name="lucide:map-pin" class="size-4" aria-hidden="true" />Find a Location
+      <a href="/locations/">
+        <Icon name="lucide:map-pin" class="size-4" aria-hidden="true" />
+        <span class="max-md:hidden">Find a Location</span>
+        <span class="md:hidden">Locations</span>
       </a>
-      <a  href={`tel:${site.business.phoneHref}`}> 
-        <Icon name="lucide:phone" class="size-4" aria-hidden="true" />1-800-MY-ORTHO
+      <a href={`tel:${site.business.phoneHref}`}>
+        <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
+        <span class="max-md:hidden">1-800-MY-ORTHO</span>
+        <span class="md:hidden">Call us</span>
       </a>
-    </div>
       {
         navigation.cta && (
-          <Button href={navigation.cta.href} size="sm" class="font-bold max-md:hidden">
-            Schedule Today
+          <Button href={navigation.cta.href} size="sm" class="font-bold">
+            <span class="max-md:hidden">Schedule Today</span>
+            <span class="md:hidden">Book now</span>
           </Button>
         )
       }
@@ -123,21 +125,28 @@ const positioned = sticky !== 'static';
   .utility-links {
     display: flex;
     align-items: center;
-    .icon-links {
-      display:flex;
-      flex-direction:row;
-      color:var(--color-neutral-300);
-    }
   }
 
   .utility-links a {
     margin-left: 1rem;
     text-decoration: none;
     width: fit-content;
-   display: flex;
+    display: flex;
     align-items: center;
-    gap:9px;
+    gap: 9px;
     font-size: var(--text-xs);
+    color: var(--color-neutral-300);
+  }
+
+  @media (max-width: 767px) {
+    .utility-links {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .utility-links a {
+      margin-left: 0;
+    }
   }
 
   header[data-hidden='true'] {

@@ -49,15 +49,10 @@ const {
   pills = [],
 } = Astro.props;
 
-const isInverse = background === 'inverse' || background === 'brand';
+const isInverse =
+  background === 'inverse' || background === 'brand' || background === 'accent';
 
-// Chunked (not wrapped) so the row count stays fixed at 3 regardless of pill widths.
-const pillChunkSize = Math.ceil(pills.length / 3);
-const pillRows: HeroPill[][] = [
-  pills.slice(0, pillChunkSize),
-  pills.slice(pillChunkSize, pillChunkSize * 2),
-  pills.slice(pillChunkSize * 2),
-].filter((row) => row.length > 0);
+const pillChunkSize = Math.max(1, Math.ceil(pills.length / 3));
 ---
 
 <Section
@@ -121,28 +116,27 @@ const pillRows: HeroPill[][] = [
       }
       {
         pills?.length > 0 && (
-          <div class="flex flex-col gap-2">
-            {pillRows.map((row) => (
-              <ul class="flex gap-2">
-                {row.map((pill) => (
-                  <li>
-                    <PillButton
-                      label={pill.label}
-                      href={pill.href}
-                      icon={pill.icon}
-                      inverse={isInverse}
-                    />
-                  </li>
-                ))}
-              </ul>
+          <ul
+            class="hero-pills flex flex-wrap gap-2"
+            style={`--hero-pill-cols: ${pillChunkSize}`}
+          >
+            {pills.map((pill) => (
+              <li>
+                <PillButton
+                  label={pill.label}
+                  href={pill.href}
+                  icon={pill.icon}
+                  inverse={isInverse}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         )
       }
 
       {
         actions.length > 0 && (
-          <div class="flex flex-wrap gap-3">
+          <div class="flex flex-wrap gap-3 max-md:w-full max-md:flex-col max-md:[&_a]:w-full">
             {actions.map((action) => (
               <ActionButton action={action} size="md" />
             ))}
@@ -168,3 +162,12 @@ const pillRows: HeroPill[][] = [
     }
   </Container>
 </Section>
+
+<style>
+  @media (min-width: 1280px) {
+    .hero-pills {
+      display: grid;
+      grid-template-columns: repeat(var(--hero-pill-cols), max-content);
+    }
+  }
+</style>

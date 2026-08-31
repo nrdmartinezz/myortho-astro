@@ -5,7 +5,7 @@
  */
 import type { HTMLAttributes } from 'astro/types';
 
-export type SectionBackground = 'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient';
+export type SectionBackground = 'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient' | 'accent';
 export type SectionSpacing = 'none' | 'sm' | 'md' | 'lg';
 
 interface Props extends Omit<HTMLAttributes<'section'>, 'class'> {
@@ -32,6 +32,7 @@ const backgrounds: Record<SectionBackground, string> = {
   inverse:
     'bg-surface-inverse text-ink-inverse bg-[linear-gradient(90deg,rgb(161_184_41/0.27)_0%,var(--color-surface-inverse)_16%)]',
   brand: 'bg-surface-brand text-ink-inverse',
+  accent: 'bg-accent-500 text-ink-inverse',
   gradient:
     'text-ink-inverse bg-[linear-gradient(90deg,var(--color-accent-500)_0%,var(--color-brand-600)_100%)]',
 };
