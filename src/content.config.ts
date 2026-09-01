@@ -35,7 +35,6 @@ const doctors = defineCollection({
     photo: z.string().optional(),
     seoTitle: z.string(),
     seoDescription: z.string(),
-    fullBio: z.string().optional(),
   }),
 });
 

@@ -68,7 +68,13 @@ const { page } = Astro.props;
                   </p>
                 )
               }
-              {entry.data.shortBio && <p class="text-ink-muted text-sm">{entry.data.shortBio}</p>}
+              {
+                entry.data.locations && entry.data.locations.length > 0 ? (
+                  <p class="text-ink-muted text-sm">{entry.data.locations.join(', ')}</p>
+                ) : (
+                  entry.data.role && <p class="text-ink-muted text-sm">{entry.data.role}</p>
+                )
+              }
             </Card>
           ))
         }

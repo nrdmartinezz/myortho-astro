@@ -7,22 +7,26 @@ import Container from '../../components/ui/Container.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Prose from '../../components/ui/Prose.astro';
 import Card from '../../components/ui/Card.astro';
-import { getPublished, related, type Entry } from '../../lib/doctors';
+import { getPublished, related, resolveLocations, type Entry } from '../../lib/doctors';
+import { getPublished as getLocations, type Entry as LocationEntry } from '../../lib/locations';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getPublished();
+  const locations = await getLocations();
+
   return entries.map((entry) => ({
     params: { slug: entry.id },
-    props: { entry, all: entries },
+    props: { entry, all: entries, locations: resolveLocations(entry, locations) },
   }));
 };
 
 interface Props {
   entry: Entry;
   all: Entry[];
+  locations: LocationEntry[];
 }
 
-const { entry, all } = Astro.props;
+const { entry, all, locations } = Astro.props;
 const { Content } = await render(entry);
 const colleagues = related(all, entry);
 ---
@@ -71,8 +75,23 @@ const colleagues = related(all, entry);
         }
 
         {
-          entry.data.locations && entry.data.locations.length > 0 && (
-            <p class="text-ink-muted text-sm">Sees patients in: {entry.data.locations.join(', ')}</p>
+          locations.length > 0 && (
+            <div class="flex flex-col gap-2">
+              <p class="text-ink-muted text-xs font-semibold tracking-wide uppercase">Office locations</p>
+              <ul class="flex flex-col gap-2">
+                {locations.map((location) => (
+                  <li>
+                    <a
+                      href={`/locations/${location.id}/`}
+                      class="text-ink-brand font-medium no-underline hover:underline"
+                    >
+                      {location.data.name}
+                    </a>
+                    <span class="text-ink-muted text-sm"> · {location.data.cityStateZip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )
         }
       </div>
