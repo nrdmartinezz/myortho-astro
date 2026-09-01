@@ -84,8 +84,9 @@ const nearby = related(all, entry);
               <Card as="li" variant="outlined">
                 <Heading level={3} size="sm">
                   <a
-                    href={`/locations/${item.id}/`}
+                    href={`/locations/${item.data.slug ?? item.id}/`}
                     class="text-ink-base no-underline hover:underline"
+                    data-slot="cta"
                   >
                     {item.data.name}
                   </a>
