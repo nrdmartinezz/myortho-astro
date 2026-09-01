@@ -13,6 +13,9 @@ import LogoCloud from '../components/blocks/LogoCloud.astro';
 import Testimonials from '../components/blocks/Testimonials.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
 import ContactBlock from '../components/blocks/ContactBlock.astro';
+import Popup from '../components/ui/Popup.astro';
+import Heading from '../components/ui/Heading.astro';
+import Button from '../components/ui/Button.astro';
 import { site, bookHref, virtualHref, phoneAction } from '../config/site';
 import { getPublished } from '../lib/locations';
 
@@ -326,8 +329,8 @@ const insuranceLogos = [
     title="What Our Patients<br/><em>Are Saying</em>"
     body="Join over 100,000 North Carolinians who have transformed their smiles with MyOrthodontist. Your complimentary consultation is free — always."
     actions={[
-      { label: 'Schedule Free Consultation', href: bookHref, variant:"primary" },
-      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: "ghost-white" },
+      { label: 'Schedule Free Consultation', href: bookHref, variant: 'primary' },
+      { ...phoneAction, label: 'Call 1-800-MY-ORTHO', variant: 'ghost-white' },
     ]}
   />
 
@@ -338,7 +341,7 @@ const insuranceLogos = [
     body="Our mission is to help underserved youth build self-esteem and confidence through healthy living, teamwork, and sports. We deliver a percentage of every dollar spent in our offices to the Happy Tooth Foundation — so every smile you create helps another child thrive."
     image={happyTooth}
     imageAlt="Happy Tooth Foundation youth community sports event"
-    actions={[{ label: 'Get More Information', href: '/about/foundation/', variant:"secondary" }]}
+    actions={[{ label: 'Get More Information', href: '/about/foundation/', variant: 'secondary' }]}
   />
 
   <ServicesGrid
@@ -389,4 +392,24 @@ const insuranceLogos = [
       }))}
     />
   </div>
+
+  <Popup
+    id="home-offer"
+    trigger="scroll"
+    scrollThreshold={0.3}
+    storageKey="home-offer"
+    labelledBy="home-offer-title"
+  >
+    <p class="block-eyebrow text-accent-500 tracking-eyebrow text-xs font-semibold uppercase">
+      Complimentary Consult
+    </p>
+    <Heading level={2} size="lg" id="home-offer-title">
+      Reveal the smile you were always <em>meant to have</em>
+    </Heading>
+    <p class="text-ink-muted max-w-reading">
+      Book a free consultation at any of our 14 North Carolina locations. Flexible financing with $0
+      down is available.
+    </p>
+    <Button href={bookHref}>Book a FREE Consult</Button>
+  </Popup>
 </BaseLayout>

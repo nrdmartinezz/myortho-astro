@@ -1,0 +1,229 @@
+---
+/**
+ * Modal overlay with a default slot for the card body. Trigger it on scroll,
+ * on load, or from a `[data-popup-open="{id}"]` control. Clicking the overlay,
+ * the close control, or Escape dismisses it.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+
+export type PopupTrigger = 'scroll' | 'load' | 'manual';
+export type PopupStorage = 'session' | 'local';
+
+interface Props extends Omit<HTMLAttributes<'dialog'>, 'class'> {
+  trigger?: PopupTrigger;
+  /** Share of page scroll (0–1) before a `scroll` trigger opens. */
+  scrollThreshold?: number;
+  /** When set, a dismissed popup stays dismissed in this storage key. */
+  storageKey?: string;
+  storage?: PopupStorage;
+  labelledBy?: string;
+  label?: string;
+  padded?: boolean;
+  class?: string;
+}
+
+const {
+  trigger = 'manual',
+  scrollThreshold = 0.3,
+  storageKey,
+  storage = 'session',
+  labelledBy,
+  label = 'Popup',
+  padded = true,
+  id,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<dialog
+  id={id}
+  class="popup"
+  data-popup
+  data-trigger={trigger}
+  data-scroll-threshold={String(scrollThreshold)}
+  data-storage-key={storageKey}
+  data-storage={storageKey ? storage : undefined}
+  aria-labelledby={labelledBy}
+  aria-label={labelledBy ? undefined : label}
+  {...rest}
+>
+  <div class:list={['popup-card', padded && 'popup-card-padded', className]} data-popup-card>
+    <button type="button" class="popup-close" data-popup-close aria-label="Close">
+      <Icon name="lucide:x" class="size-5" aria-hidden="true" />
+    </button>
+    <slot />
+  </div>
+</dialog>
+
+<style>
+  .popup {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: var(--spacing-gutter);
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: none;
+    background: transparent;
+  }
+
+  .popup[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .popup[open]::backdrop {
+    background: rgb(7 19 28 / 0.6);
+    animation: popup-overlay-in 0.35s ease both;
+  }
+
+  .popup[open] .popup-card {
+    animation: popup-card-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .popup-card {
+    position: relative;
+    display: flex;
+    width: min(36rem, 100%);
+    max-height: min(90vh, 48rem);
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--color-line-base);
+    border-radius: var(--radius-2xl);
+    background: var(--color-surface-base);
+    box-shadow: var(--shadow-lg);
+    color: var(--color-ink-base);
+  }
+
+  .popup-card-padded {
+    gap: 1rem;
+    padding: 2.25rem 3.5rem 2rem 2rem;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 1;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-ink-muted);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .popup-close:hover,
+  .popup-close:focus-visible {
+    background: var(--color-neutral-100);
+    color: var(--color-ink-heading);
+  }
+
+  @keyframes popup-overlay-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes popup-card-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem) scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const popups = document.querySelectorAll<HTMLDialogElement>('dialog[data-popup]');
+
+  const storageFor = (popup: HTMLDialogElement) => {
+    const key = popup.dataset.storageKey;
+    if (!key) return null;
+    const store = popup.dataset.storage === 'local' ? localStorage : sessionStorage;
+    return { key, store };
+  };
+
+  const wasDismissed = (popup: HTMLDialogElement) => {
+    const storage = storageFor(popup);
+    return storage ? storage.store.getItem(storage.key) === 'dismissed' : false;
+  };
+
+  const rememberDismiss = (popup: HTMLDialogElement) => {
+    const storage = storageFor(popup);
+    storage?.store.setItem(storage.key, 'dismissed');
+  };
+
+  const openPopup = (popup: HTMLDialogElement) => {
+    if (popup.open || wasDismissed(popup)) return;
+    popup.showModal();
+  };
+
+  const closePopup = (popup: HTMLDialogElement) => {
+    if (!popup.open) return;
+    popup.close();
+  };
+
+  for (const popup of popups) {
+    popup.querySelector('[data-popup-close]')?.addEventListener('click', () => closePopup(popup));
+
+    popup.addEventListener('click', (event) => {
+      if (event.target === popup) closePopup(popup);
+    });
+
+    popup.addEventListener('close', () => rememberDismiss(popup));
+
+    if (wasDismissed(popup)) continue;
+
+    const trigger = popup.dataset.trigger ?? 'manual';
+
+    if (trigger === 'load') {
+      openPopup(popup);
+      continue;
+    }
+
+    if (trigger !== 'scroll') continue;
+
+    const threshold = Number(popup.dataset.scrollThreshold ?? 0.3);
+
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max <= 0 ? 1 : window.scrollY / max;
+      if (progress < threshold) return;
+      openPopup(popup);
+      window.removeEventListener('scroll', onScroll);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  for (const control of document.querySelectorAll('[data-popup-open]')) {
+    control.addEventListener('click', () => {
+      const id = control.getAttribute('data-popup-open');
+      const popup = id ? document.getElementById(id) : document.querySelector('dialog[data-popup]');
+      if (popup instanceof HTMLDialogElement) openPopup(popup);
+    });
+  }
+</script>

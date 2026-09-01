@@ -12,6 +12,7 @@ import Container from '../components/ui/Container.astro';
 import Heading from '../components/ui/Heading.astro';
 import Button from '../components/ui/Button.astro';
 import Card from '../components/ui/Card.astro';
+import Popup from '../components/ui/Popup.astro';
 import Prose from '../components/ui/Prose.astro';
 
 import ServicesGrid from '../components/blocks/ServicesGrid.astro';
@@ -130,6 +131,21 @@ const faqs = [
     </Container>
   </Section>
 
+  <Section background="base" spacing="sm">
+    <Container gap="md">
+      <Heading level={2} size="lg">Popup</Heading>
+      <p class="text-ink-muted max-w-reading">
+        Overlay dialog with a default slot. The dimmed area, the close control, and Escape all
+        dismiss it.
+      </p>
+      <Button type="button" data-popup-open="styleguide-popup">Open popup</Button>
+      <Popup id="styleguide-popup" trigger="manual" labelledBy="styleguide-popup-title">
+        <Heading level={2} size="md" id="styleguide-popup-title">Slotted content</Heading>
+        <p class="text-ink-muted">Anything you pass into the slot renders inside the card.</p>
+      </Popup>
+    </Container>
+  </Section>
+
   <Section background="inverse" spacing="sm">
     <Container gap="md">
       <Heading level={2} size="lg">Cards on dark</Heading>
@@ -137,9 +153,6 @@ const faqs = [
         <Card variant="inverse">
           <p>inverse (frosted, readable on dark)</p>
         </Card>
-      </div>
-    </Container>
-  </Section>
       </div>
     </Container>
   </Section>
