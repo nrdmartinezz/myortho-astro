@@ -69,7 +69,16 @@ const defaultVariant =
       )
     }
     {title && <Heading level={titleLevel} set:html={title} />}
-    {body && <p class="block-body max-w-reading text-lg">{body}</p>}
+    {body && (
+      <p
+        class:list={[
+          'max-w-reading text-lg',
+          defaultVariant === 'inverse' ? 'text-white/80' : 'block-body',
+        ]}
+      >
+        {body}
+      </p>
+    )}
 
     <div class:list={['flex flex-wrap gap-3', align === 'center' && 'justify-center']}>
       {

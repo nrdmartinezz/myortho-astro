@@ -33,6 +33,12 @@ const {
   bare = false,
 } = Astro.props;
 
+const onDark =
+  background === 'brand' ||
+  background === 'inverse' ||
+  background === 'gradient' ||
+  background === 'accent';
+
 const hasMediaSlot = Astro.slots.has('media');
 
 const BULLETS_PER_COLUMN = 5;
@@ -96,7 +102,9 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
         )
       }
       {title && <Heading level={titleLevel} set:html={title} />}
-      {body && <p class="text-ink-muted max-w-reading">{body}</p>}
+      {body && (
+        <p class:list={['max-w-reading', onDark ? 'text-white/80' : 'text-ink-muted']}>{body}</p>
+      )}
 
       {
         bullets.length > 0 && (

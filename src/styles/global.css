@@ -132,8 +132,9 @@
 
   [data-bg='inverse'] .block-body,
   [data-bg='gradient'] .block-body,
-  [data-bg='accent'] .block-body {
-    color: rgb(255 255 255 / 0.72);
+  [data-bg='accent'] .block-body,
+  [data-bg='brand'] .block-body {
+    color: rgb(255 255 255 / 0.85);
   }
 
   [data-bg='inverse'] .stat-value,
@@ -155,9 +156,10 @@
     font-weight: 800;
   }
 
-  [data-bg='brand'] .block-body,
   [data-bg='brand'] .text-ink-muted,
-  [data-bg='accent'] .text-ink-muted {
+  [data-bg='accent'] .text-ink-muted,
+  [data-bg='inverse'] .text-ink-muted,
+  [data-bg='gradient'] .text-ink-muted {
     color: rgb(255 255 255 / 0.85);
   }
 
