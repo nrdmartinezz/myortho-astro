@@ -1,0 +1,22 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Privacy Policy"
+  description="How MyOrthodontist collects, uses, and protects your information."
+  showCtaBanner={false}
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Privacy Policy",
+      "href": "/privacy/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>

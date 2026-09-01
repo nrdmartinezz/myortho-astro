@@ -1,0 +1,22 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Terms of Service"
+  description="Terms and conditions for using the MyOrthodontist website."
+  showCtaBanner={false}
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Terms of Service",
+      "href": "/terms/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>

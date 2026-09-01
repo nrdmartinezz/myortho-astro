@@ -1,0 +1,25 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="New Patient Info"
+  description="Everything you need before your first orthodontic appointment."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources/"
+    },
+    {
+      "name": "New Patient Info",
+      "href": "/patient/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>

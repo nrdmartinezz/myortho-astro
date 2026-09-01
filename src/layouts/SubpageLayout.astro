@@ -1,0 +1,45 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '../components/blocks/PageHero.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { bookHref, virtualHref, phoneAction } from '../config/site';
+import type { BlockAction } from '../components/blocks/types';
+
+const pageActions: BlockAction[] = [
+  { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
+  { icon: 'lucide:laptop', label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+  { ...phoneAction, variant: 'outline' },
+];
+import type { BreadcrumbEntry } from '../components/seo/Schema.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  breadcrumbs: BreadcrumbEntry[];
+  eyebrow?: string;
+  showCtaBanner?: boolean;
+}
+
+const {
+  title,
+  description,
+  breadcrumbs,
+  eyebrow = 'North Carolina · MyOrthodontist',
+  showCtaBanner = true,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <PageHero eyebrow={eyebrow} title={title} body={description} actions={pageActions} />
+  <slot />
+  {
+    showCtaBanner && (
+      <CTABanner
+        background="inverse"
+        title="Ready for your free consultation?"
+        body="Schedule in minutes — virtual or in-office."
+        actions={pageActions}
+      />
+    )
+  }
+</BaseLayout>

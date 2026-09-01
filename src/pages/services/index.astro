@@ -1,0 +1,105 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+---
+
+<SubpageLayout
+  title="Treatments"
+  description="Braces, Invisalign, and advanced orthodontic options for every age."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Treatments",
+      "href": "/services/"
+    }
+  ]}
+>
+  <ServicesGrid
+    background="base"
+    spacing="md"
+    columns={3}
+    items={[
+    {
+        title: 'Types of Braces',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/types-of-braces/',
+        icon: 'lucide:smile'
+    },
+    {
+        title: 'Adult Braces',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/braces-for-adults/',
+        icon: 'lucide:user'
+    },
+    {
+        title: 'Teen Braces',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/braces-for-teens/',
+        icon: 'lucide:users'
+    },
+    {
+        title: 'Children Braces',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/braces-for-children/',
+        icon: 'lucide:baby'
+    },
+    {
+        title: 'How Invisalign Works',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/types-of-invisalign/',
+        icon: 'lucide:scan'
+    },
+    {
+        title: 'Adult Invisalign',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/invisalign-for-adults/',
+        icon: 'lucide:user-check'
+    },
+    {
+        title: 'Teen Invisalign',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/invisalign-for-teens/',
+        icon: 'lucide:sparkles'
+    },
+    {
+        title: 'Children Invisalign',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/invisalign-for-children/',
+        icon: 'lucide:heart'
+    },
+    {
+        title: 'Retainers',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/retainers/',
+        icon: 'lucide:shield'
+    },
+    {
+        title: 'Teeth Whitening',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/teeth-whitening/',
+        icon: 'lucide:sun'
+    },
+    {
+        title: 'Dental Pain Eraser',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/dental-pain-eraser/',
+        icon: 'lucide:zap'
+    },
+    {
+        title: 'Carriere Motion',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/carrier-motion/',
+        icon: 'lucide:move'
+    },
+    {
+        title: 'Virtual Care',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/virtual-care/',
+        icon: 'lucide:video'
+    }
+]}
+  />
+</SubpageLayout>

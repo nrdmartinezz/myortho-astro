@@ -1,0 +1,25 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Patient Portal"
+  description="Access your account, appointments, and treatment information online."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources/"
+    },
+    {
+      "name": "Patient Portal",
+      "href": "/patient-portal/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>

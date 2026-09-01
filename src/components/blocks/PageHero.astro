@@ -1,0 +1,47 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import ActionButton from './ActionButton.astro';
+import type { BlockAction } from './types';
+import type { SectionBackground, SectionSpacing } from '../ui/Section.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  actions?: BlockAction[];
+  background?: SectionBackground;
+  spacing?: SectionSpacing;
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  actions = [],
+  background = 'muted',
+  spacing = 'md',
+} = Astro.props;
+---
+
+<Section background={background} spacing={spacing}>
+  <Container gap="sm">
+    {
+      eyebrow && (
+        <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">{eyebrow}</p>
+      )
+    }
+    <Heading level={1}>{title}</Heading>
+    {body && <p class="text-ink-muted max-w-reading text-lg">{body}</p>}
+    {
+      actions.length > 0 && (
+        <div class="flex flex-wrap gap-3 max-md:w-full max-md:flex-col max-md:[&_a]:w-full">
+          {actions.map((action) => (
+            <ActionButton action={action} size="md" />
+          ))}
+        </div>
+      )
+    }
+  </Container>
+</Section>
