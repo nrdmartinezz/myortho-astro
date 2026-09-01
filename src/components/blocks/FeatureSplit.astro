@@ -30,6 +30,7 @@ const {
   bullets = [],
   actions = [],
   reverse = false,
+  bare = false,
 } = Astro.props;
 
 const hasMediaSlot = Astro.slots.has('media');
@@ -48,9 +49,20 @@ function chunk<T>(items: T[], size: number): T[][] {
 const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} layout="row" gap="lg">
-    <div class:list={['w-full md:w-1/2', reverse ? 'md:order-2' : 'md:order-1']}>
+<Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
+  <Container
+    width={width}
+    layout={bare ? 'stack' : 'row'}
+    gap="lg"
+    class:list={[bare && 'mx-0! max-w-none! px-0!']}
+  >
+    <div
+      class:list={[
+        'w-full',
+        !bare && 'md:w-1/2',
+        !bare && (reverse ? 'md:order-2' : 'md:order-1'),
+      ]}
+    >
       {
         hasMediaSlot ? (
           <slot name="media" />
@@ -59,7 +71,7 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
             src={image}
             alt={imageAlt}
             widths={[480, 768, 1024]}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes={bare ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, 50vw'}
             loading="lazy"
             class="w-full rounded-lg object-cover"
           />
@@ -71,8 +83,9 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
 
     <div
       class:list={[
-        'flex flex-col items-start gap-5 md:w-1/2',
-        reverse ? 'md:order-1' : 'md:order-2',
+        'flex w-full flex-col items-start gap-5',
+        !bare && 'md:w-1/2',
+        !bare && (reverse ? 'md:order-1' : 'md:order-2'),
       ]}
     >
       {

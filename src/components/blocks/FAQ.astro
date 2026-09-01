@@ -33,6 +33,7 @@ const {
   items,
   schema = true,
   multiple = false,
+  bare = false,
 } = Astro.props;
 
 const jsonLd = {
@@ -46,8 +47,8 @@ const jsonLd = {
 };
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} align={align} gap="lg">
+<Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
+  <Container width={width} align={align} gap="lg" class:list={[bare && 'mx-0! max-w-none! px-0!']}>
     <BlockHeader
       eyebrow={eyebrow}
       title={title}
@@ -67,7 +68,7 @@ const jsonLd = {
                 aria-hidden="true"
               />
             </summary>
-            <p class="text-ink-muted max-w-reading pb-4">{item.answer}</p>
+            <p class="text-ink-muted max-w-reading pb-4" set:html={item.answer} />
           </details>
         ))
       }

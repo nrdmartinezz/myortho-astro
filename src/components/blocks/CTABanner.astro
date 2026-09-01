@@ -73,9 +73,22 @@ const defaultVariant =
 
     <div class:list={['flex flex-wrap gap-3', align === 'center' && 'justify-center']}>
       {
-        actions.map((action) => (
-          <ActionButton action={action} size="lg" defaultVariant={defaultVariant} />
-        ))
+        actions.map((action) => {
+          // `outline` is navy-on-light. On dark bands it disappears — use the
+          // white outline (`secondary`) instead. Explicit inverse/ghost-white
+          // still win; unspecified variants still take `defaultVariant`.
+          const onDark = defaultVariant === 'inverse';
+          const variant =
+            onDark && action.variant === 'outline' ? 'secondary' : action.variant;
+
+          return (
+            <ActionButton
+              action={{ ...action, variant }}
+              size="lg"
+              defaultVariant={defaultVariant}
+            />
+          );
+        })
       }
     </div>
   </Container>

@@ -1,0 +1,44 @@
+---
+import OfficeList, { type OfficeItem } from './OfficeList.astro';
+import Card from '../ui/Card.astro';
+import Heading from '../ui/Heading.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  offices: OfficeItem[];
+}
+
+const { offices } = Astro.props;
+
+const path = Astro.url.pathname;
+const showFinancing = path !== '/insurance/' && path !== '/insurance';
+---
+
+<aside class="flex w-full flex-col gap-6">
+  <OfficeList offices={offices} source="subpage-aside" />
+
+  {
+    showFinancing && (
+      <Card variant="outlined">
+        <Icon name="lucide:wallet" data-slot="icon" aria-hidden="true" />
+        <p class="tracking-eyebrow text-xs font-semibold uppercase" data-slot="eyebrow">
+          Insurance & Financing
+        </p>
+        <Heading level={2} size="md">
+          Affordable orthodontic financing
+        </Heading>
+        <p class="text-ink-muted text-sm">
+          We offer flexible payment plans, work with major insurance providers, and partner with
+          CareCredit to make treatment affordable.
+        </p>
+        <a
+          href="/insurance/"
+          class="mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline"
+          data-slot="cta"
+        >
+          Explore Options
+        </a>
+      </Card>
+    )
+  }
+</aside>

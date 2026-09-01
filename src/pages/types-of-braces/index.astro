@@ -1,25 +1,94 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import metalCeramic from '../../images/services/metal-ceramic-braces.jpg';
 ---
 
 <SubpageLayout
   title="Types of Braces"
-  description="Explore metal, ceramic, and advanced braces options for every age."
+  description="Braces for kids, adults, and teens in North Carolina — metal and ceramic options that straighten teeth, improve your bite, and protect long-term oral health."
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Treatments",
-      "href": "/services/"
-    },
-    {
-      "name": "Types of Braces",
-      "href": "/types-of-braces/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Types of Braces', href: '/types-of-braces/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Braces for kids, adults, and teens in North Carolina</h2>
+    <p>
+      For most teenagers, getting braces is a rite of passage. If you have crooked teeth or a
+      misaligned bite, regardless of your age, <strong>braces are often the best option</strong> to
+      help straighten teeth.
+    </p>
+    <p>
+      Braces provide you with straight teeth, a good bite and a beautiful smile, and as a result
+      they also prevent long-term tooth damage caused by poor tooth or jaw alignment.
+    </p>
+    <p>
+      Teens aren’t the only ones who can benefit from getting braces. More adults than ever before
+      are seeking orthodontic treatment to correct their bite and improve their smile and overall
+      oral health.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="Braces for All Ages"
+    title="Why Get Braces?"
+    body="For most people, a beautiful smile is the most obvious benefit of orthodontics. But alleviating and preventing long-term health problems is just as important. Crooked or crowded teeth are difficult to clean and maintain and can lead to tooth decay, gum disease or tooth loss. Poor jaw or tooth alignment can cause abnormal wear of your teeth, an inability to chew efficiently and, as a result, excessive stress on gum tissue and the bone that support your teeth. Braces can make your teeth look better, work better and easier to clean."
+    image={metalCeramic}
+    imageAlt="Patient smiling with metal and ceramic braces"
+    bullets={[
+      'Straighter teeth and a more attractive smile',
+      'Improved oral health and function',
+      'Prevention of common dental problems caused by crooked teeth or a misaligned bite',
+      'A boost in self-confidence',
+    ]}
+  />
+
+  <Prose>
+    <h2>How braces work</h2>
+    <p>
+      Braces work by applying continuous pressure over a period of time, by using a system of wires
+      and brackets to slowly move teeth in a specific direction. As the teeth move, the bone changes
+      shape as pressure is applied. Once the braces are removed (typically in one to two years), you
+      are left with straighter teeth, proper jaw alignment, and a dazzling smile.
+    </p>
+  </Prose>
+
+  <FAQ
+    bare
+    schema
+    items={[
+      {
+        question: 'Can adults get braces?',
+        answer:
+          'While braces are typically associated with teenagers, you can get braces at any age. Adult braces are quite a common procedure. It’s never too late to address dental problems caused by crooked teeth and to get that smile you’ve always wanted. <a href="/braces-for-adults/">Learn more about adult braces</a>.',
+      },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Your options"
+    title="Braces Options to Fit Your Style"
+    body="Braces have changed over the years. Today, options range from colorfully cool to nearly invisible. The choice is yours, and you don’t have to come up with the answers alone. As orthodontists, we are experts in helping you find your perfect match."
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: 'Metal Braces',
+        body: 'This is the most common type of braces, and they are more comfortable today than ever before. Made of high-grade stainless steel, metal braces straighten your teeth using metal brackets and archwires. With metal braces, you have the option of adding colored elastics (rubber bands) for a unique and colorful smile.',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Clear Ceramic Braces',
+        body: 'Ceramic braces are made of clear or tooth-colored materials, making them less visible than metal braces. While visually less prominent, they do require more attention to oral hygiene, as ceramic braces are larger and more brittle than their metal counterparts. For these reasons, ceramic braces are used mainly on older teenagers and adults who have cosmetic concerns.',
+      },
+    ]}
+  />
 </SubpageLayout>

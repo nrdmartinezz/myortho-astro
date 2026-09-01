@@ -18,6 +18,8 @@ export interface BlockProps {
   titleLevel?: 2 | 3;
   /** `split` puts eyebrow+title opposite the body. Omit for a centered stack. */
   headerLayout?: 'stack' | 'split';
+  /** Skip Section/Container padding so the block can sit inside another layout band. */
+  bare?: boolean;
 }
 
 export interface BlockAction {

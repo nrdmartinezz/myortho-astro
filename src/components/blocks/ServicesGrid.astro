@@ -39,6 +39,7 @@ const {
   headerLayout,
   items,
   columns = 3,
+  bare = false,
 } = Astro.props;
 
 // Owns its own grid rather than asking Container to model it.
@@ -55,8 +56,8 @@ const onDark =
   background === 'accent';
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} align={align} gap="lg">
+<Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
+  <Container width={width} align={align} gap="lg" class:list={[bare && 'mx-0! max-w-none! px-0!']}>
     <BlockHeader
       eyebrow={eyebrow}
       title={title}

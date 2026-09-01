@@ -13,17 +13,13 @@ import Container from '../ui/Container.astro';
 import Field from '../ui/Field.astro';
 import FormMessage from '../ui/FormMessage.astro';
 import Button from '../ui/Button.astro';
-import Card from '../ui/Card.astro';
 import BlockHeader from './BlockHeader.astro';
+import OfficeList, { type OfficeItem } from './OfficeList.astro';
 import { Icon } from 'astro-icon/components';
 import { site, formattedAddress } from '../../config/site';
 import type { BlockProps } from './types';
 
-export interface ContactOffice {
-  name: string;
-  phone: string;
-  href: string;
-}
+export type ContactOffice = OfficeItem;
 
 interface Props extends BlockProps {
   subject?: string;
@@ -54,11 +50,6 @@ const {
 
 const action = site.formspreeId ? `https://formspree.io/f/${site.formspreeId}` : '';
 const thankYou = new URL('/thank-you/', site.url).href;
-
-const telHref = (value: string) => {
-  const digits = value.replace(/\D/g, '');
-  return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
-};
 ---
 
 <Section background={background} spacing={spacing}>
@@ -162,37 +153,7 @@ const telHref = (value: string) => {
             ))}
           </dl>
 
-          {
-            offices.length > 0 && (
-              <Card class="w-full" variant="outlined" hover={false}>
-                <p class="font-semibold">Our locations</p>
-                <div class="max-h-80 w-full overflow-y-auto overscroll-contain pe-3">
-                  <ul>
-                    {offices.map((office) => (
-                      <li class="border-line-base flex items-center gap-3 border-b px-3 py-3 transition-colors last:border-b-0 hover:bg-neutral-100">
-                        <a
-                          href={office.href}
-                          class="text-ink-base flex min-h-11 min-w-0 flex-1 flex-col justify-center no-underline"
-                        >
-                          <span class="font-medium">{office.name}</span>
-                          <span class="text-ink-muted text-sm">{office.phone}</span>
-                        </a>
-                        <Button
-                          href={telHref(office.phone)}
-                          size="sm"
-                          variant="outline"
-                          data-source="contact-block"
-                          aria-label={`Call ${office.name}`}
-                        >
-                          Call
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Card>
-            )
-          }
+          <OfficeList offices={offices} source="contact-block" />
         </aside>
       )
     }
