@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import type { Entry as LocationEntry } from './locations';
 
 export type Entry = CollectionEntry<'doctors'>;
 
@@ -14,6 +15,12 @@ export async function getPublished(): Promise<Entry[]> {
 /** Doctors declare the offices they visit by location display name, not slug. */
 export function atLocation(all: Entry[], locationName: string): Entry[] {
   return all.filter((entry) => entry.data.locations?.includes(locationName));
+}
+
+/** Resolve a doctor's location names to published location entries. */
+export function resolveLocations(doctor: Entry, allLocations: LocationEntry[]): LocationEntry[] {
+  const names = doctor.data.locations ?? [];
+  return allLocations.filter((location) => names.includes(location.data.name));
 }
 
 /** Same location first, then alphabetical. */
