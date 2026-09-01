@@ -141,3 +141,13 @@ export const formattedAddress = [
 
 /** No configured ID means the analytics bundle is never mounted at all. */
 export const hasAnalytics = Object.values(site.analytics).some(Boolean);
+
+/** Formlync registration and virtual consult paths — used in hero and page CTAs. */
+export const bookHref = 'https://forms.formlync.com/myorthodontist/register';
+export const virtualHref = '/request-consult/';
+
+export const phoneAction = {
+  icon: 'lucide:phone' as const,
+  label: site.business.phone,
+  href: `tel:${site.business.phoneHref}`,
+};

@@ -1,0 +1,93 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+---
+
+<SubpageLayout
+  title="Resources"
+  description="Patient information, policies, and ways to connect with our team."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources/"
+    }
+  ]}
+>
+  <ServicesGrid
+    background="base"
+    spacing="md"
+    columns={3}
+    items={[
+    {
+        title: 'Insurance & Financing',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/insurance/',
+        icon: 'lucide:credit-card'
+    },
+    {
+        title: 'Orthodontic FAQs',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/faqs/',
+        icon: 'lucide:help-circle'
+    },
+    {
+        title: 'Patient Portal',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/patient-portal/',
+        icon: 'lucide:log-in'
+    },
+    {
+        title: 'Office Policies',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/office-policies/',
+        icon: 'lucide:file-text'
+    },
+    {
+        title: 'Orthodontic Emergencies',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/orthodontic-emergencies/',
+        icon: 'lucide:alert-circle'
+    },
+    {
+        title: 'New Patient Info',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/patient/',
+        icon: 'lucide:clipboard-list'
+    },
+    {
+        title: 'Your First Visit',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/your-first-visit/',
+        icon: 'lucide:calendar-check'
+    },
+    {
+        title: 'Special Offers',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/special-offers/',
+        icon: 'lucide:tag'
+    },
+    {
+        title: 'Contact',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/contact/',
+        icon: 'lucide:mail'
+    },
+    {
+        title: 'Locations',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/locations/',
+        icon: 'lucide:map-pin'
+    },
+    {
+        title: 'Careers',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/careers/',
+        icon: 'lucide:briefcase'
+    }
+]}
+  />
+</SubpageLayout>

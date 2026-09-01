@@ -1,0 +1,57 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+---
+
+<SubpageLayout
+  title="About Us"
+  description="Our story, team, and commitment to North Carolina communities."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "About",
+      "href": "/about/"
+    }
+  ]}
+>
+  <ServicesGrid
+    background="base"
+    spacing="md"
+    columns={3}
+    items={[
+    {
+        title: 'Our Story',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/about/',
+        icon: 'lucide:book-open'
+    },
+    {
+        title: 'Why Choose Us',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/about/what-sets-us-apart/',
+        icon: 'lucide:star'
+    },
+    {
+        title: 'Our Foundation',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/about/foundation/',
+        icon: 'lucide:heart-handshake'
+    },
+    {
+        title: 'Meet the Doctors',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/doctors/',
+        icon: 'lucide:stethoscope'
+    },
+    {
+        title: 'Meet Dr. Moray',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        href: '/doctors/dr-moray/',
+        icon: 'lucide:user-round'
+    }
+]}
+  />
+</SubpageLayout>

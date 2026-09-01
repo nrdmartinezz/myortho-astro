@@ -1,0 +1,25 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Virtual Care"
+  description="Remote monitoring and virtual appointments for busy schedules."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Treatments",
+      "href": "/services/"
+    },
+    {
+      "name": "Virtual Care",
+      "href": "/virtual-care/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>

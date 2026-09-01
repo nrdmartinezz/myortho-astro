@@ -13,7 +13,7 @@ import LogoCloud from '../components/blocks/LogoCloud.astro';
 import Testimonials from '../components/blocks/Testimonials.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
 import ContactBlock from '../components/blocks/ContactBlock.astro';
-import { site } from '../config/site';
+import { site, bookHref, virtualHref, phoneAction } from '../config/site';
 import { getPublished } from '../lib/locations';
 
 import heroBackground from '../images/hero-bg.jpg';
@@ -42,14 +42,6 @@ import logoUnited from '../images/insurance/United-Healthcare.png';
 
 const locations = await getPublished();
 const locationNames = locations.map((location) => location.data.name);
-const bookHref = 'https://forms.formlync.com/myorthodontist/register';
-const virtualHref = '/request-consult/';
-const phoneAction = {
-  icon: 'lucide:phone' as const,
-  label: site.business.phone,
-  href: `tel:${site.business.phoneHref}`,
-};
-
 const insuranceLogos = [
   { name: 'Aetna', image: logoAetna },
   { name: 'Ameritas', image: logoAmeritas },
@@ -81,7 +73,7 @@ const insuranceLogos = [
       {
         icon: 'lucide:calendar',
         label: 'Book a FREE Consult',
-        href: 'https://forms.formlync.com/myorthodontist/register',
+        href: bookHref,
       },
       {
         icon: 'lucide:laptop',

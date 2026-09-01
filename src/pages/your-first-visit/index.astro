@@ -1,0 +1,25 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Your First Visit"
+  description="What happens at your complimentary consultation and how to prepare."
+  breadcrumbs={[
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources/"
+    },
+    {
+      "name": "Your First Visit",
+      "href": "/your-first-visit/"
+    }
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>
