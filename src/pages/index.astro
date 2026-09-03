@@ -401,14 +401,28 @@ const insuranceLogos = [
     padded={false}
     label="Special offer: $1,200 off braces and clear aligners — book a free consult"
   >
-    <a href={bookHref} class="block no-underline">
+    <a href={bookHref} class="home-offer-link no-underline">
       <Image
         src={smileBloomOffer}
         alt="Let your smile bloom — $1,200 off braces and clear aligners at MyOrthodontist North Carolina. Offer ends 4/30. Some restrictions apply. Book a free consult."
         widths={[375, 576, 750]}
         sizes="(max-width: 640px) 100vw, 36rem"
-        class="h-auto w-full"
+        class="home-offer-image"
       />
     </a>
   </Popup>
+
+  <style>
+    /* 750×937 flyer: cap width so the full image fits the viewport with gutters. */
+    .home-offer-link {
+      display: block;
+      width: min(36rem, calc(100vw - 2 * var(--spacing-gutter)), calc((100svh - 2 * var(--spacing-gutter)) * 750 / 937));
+    }
+
+    .home-offer-link :global(.home-offer-image) {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
 </BaseLayout>
