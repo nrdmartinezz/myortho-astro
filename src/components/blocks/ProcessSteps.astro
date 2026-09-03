@@ -16,6 +16,7 @@ interface Props extends BlockProps {
   items: ProcessStep[];
   /** Numbers the steps rather than showing icons. */
   numbered?: boolean;
+  columns?: 2 | 3 | 4;
 }
 
 const {
@@ -29,19 +30,22 @@ const {
   titleLevel = 2,
   items,
   numbered = true,
+  columns = 4,
+  bare = false,
 } = Astro.props;
+
+const columnClass = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+  4: 'sm:grid-cols-2 lg:grid-cols-4',
+}[columns];
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} align={align} gap="lg">
-    <BlockHeader
-      eyebrow={eyebrow}
-      title={title}
-      body={body}
-      level={titleLevel}
-    />
+<Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
+  <Container width={width} align={align} gap="lg" class:list={[bare && 'mx-0! max-w-none! px-0!']}>
+    <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
-    <ol class="grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <ol class:list={['grid w-full gap-8', columnClass]}>
       {
         items.map((step, index) => (
           <li class="flex flex-col gap-3">
