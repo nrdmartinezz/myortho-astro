@@ -49,6 +49,18 @@ const columnClass = {
   4: 'sm:grid-cols-2 lg:grid-cols-4',
 }[columns];
 
+// Every layout drops to two columns at the `sm`–`lg` tablet range, so an odd
+// item count leaves the final card orphaned on the left. Center that orphan
+// across both columns (constrained to a single track: 50% minus half the
+// `gap-6` gutter) and restore the normal cell once the grid reaches its full
+// column count.
+const hasTabletOrphan = items.length % 2 === 1;
+const orphanClass = {
+  2: 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.75rem)]',
+  3: 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.75rem)] lg:col-span-1 lg:mx-0 lg:w-auto',
+  4: 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.75rem)] lg:col-span-1 lg:mx-0 lg:w-auto',
+}[columns];
+
 const onDark =
   background === 'inverse' ||
   background === 'brand' ||
@@ -68,8 +80,13 @@ const onDark =
 
     <ul class:list={['grid w-full gap-6', columnClass]}>
       {
-        items.map((item) => (
-          <Card as="li" variant={onDark ? 'inverse' : 'plain'} padded={!item.image}>
+        items.map((item, index) => (
+          <Card
+            as="li"
+            variant={onDark ? 'inverse' : 'plain'}
+            padded={!item.image}
+            class:list={[hasTabletOrphan && index === items.length - 1 && orphanClass]}
+          >
             {item.image && (
               <Image
                 src={item.image}

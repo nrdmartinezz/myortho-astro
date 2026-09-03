@@ -1,25 +1,181 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ProcessSteps from '../../components/blocks/ProcessSteps.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import adultAligners from '../../images/invisalign/adult-aligners.jpg';
+import alignerTrays from '../../images/services-aligners.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Clear aligners in North Carolina"
   title="How Invisalign Works"
-  description="Clear aligner treatment explained — from first scan to final smile."
+  description="Invisalign clear aligners at all 14 MyOrthodontist locations — a virtually invisible, removable path to a straighter smile, with 3D imaging that shows your results before you begin."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'How Invisalign Works',
-      href: '/types-of-invisalign/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'How Invisalign Works', href: '/types-of-invisalign/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Invisalign Clear Aligners at MyOrthodontist</h2>
+    <p>
+      You wake up and look in the mirror. You wish your smile looked a little different. We get it.
+      Whether it is crowding that makes you hesitate in photos, a gap you have always noticed, or a
+      bite that affects how you chew or speak, you are not alone.
+    </p>
+    <p>
+      The good news? You do not have to settle for metal brackets and wires anymore. At
+      MyOrthodontist, we believe your orthodontic treatment should fit your real life, not interrupt
+      it. That is why we proudly offer Invisalign® clear aligners, the world’s number one clear
+      aligner system, at all fourteen of our convenient locations across North Carolina. With
+      virtually invisible removable aligners and advanced 3D technology that shows you your future
+      smile before you even begin, we make it easy to get the confident smile you deserve.
+    </p>
+    <h2>What is Invisalign and how does it actually work?</h2>
+    <p>
+      Invisalign uses a series of custom-made, clear, removable aligners made from smooth,
+      medical-grade plastic — including SmartTrack™, a patented thermoplastic engineered to move
+      teeth more comfortably and predictably. Each set is designed using advanced 3D digital imaging
+      (including iTero® scans) to gently and precisely move your teeth into their ideal positions.
+    </p>
+  </Prose>
+
+  <ProcessSteps
+    bare
+    numbered
+    columns={3}
+    align="start"
+    eyebrow="Your treatment"
+    title="Here’s how simple the process feels"
+    items={[
+      {
+        title: 'Free consultation & 3D scan',
+        body: 'We capture a detailed digital impression of your teeth in minutes — no messy molds.',
+      },
+      {
+        title: 'See your future smile today',
+        body: 'Cutting-edge software creates a 3D simulation of how your teeth will move and what your smile will look like at the end of treatment.',
+      },
+      {
+        title: 'Receive your custom aligners',
+        body: 'You get a series of clear aligners, usually changed every 7–14 days.',
+      },
+      {
+        title: 'Wear & go',
+        body: 'Wear them 20–22 hours a day. Remove them for eating, drinking anything but water, brushing, and flossing.',
+      },
+      {
+        title: 'Progress check-ins',
+        body: 'Quick visits every 6–10 weeks so we can monitor your progress and keep everything on track.',
+      },
+      {
+        title: 'Retainers & results',
+        body: 'Once treatment is complete, retainers keep your new smile in place for life.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Why patients choose Invisalign"
+    title="Why so many North Carolina adults and teens choose Invisalign"
+    body="Traditional braces work great, but they come with compromises many busy adults and image-conscious teens want to avoid. Invisalign lets you keep living — and smiling — while your teeth move."
+    image={adultAligners}
+    imageAlt="Patient holding a clear Invisalign aligner and smiling"
+    bullets={[
+      'Virtually invisible treatment — most people won’t even notice you’re wearing aligners',
+      'Full freedom to eat what you love — just pop them out for meals and snacks',
+      'Easier oral hygiene — brush and floss normally, with no food trapped in brackets',
+      'Comfort — no wires or brackets to irritate your cheeks and lips',
+      'The ability to whiten during treatment, with our guidance',
+      'Fewer office visits compared to traditional braces in many cases',
+      'A preview of your results before you commit',
+    ]}
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Clear aligners"
+    title="Custom trays, made for your smile"
+    body="Each set of aligners is custom-designed to your unique smile using advanced 3D digital imaging, giving our doctors complete control over every stage of your treatment. With data from millions of smiles worldwide, Invisalign is the most clinically proven clear aligner system available — and we are proud to bring it to you."
+    image={alignerTrays}
+    imageAlt="Hands holding a pair of clear custom aligner trays"
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Find your fit"
+    title="Invisalign for every stage of life"
+    body="Whether you are an adult looking to straighten your smile discreetly, a teen ready to skip the look of traditional braces, or a parent asking when a child might be ready — we will help you choose the right path."
+    items={[
+      {
+        icon: 'lucide:user-check',
+        title: 'Adult Invisalign',
+        body: 'Nearly invisible aligners for adults who want a straighter smile without putting life on hold.',
+        href: '/invisalign-for-adults/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Teen Invisalign',
+        body: 'Clear aligners built for busy school calendars, sports, and the social side of being a teenager.',
+        href: '/invisalign-for-teens/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:heart',
+        title: 'Children Invisalign',
+        body: 'When growing smiles are ready — including Invisalign Teen and an early orthodontic screening.',
+        href: '/invisalign-for-children/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:smile',
+        title: 'Compare with braces',
+        body: 'Metal and ceramic braces remain a proven option. We will help you choose what fits your smile and lifestyle.',
+        href: '/types-of-braces/',
+        ctaLabel: 'Types of braces',
+      },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Common questions"
+    title="Invisalign FAQs"
+    items={[
+      {
+        question: 'What is Invisalign?',
+        answer:
+          'Invisalign is an alternative to traditional bracket-and-wire braces. Custom clear plastic aligners shift teeth gradually into the correct position — they are less noticeable, removable for eating and brushing, and typically more comfortable than metal braces.',
+      },
+      {
+        question: 'How is Invisalign different from braces?',
+        answer:
+          'Braces use metal or ceramic brackets bonded to your teeth and connected by wires. Invisalign uses smooth, BPA-free clear trays worn over your teeth. Both can straighten teeth; Invisalign is designed to be almost invisible and can be removed for meals, brushing, and flossing. <a href="/types-of-braces/">Compare braces options</a>.',
+      },
+      {
+        question: 'Is Invisalign appropriate for teens and children?',
+        answer:
+          'Invisalign Teen is designed for adolescents whose second molars have come in, with extra aligners if trays are lost, features that accommodate erupting teeth, and tools that help teens stay on track. Younger children often start with an orthodontic screening around age 7. <a href="/invisalign-for-teens/">Teen Invisalign</a> · <a href="/invisalign-for-children/">Children Invisalign</a>.',
+      },
+      {
+        question: 'How long does Invisalign treatment take?',
+        answer:
+          'Treatment time depends on your specific orthodontic needs. Aligners are typically changed every 7–14 days, with check-ins every 6–10 weeks. We map the full plan — and show you a 3D preview — at your complimentary consultation.',
+      },
+    ]}
+  />
 </SubpageLayout>

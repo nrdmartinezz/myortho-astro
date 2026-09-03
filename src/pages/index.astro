@@ -14,8 +14,7 @@ import Testimonials from '../components/blocks/Testimonials.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
 import ContactBlock from '../components/blocks/ContactBlock.astro';
 import Popup from '../components/ui/Popup.astro';
-import Heading from '../components/ui/Heading.astro';
-import Button from '../components/ui/Button.astro';
+import { Image } from 'astro:assets';
 import { site, bookHref, virtualHref, phoneAction } from '../config/site';
 import { getPublished } from '../lib/locations';
 
@@ -24,6 +23,7 @@ import aboutPractice from '../images/about-practice-care.webp';
 import virtualConsult from '../images/foundation/virtual-consult.jpg';
 import happyTooth from '../images/foundation/happy-tooth.jpg';
 import consultationCta from '../images/consultation-cta.jpg';
+import smileBloomOffer from '../images/offers/smile-bloom-offer.jpg';
 
 import metalCeramic from '../images/services/metal-ceramic-braces.jpg';
 import sparkAligners from '../images/services/spark-clear-aligners.jpg';
@@ -398,18 +398,17 @@ const insuranceLogos = [
     trigger="scroll"
     scrollThreshold={0.3}
     storageKey="home-offer"
-    labelledBy="home-offer-title"
+    padded={false}
+    label="Special offer: $1,200 off braces and clear aligners — book a free consult"
   >
-    <p class="block-eyebrow text-accent-500 tracking-eyebrow text-xs font-semibold uppercase">
-      Complimentary Consult
-    </p>
-    <Heading level={2} size="lg" id="home-offer-title">
-      Reveal the smile you were always <em>meant to have</em>
-    </Heading>
-    <p class="text-ink-muted max-w-reading">
-      Book a free consultation at any of our 14 North Carolina locations. Flexible financing with $0
-      down is available.
-    </p>
-    <Button href={bookHref}>Book a FREE Consult</Button>
+    <a href={bookHref} class="block no-underline">
+      <Image
+        src={smileBloomOffer}
+        alt="Let your smile bloom — $1,200 off braces and clear aligners at MyOrthodontist North Carolina. Offer ends 4/30. Some restrictions apply. Book a free consult."
+        widths={[375, 576, 750]}
+        sizes="(max-width: 640px) 100vw, 36rem"
+        class="h-auto w-full"
+      />
+    </a>
   </Popup>
 </BaseLayout>

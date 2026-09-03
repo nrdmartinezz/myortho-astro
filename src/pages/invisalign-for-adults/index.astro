@@ -1,25 +1,133 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { Image } from 'astro:assets';
+import { bookHref, virtualHref } from '../../config/site';
+import adultAligners from '../../images/invisalign/adult-aligners.jpg';
+import dreamSmile from '../../images/invisalign/dream-smile.jpg';
+import iteroScanner from '../../images/invisalign/itero-scanner.png';
 ---
 
 <SubpageLayout
+  eyebrow="Invisalign for Adults in North Carolina"
   title="Adult Invisalign"
-  description="Nearly invisible aligners for adults who want a straighter smile on their terms."
+  description="Virtually invisible Invisalign aligners for adults — removable, comfortable, and designed so you don’t have to compromise your smile during treatment. Complimentary in-office or virtual consultations."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Adult Invisalign',
-      href: '/invisalign-for-adults/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Adult Invisalign', href: '/invisalign-for-adults/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Invisalign for Adults at MyOrthodontist</h2>
+    <p>
+      You wake up in the morning, smile at yourself, and wish you could change one little thing
+      about your smile. Whatever that little thing is, we understand, and we know just how important
+      having a healthy, beautiful smile is. That is why we promise to listen to each and every one
+      of your concerns regarding your smile. Here at MyOrthodontist, our utmost priority is to give
+      you the smile of your dreams.
+    </p>
+    <p>
+      One of the ways we achieve this is through Invisalign® clear aligners. Virtually invisible and
+      designed for comfort, Invisalign is a premier option for most of our adult patients.
+      Invisalign works without metal brackets or archwires. Using medical-grade plastic mere
+      millimeters thick, it applies continuous, light pressure to your teeth, moving them into the
+      desired position.
+    </p>
+    <p>
+      Not only can you remove Invisalign clear aligners as you please, allowing you to eat and drink
+      normally, but you can also brush, floss, and even whiten your teeth as you normally would. To
+      put it plainly, our VIP patients deserve VIP treatment, and that is exactly what Invisalign
+      is.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="iTero® 3D imaging"
+    title="We show you today what your smile will look like tomorrow"
+    body="At MyOrthodontist, we can give you a sneak peek at what your actual smile will look like after treatment. Using cutting-edge imaging technology, we create a real-time 3D rendering of your mouth and then show you how your teeth will move over the course of your Invisalign treatment to give you the smile you’ve always dreamed of."
+    bullets={[
+      'Real-time 3D imaging of your teeth',
+      'Enhanced precision at every stage of treatment',
+      'Visual progress tracking so you can see the plan before you begin',
+    ]}
+  >
+    <Image
+      slot="media"
+      src={iteroScanner}
+      alt="iTero Element scanner displaying a 3D model of teeth"
+      widths={[480, 768, 1024]}
+      sizes="(max-width: 1024px) 100vw, 66vw"
+      loading="lazy"
+      class="w-full rounded-lg bg-neutral-950 object-contain p-6"
+    />
+  </FeatureSplit>
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Life during treatment"
+    title="Your dream smile without the compromise"
+    body="You just got off work and are headed to happy hour, only to arrive and get told you have food stuck in your brackets. How long has the food been there? All day? During your big presentation? We’ve heard these kinds of stories firsthand from our patients, and while it might not be the end of the world, it is still extremely frustrating."
+    image={dreamSmile}
+    imageAlt="Adult smiling confidently while enjoying a drink — no brackets in the way"
+    bullets={[
+      'No food stuck in brackets — aligners come out for meals',
+      'Virtually invisible, so treatment stays off-camera and off-stage',
+      'Brush, floss, and even whiten as you normally would',
+    ]}
+  />
+
+  <Prose>
+    <p>
+      Well, it’s time to put those frustrations aside. With Invisalign clear aligners, you no longer
+      have to worry about food getting stuck in your braces. Invisalign clear aligners are
+      removable, virtually invisible aligners that help patients achieve their dream smiles.
+    </p>
+    <p>
+      Here at MyOrthodontist, you don’t have to compromise your desire to have a beautiful smile for
+      treatment. We will keep you smiling 24/7/365, during and after treatment. So go to that happy
+      hour. Nail that big presentation. Because your team at MyOrthodontist has your back.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="Ready when you are"
+    title="There is no maximum age for Invisalign"
+    body="We’ve had patients in their 40s, 50s, and even 60s try Invisalign and achieve wonderful results. Schedule your complimentary in-office or virtual consultation and see your future smile before you commit."
+    image={adultAligners}
+    imageAlt="Adult patient holding a clear Invisalign aligner"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Also exploring"
+    title="More Invisalign options"
+    items={[
+      {
+        icon: 'lucide:scan',
+        title: 'How Invisalign Works',
+        body: 'From first scan to retainers — the full clear-aligner process, step by step.',
+        href: '/types-of-invisalign/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Teen Invisalign',
+        body: 'Clear aligners designed around school, sports, and a teenager’s social life.',
+        href: '/invisalign-for-teens/',
+        ctaLabel: 'Learn more',
+      },
+    ]}
+  />
 </SubpageLayout>
