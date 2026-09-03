@@ -93,10 +93,11 @@ const positioned = sticky !== 'static';
         )
       }
 
-      <MobileNav currentPath={currentPath} />
+      <MobileNav part="toggle" currentPath={currentPath} />
     </div>
   </Container>
 </header>
+<MobileNav part="drawer" currentPath={currentPath} />
 
 <style>
   header {
