@@ -1,6 +1,8 @@
 ---
 /** Shared heading cluster so every block introduces itself the same way. */
 import Heading from '../ui/Heading.astro';
+import { Icon } from 'astro-icon/components';
+import type { BlockAction } from './types';
 
 export type BlockHeaderLayout = 'stack' | 'split';
 
@@ -10,17 +12,18 @@ interface Props {
   body?: string;
   level?: 2 | 3;
   centered?: boolean;
-  /** `split` places eyebrow+title on the start edge and body on the end. */
+  /** `split` places eyebrow+title on the start edge and body/action on the end. */
   layout?: BlockHeaderLayout;
+  action?: BlockAction;
 }
 
-const { eyebrow, title, body, level = 2, centered = true, layout } = Astro.props;
+const { eyebrow, title, body, level = 2, centered = true, layout, action } = Astro.props;
 
-const split = layout === 'split' && Boolean(body) && Boolean(eyebrow || title);
+const split = layout === 'split' && Boolean(body || action) && Boolean(eyebrow || title);
 ---
 
 {
-  (eyebrow || title || body) && (
+  (eyebrow || title || body || action) && (
     <div
       class:list={[
         'flex w-full',
@@ -37,17 +40,42 @@ const split = layout === 'split' && Boolean(body) && Boolean(eyebrow || title);
           {title && <Heading level={level} set:html={title} />}
         </div>
       )}
-      {body && (
-        <p
+      {(body || action) && (
+        <div
           class:list={[
-            'block-body text-base',
-            split
-              ? 'md:max-w-reading min-w-0 flex-1 text-end max-md:text-start md:pt-1'
-              : 'max-w-reading',
+            'flex flex-col gap-2',
+            split && 'items-end max-md:items-start',
+            split && body && 'md:max-w-reading min-w-0 flex-1',
+            split && !body && 'shrink-0',
+            !split && centered && 'items-center',
           ]}
         >
-          {body}
-        </p>
+          {body && (
+            <p
+              class:list={[
+                'block-body text-base',
+                split
+                  ? 'md:max-w-reading min-w-0 text-end max-md:text-start md:pt-1'
+                  : 'max-w-reading',
+              ]}
+            >
+              {body}
+            </p>
+          )}
+          {action && (
+            <a
+              href={action.href}
+              class="text-accent-500 tracking-eyebrow inline-flex items-center gap-1.5 text-xs font-semibold uppercase no-underline"
+            >
+              {action.label}
+              <Icon
+                name={action.icon ?? 'lucide:arrow-right'}
+                class="size-3.5"
+                aria-hidden="true"
+              />
+            </a>
+          )}
+        </div>
       )}
     </div>
   )

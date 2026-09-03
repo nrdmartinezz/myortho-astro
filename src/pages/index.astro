@@ -11,6 +11,7 @@ import StatCard from '../components/blocks/StatCard.astro';
 import FeatureSplit from '../components/blocks/FeatureSplit.astro';
 import LogoCloud from '../components/blocks/LogoCloud.astro';
 import Testimonials from '../components/blocks/Testimonials.astro';
+import PostGrid from '../components/blocks/PostGrid.astro';
 import CTABanner from '../components/blocks/CTABanner.astro';
 import ContactBlock from '../components/blocks/ContactBlock.astro';
 import Popup from '../components/ui/Popup.astro';
@@ -31,6 +32,7 @@ import carriere from '../images/services/carriere.jpg';
 import brius from '../images/services/brius.jpg';
 import virtualMonitoring from '../images/services/virtual-dental-monitoring.jpg';
 import smile360 from '../images/services/smile-360.jpg';
+import adultAligners from '../images/invisalign/adult-aligners.jpg';
 
 import logoAetna from '../images/insurance/Aetna.png';
 import logoAmeritas from '../images/insurance/Ameritas.png';
@@ -296,7 +298,8 @@ const insuranceLogos = [
     align="center"
     eyebrow="Patient Stories"
     title="What Our Patients<br/><em>Are Saying</em>"
-    body="4.9 / 5.0 Google Reviews"
+    ratingScore="4.9 / 5.0"
+    ratingSource="Google Reviews"
     items={[
       {
         quote:
@@ -304,6 +307,7 @@ const insuranceLogos = [
         name: 'Sarah M.',
         role: 'Raleigh, NC',
         rating: 5,
+        tag: 'Clear Aligners',
       },
       {
         quote:
@@ -311,6 +315,7 @@ const insuranceLogos = [
         name: 'James T.',
         role: 'Fayetteville, NC',
         rating: 5,
+        tag: 'Ceramic Braces',
       },
       {
         quote:
@@ -318,6 +323,7 @@ const insuranceLogos = [
         name: 'Maria L.',
         role: 'Chapel Hill, NC',
         rating: 5,
+        tag: 'Metal Braces',
       },
     ]}
   />
@@ -344,33 +350,41 @@ const insuranceLogos = [
     actions={[{ label: 'Get More Information', href: '/about/foundation/', variant: 'secondary' }]}
   />
 
-  <ServicesGrid
-    background="muted"
-    align="center"
+  <PostGrid
+    background="base"
     eyebrow="The Tooth Wisdom Blog"
     title="Latest Posts &<br/><em>Smile Tips</em>"
-    columns={3}
+    action={{ label: 'Read More Posts', href: 'https://myorthodontistnc.com/blog/' }}
     items={[
       {
-        eyebrow: 'June 2, 2026',
-        title: 'Invisalign vs. Braces — A Practical Comparison',
-        body: 'At MyOrthodontist in Fayetteville, NC, we believe every patient deserves to reveal the beautiful smile they were always meant to have.',
-        href: 'https://site.myorthodontistnc.com/invisalign-vs-braces/',
-        ctaLabel: 'Read More',
+        tag: 'Family Care',
+        date: 'May 2, 2026',
+        dateTime: '2026-05-02',
+        title: "Your Child's Dental Health Journey: A Step-by-Step Guide from MyOrthodontist",
+        body: "From the first tooth to the final retainer, we guide families through every milestone of their child's orthodontic journey.",
+        href: 'https://myorthodontistnc.com/uncategorized/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/',
+        image: consultationCta,
+        imageAlt: 'Family smiling together outdoors',
       },
       {
-        eyebrow: 'May 15, 2026',
-        title: 'Life After Braces — Retention & Retainers',
-        body: "Congratulations! You've reached the exciting milestone of having your braces removed. Here's how to protect your new smile.",
-        href: 'https://site.myorthodontistnc.com/life-after-braces-retention-retainers/',
-        ctaLabel: 'Read More',
+        tag: 'Preventive Care',
+        date: 'April 28, 2026',
+        dateTime: '2026-04-28',
+        title: "Dental Sealants: A Simple Step to Shield Your Child's Smile from Cavities",
+        body: "Learn how dental sealants provide an extra layer of protection against cavities and why they're recommended for children.",
+        href: 'https://myorthodontistnc.com/uncategorized/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/',
+        image: aboutPractice,
+        imageAlt: 'Orthodontist caring for a young patient',
       },
       {
-        eyebrow: 'May 4, 2026',
-        title: "Orthodontics for Adults — It's Never Too Late",
-        body: 'At MyOrthodontist, we believe everyone deserves to reveal the beautiful smile they were always meant to have — at any age.',
-        href: 'https://site.myorthodontistnc.com/orthodontics-for-adults-why-its-never-too-late-to-straighten-your-teeth-and-improve-your-health/',
-        ctaLabel: 'Read More',
+        tag: 'Nutrition & Health',
+        date: 'April 20, 2026',
+        dateTime: '2026-04-20',
+        title: "More Than Just Sugar: How Hidden Acids in Your Child's Diet Threaten Their Enamel",
+        body: "Discover the surprising foods and drinks that erode tooth enamel and what you can do to protect your family's smiles.",
+        href: 'https://myorthodontistnc.com/uncategorized/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/',
+        image: adultAligners,
+        imageAlt: 'Patient smiling outdoors after treatment',
       },
     ]}
   />
