@@ -1,0 +1,22 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+---
+
+<SubpageLayout
+  title="Accessibility"
+  description="Our commitment to making the MyOrthodontist website usable for everyone."
+  showCtaBanner={false}
+  breadcrumbs={[
+    {
+      name: 'Home',
+      href: '/',
+    },
+    {
+      name: 'Accessibility',
+      href: '/accessibility/',
+    },
+  ]}
+>
+  <PlaceholderProse />
+</SubpageLayout>
