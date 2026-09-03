@@ -33,8 +33,15 @@ const linkClass =
   aria-controls="mobile-nav"
   class="inline-flex size-11 items-center justify-center rounded-md hover:bg-neutral-100 md:hidden"
 >
-  <span class="sr-only">Menu</span>
-  <Icon name="lucide:menu" class="size-6" aria-hidden="true" />
+  <span class="sr-only" data-nav-toggle-label>Menu</span>
+  <span class="nav-toggle-icons" aria-hidden="true">
+    <span class="nav-toggle-icon nav-toggle-icon--menu">
+      <Icon name="lucide:menu" class="size-6" />
+    </span>
+    <span class="nav-toggle-icon nav-toggle-icon--close">
+      <Icon name="lucide:x" class="size-6" />
+    </span>
+  </span>
 </button>
 
 <div
@@ -148,8 +155,42 @@ const linkClass =
     --header-h: 4rem;
   }
 
+  .nav-toggle-icons {
+    display: grid;
+    place-items: center;
+  }
+
+  .nav-toggle-icon {
+    grid-area: 1 / 1;
+    display: flex;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .nav-toggle-icon--close {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  #nav-toggle[aria-expanded='true'] .nav-toggle-icon--menu {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  #nav-toggle[aria-expanded='true'] .nav-toggle-icon--close {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
   .mobile-accordion[aria-expanded='true'] :global(svg) {
     transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-toggle-icon {
+      transition: none;
+    }
   }
 </style>
 
@@ -164,8 +205,11 @@ const linkClass =
       (el) => el !== header && el !== drawer,
     ) as HTMLElement[];
 
+    const label = toggle.querySelector<HTMLElement>('[data-nav-toggle-label]');
+
     const setDrawer = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
+      if (label) label.textContent = open ? 'Close' : 'Menu';
       drawer.hidden = !open;
       document.body.style.overflow = open ? 'hidden' : '';
 
