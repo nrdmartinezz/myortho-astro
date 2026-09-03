@@ -1,25 +1,152 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import aboutPractice from '../../images/about-practice-care.webp';
+import youngWomanAligners from '../../images/invisalign/young-woman-aligners.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Invisalign for growing smiles"
   title="Children Invisalign"
-  description="Early aligner treatment options for growing smiles."
+  description="Considering Invisalign for a school-age child? Learn the minimum-age guidelines, Invisalign Teen, and why an orthodontic screening around age 7 still matters — then book a free consult."
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Treatments",
-      "href": "/services/"
-    },
-    {
-      "name": "Children Invisalign",
-      "href": "/invisalign-for-children/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Children Invisalign', href: '/invisalign-for-children/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Starting young: Invisalign for school-age patients</h2>
+    <p>
+      If you are considering Invisalign® for your school-age children, you might be asking: What’s
+      the youngest age for Invisalign? When can I get treatment started? There is a recommended
+      Invisalign minimum age for treatment, but there are several other things you should consider
+      as well.
+    </p>
+    <p>
+      Generally, it is recommended that your child’s second molars (also known as their
+      “twelve-year-old molars”) have come in. Looking at statistics for the North Carolina area,
+      this has usually happened by the time kids are around 14. This is the minimum recommended age
+      for Invisalign. It has been our experience, throughout our North Carolina offices, that girls
+      often mature a little faster than boys when it comes to their developing teeth, and so they
+      might be eligible a little earlier.
+    </p>
+    <p>
+      As long as this requirement (second molars in) has been met, your teenager is probably
+      eligible for treatment with Invisalign. In fact, there is a treatment option called Invisalign
+      Teen which was specifically developed for teenagers.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="Invisalign Teen"
+    title="A clear-aligner program built for adolescents"
+    body="Invisalign Teen differs slightly from the usual Invisalign course of treatment so it can keep up with sports, school, and teeth that are still coming in."
+    image={youngWomanAligners}
+    imageAlt="Young patient holding a clear Invisalign aligner"
+    bullets={[
+      'Extra aligners in case trays get lost or damaged, including during sports',
+      'Aligners that evolve as new molars erupt, helping guide new teeth into position',
+      'Special features to help guide tooth roots into place so changes last',
+      'Tools that help your child stay on track with daily wear',
+    ]}
+    actions={[
+      { label: 'Teen Invisalign details', href: '/invisalign-for-teens/', variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Before you start"
+    title="Considerations other than minimum age"
+    body="Age is only one piece. These are the other things we look at before recommending Invisalign for a younger patient."
+    items={[
+      {
+        icon: 'lucide:clock',
+        title: 'Maturity to comply',
+        body: 'Aligners should be worn 20–22 hours a day, stored and protected when they are out, and cleaned properly. Your child needs the maturity to stick with that routine.',
+      },
+      {
+        icon: 'lucide:shield-check',
+        title: 'Healthy teeth first',
+        body: 'There should be no significant tooth decay or damage. Other oral health problems should be addressed before Invisalign, or the process can be ineffective or uncomfortable.',
+      },
+      {
+        icon: 'lucide:baby',
+        title: 'Baby teeth should be out',
+        body: 'Mouths develop at different rates — even some teenagers still have baby teeth. If that’s the case, we wait until those teeth have come out.',
+      },
+      {
+        icon: 'lucide:scan-eye',
+        title: 'Screening can start earlier',
+        body: 'The American Association of Orthodontists recommends an orthodontic screening at age 7. Early evaluation does not always mean early Invisalign — it means we catch problems before they become more severe.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>What about an earlier start?</h2>
+    <p>
+      An early screening is not the same as starting Invisalign. Some orthodontic problems are
+      significant enough to need Phase One treatment between ages 7 and 10 — usually to prevent
+      issues from becoming more severe and to support a child’s self-esteem. After Phase One, we
+      monitor growth until the time is right for full treatment, which for many families is
+      Invisalign Teen once second molars are in.
+    </p>
+    <p>
+      Here at MyOrthodontist, we’ve seen patients of all ages get the smile they want with
+      Invisalign. We can work with your child whether we are planning ahead at age 7 or starting
+      aligners as a teenager. The first step is a complimentary consultation.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Complimentary consult"
+    title="Find out if — and when — Invisalign is right"
+    body="Walk into one of our offices or schedule a virtual consult. We’ll look at growth, eruption, and habits, then recommend Invisalign Teen, braces, or simply watching and waiting — whichever is best for your child."
+    image={aboutPractice}
+    imageAlt="Orthodontist meeting with a young patient in the treatment chair"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Parents ask"
+    title="Children, teens, and Invisalign"
+    items={[
+      {
+        question: 'At what age should I schedule an orthodontic screening?',
+        answer:
+          'The American Association of Orthodontists recommends an orthodontic screening at age 7. By this age, several permanent teeth in most children have erupted, allowing us to evaluate your child’s orthodontic condition. Early treatment can sometimes help avoid more difficult or extensive treatment later.',
+      },
+      {
+        question: 'What is the minimum age for Invisalign?',
+        answer:
+          'We generally recommend waiting until second molars (“twelve-year-old molars”) have come in — often around age 14 in North Carolina, sometimes a little earlier. Invisalign Teen is the program designed for that stage. A screening at 7 still helps us plan, even if aligners come later.',
+      },
+      {
+        question: 'Will my child need braces even after early treatment?',
+        answer:
+          'It is best to assume that your child will need full treatment even after Phase One. The period following Phase One is a “resting period,” during which we closely monitor growth and tooth eruption and keep you informed of future recommendations — which may include Invisalign Teen or braces.',
+      },
+      {
+        question: 'How is Invisalign Teen different from adult Invisalign?',
+        answer:
+          'Invisalign Teen includes extra replacement aligners, features that accommodate erupting teeth and root guidance, and wear-time tools to help teens stay on track. <a href="/invisalign-for-teens/">Learn more about Teen Invisalign</a>.',
+      },
+    ]}
+  />
 </SubpageLayout>

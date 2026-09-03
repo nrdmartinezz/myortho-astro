@@ -1,25 +1,166 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { Image } from 'astro:assets';
+import { bookHref, virtualHref } from '../../config/site';
+import youngWomanAligners from '../../images/invisalign/young-woman-aligners.jpg';
+import iteroScanner from '../../images/invisalign/itero-scanner.png';
+import virtualConsult from '../../images/foundation/virtual-consult.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Invisalign for Teens in North Carolina"
   title="Teen Invisalign"
-  description="Clear aligners built for teens — removable, comfortable, and confidence-boosting."
+  description="One of the main concerns our orthodontists hear from a teenager is “How am I going to look in braces?” With Invisalign for Teens, you won’t have to worry about that — removable, virtually invisible aligners built for busy schedules."
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Treatments",
-      "href": "/services/"
-    },
-    {
-      "name": "Teen Invisalign",
-      "href": "/invisalign-for-teens/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Teen Invisalign', href: '/invisalign-for-teens/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Invisalign for Teens at MyOrthodontist</h2>
+    <p>
+      One of the main concerns our trusted orthodontists hear from a teenager is “How am I going to
+      look in braces?” Well, with Invisalign for Teens, you won’t have to worry about that. Whether
+      you are a teenager doing research on your own, or a parent looking into orthodontic care for
+      your loved one, we are here to answer any and all of your questions.
+    </p>
+    <p>
+      So, what are Invisalign® clear aligners? Invisalign clear aligners are made out of
+      medical-grade plastic, and are only mere millimeters thick. Instead of using metal archwires
+      and brackets, Invisalign uses continuous, light pressure to gently shift the teeth into a more
+      preferred position.
+    </p>
+    <p>
+      Invisalign clear aligners are also completely removable, meaning your teen can continue eating
+      all of the foods they enjoy, as well as keep up with their excellent oral hygiene. The amount
+      of in-office appointments also decreases with the use of Invisalign, so they can get back to
+      their busy schedule, and you can get back to yours.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="iTero® 3D imaging"
+    title="We show you today what your smile will look like tomorrow"
+    body="At MyOrthodontist, we can give you a sneak peek at what your actual smile will look like after treatment. Using cutting-edge imaging technology, we create a real-time 3D rendering of your mouth and then show you how your teeth will move over the course of your Invisalign treatment."
+    bullets={[
+      'Real-time 3D imaging of your teeth',
+      'Enhanced precision at every stage of treatment',
+      'Visual progress tracking so you can see the plan before you begin',
+    ]}
+  >
+    <Image
+      slot="media"
+      src={iteroScanner}
+      alt="iTero Element scanner displaying a 3D model of teeth"
+      widths={[480, 768, 1024]}
+      sizes="(max-width: 1024px) 100vw, 66vw"
+      loading="lazy"
+      class="w-full rounded-lg bg-neutral-950 object-contain p-6"
+    />
+  </FeatureSplit>
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Built for teenage life"
+    title="Why choose MyOrthodontist and Invisalign clear aligners?"
+    body="Picture this. You have homecoming in 24 hours, and all of a sudden you break a bracket. What do you do? Do you miss homecoming, the biggest night of the year, to get your bracket fixed? Do you wait until Monday, but you’re in pain all weekend? Unfortunately, this is something that a lot of people with traditional metal or ceramic braces face."
+    image={youngWomanAligners}
+    imageAlt="Teen holding a clear Invisalign aligner and smiling"
+    bullets={[
+      'No broken brackets or pokey wires to ruin a weekend',
+      'Virtually invisible — most people won’t notice them',
+      'Take them out for dinner, brush, and put them back in for the dance',
+      'Invisalign Teen includes extra aligners if trays get lost or damaged',
+    ]}
+  />
+
+  <Prose>
+    <p>
+      When you have Invisalign, you don’t have to worry about broken brackets or pokey wires. All
+      you have to worry about is showing up for homecoming and showing everyone your dazzling smile.
+      As Invisalign is virtually invisible, no one will even notice you have it on. Go ahead, take
+      them out while you eat your big homecoming dinner, brush your teeth, and put them back in when
+      you head to the dance.
+    </p>
+    <p>
+      As a teenager with Invisalign, the only thing you have to worry about is smiling that big,
+      beautiful smile and having a good time at your dance, at school, or your extracurricular
+      activities. Come see if Invisalign is right for you by scheduling your in-office or virtual
+      complimentary consultation.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Invisalign Teen extras"
+    title="Designed around growing smiles"
+    body="Invisalign Teen differs slightly from adult Invisalign so treatment can keep up with school, sports, and erupting teeth."
+    items={[
+      {
+        icon: 'lucide:replace',
+        title: 'Extra aligners',
+        body: 'The program allows for extra aligners in case they get lost or damaged — for example, when playing sports.',
+      },
+      {
+        icon: 'lucide:sprout',
+        title: 'Grows with new teeth',
+        body: 'Aligners for teenagers evolve as new molars begin erupting, helping guide new teeth into position.',
+      },
+      {
+        icon: 'lucide:waypoints',
+        title: 'Root guidance',
+        body: 'Special features help guide tooth roots into place so the changes are longer lasting.',
+      },
+      {
+        icon: 'lucide:badge-check',
+        title: 'Wear-time tools',
+        body: 'Extra tools help ensure your son or daughter is complying with treatment and heading toward success.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Complimentary consult"
+    title="See if Invisalign Teen is the right fit"
+    body="Schedule an in-office or virtual complimentary consultation. We’ll answer every question — from wear time to sports to how treatment fits around school."
+    image={virtualConsult}
+    imageAlt="Patient meeting with an orthodontist over a virtual consultation"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Also exploring"
+    title="More Invisalign options"
+    items={[
+      {
+        icon: 'lucide:scan',
+        title: 'How Invisalign Works',
+        body: 'From first scan to retainers — the full clear-aligner process, step by step.',
+        href: '/types-of-invisalign/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:heart',
+        title: 'Children Invisalign',
+        body: 'When a younger smile might be ready, and what an early orthodontic screening can tell you.',
+        href: '/invisalign-for-children/',
+        ctaLabel: 'Learn more',
+      },
+    ]}
+  />
 </SubpageLayout>
