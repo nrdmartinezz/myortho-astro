@@ -11,7 +11,12 @@ import { getPublished, type Entry } from '../../lib/doctors';
 
 const pageActions = [
   { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
-  { icon: 'lucide:laptop', label: 'Virtual Consult', href: virtualHref, variant: 'outline' as const },
+  {
+    icon: 'lucide:laptop',
+    label: 'Virtual Consult',
+    href: virtualHref,
+    variant: 'outline' as const,
+  },
   { ...phoneAction, variant: 'outline' as const },
 ];
 
@@ -57,24 +62,23 @@ const { page } = Astro.props;
                 />
               )}
               <Heading level={2} size="md">
-                <a href={`/doctors/${entry.id}/`} class="text-ink-base no-underline hover:underline">
+                <a
+                  href={`/doctors/${entry.id}/`}
+                  class="text-ink-base no-underline hover:underline"
+                >
                   {entry.data.name}
                 </a>
               </Heading>
-              {
-                (entry.data.credentials || entry.data.role) && (
-                  <p class="text-ink-muted text-sm">
-                    {[entry.data.credentials, entry.data.role].filter(Boolean).join(' · ')}
-                  </p>
-                )
-              }
-              {
-                entry.data.locations && entry.data.locations.length > 0 ? (
-                  <p class="text-ink-muted text-sm">{entry.data.locations.join(', ')}</p>
-                ) : (
-                  entry.data.role && <p class="text-ink-muted text-sm">{entry.data.role}</p>
-                )
-              }
+              {(entry.data.credentials || entry.data.role) && (
+                <p class="text-ink-muted text-sm">
+                  {[entry.data.credentials, entry.data.role].filter(Boolean).join(' · ')}
+                </p>
+              )}
+              {entry.data.locations && entry.data.locations.length > 0 ? (
+                <p class="text-ink-muted text-sm">{entry.data.locations.join(', ')}</p>
+              ) : (
+                entry.data.role && <p class="text-ink-muted text-sm">{entry.data.role}</p>
+              )}
             </Card>
           ))
         }

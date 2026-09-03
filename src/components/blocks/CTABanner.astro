@@ -63,22 +63,22 @@ const defaultVariant =
   <Container width={width} align={align} gap="md">
     {
       eyebrow && (
-        <p class="block-eyebrow tracking-eyebrow text-xs font-light uppercase">
-          {eyebrow}
-        </p>
+        <p class="block-eyebrow tracking-eyebrow text-xs font-light uppercase">{eyebrow}</p>
       )
     }
     {title && <Heading level={titleLevel} set:html={title} />}
-    {body && (
-      <p
-        class:list={[
-          'max-w-reading text-lg',
-          defaultVariant === 'inverse' ? 'text-white/80' : 'block-body',
-        ]}
-      >
-        {body}
-      </p>
-    )}
+    {
+      body && (
+        <p
+          class:list={[
+            'max-w-reading text-lg',
+            defaultVariant === 'inverse' ? 'text-white/80' : 'block-body',
+          ]}
+        >
+          {body}
+        </p>
+      )
+    }
 
     <div class:list={['flex flex-wrap gap-3', align === 'center' && 'justify-center']}>
       {
@@ -87,8 +87,7 @@ const defaultVariant =
           // white outline (`secondary`) instead. Explicit inverse/ghost-white
           // still win; unspecified variants still take `defaultVariant`.
           const onDark = defaultVariant === 'inverse';
-          const variant =
-            onDark && action.variant === 'outline' ? 'secondary' : action.variant;
+          const variant = onDark && action.variant === 'outline' ? 'secondary' : action.variant;
 
           return (
             <ActionButton

@@ -69,11 +69,7 @@ const onDark =
     <ul class:list={['grid w-full gap-6', columnClass]}>
       {
         items.map((item) => (
-          <Card
-            as="li"
-            variant={onDark ? 'inverse' : 'plain'}
-            padded={!item.image}
-          >
+          <Card as="li" variant={onDark ? 'inverse' : 'plain'} padded={!item.image}>
             {item.image && (
               <Image
                 src={item.image}
@@ -94,10 +90,7 @@ const onDark =
                 />
               )}
               {item.eyebrow && (
-                <p
-                  class="tracking-eyebrow text-xs font-semibold uppercase"
-                  data-slot="eyebrow"
-                >
+                <p class="tracking-eyebrow text-xs font-semibold uppercase" data-slot="eyebrow">
                   {item.eyebrow}
                 </p>
               )}

@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const locations = defineCollection({
@@ -10,7 +11,7 @@ const locations = defineCollection({
     region: z.string(),
     phone: z.string(),
     fax: z.string().optional(),
-    email: z.string().email(),
+    email: z.email(),
     hours: z.string(),
     slug: z.string().optional(),
     coordinates: z.object({ lat: z.number(), lng: z.number() }).optional(),

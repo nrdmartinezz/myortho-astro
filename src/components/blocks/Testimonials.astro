@@ -37,12 +37,7 @@ const columnClass = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }[columns];
 
 <Section background={background} spacing={spacing}>
   <Container width={width} align={align} gap="lg">
-    <BlockHeader
-      eyebrow={eyebrow}
-      title={title}
-      body={body}
-      level={titleLevel}
-    />
+    <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
     <ul class:list={['grid w-full gap-6', columnClass]}>
       {

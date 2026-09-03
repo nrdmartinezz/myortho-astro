@@ -14,11 +14,15 @@ const iconPosition = action.iconPosition ?? 'left';
 ---
 
 <Button href={action.href} variant={action.variant ?? defaultVariant} size={size}>
-  {action.icon && iconPosition === 'left' && (
-    <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
-  )}
+  {
+    action.icon && iconPosition === 'left' && (
+      <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
+    )
+  }
   {action.label}
-  {action.icon && iconPosition === 'right' && (
-    <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
-  )}
+  {
+    action.icon && iconPosition === 'right' && (
+      <Icon name={action.icon} class="size-5 shrink-0" aria-hidden="true" />
+    )
+  }
 </Button>

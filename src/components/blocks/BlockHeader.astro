@@ -29,23 +29,21 @@ const split = layout === 'split' && Boolean(body) && Boolean(eyebrow || title);
           : ['flex-col gap-3', centered && 'items-center text-center'],
       ]}
     >
-      {
-        (eyebrow || title) && (
-          <div class:list={['flex flex-col gap-3', split && 'min-w-0 flex-1 text-start']}>
-            {eyebrow && (
-              <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">
-                {eyebrow}
-              </p>
-            )}
-            {title && <Heading level={level} set:html={title} />}
-          </div>
-        )
-      }
+      {(eyebrow || title) && (
+        <div class:list={['flex flex-col gap-3', split && 'min-w-0 flex-1 text-start']}>
+          {eyebrow && (
+            <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">{eyebrow}</p>
+          )}
+          {title && <Heading level={level} set:html={title} />}
+        </div>
+      )}
       {body && (
         <p
           class:list={[
             'block-body text-base',
-            split ? 'min-w-0 flex-1 text-end max-md:text-start md:max-w-reading md:pt-1' : 'max-w-reading',
+            split
+              ? 'md:max-w-reading min-w-0 flex-1 text-end max-md:text-start md:pt-1'
+              : 'max-w-reading',
           ]}
         >
           {body}

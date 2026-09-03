@@ -11,7 +11,12 @@ import { getPublished, type Entry } from '../../lib/locations';
 
 const pageActions = [
   { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
-  { icon: 'lucide:laptop', label: 'Virtual Consult', href: virtualHref, variant: 'outline' as const },
+  {
+    icon: 'lucide:laptop',
+    label: 'Virtual Consult',
+    href: virtualHref,
+    variant: 'outline' as const,
+  },
   { ...phoneAction, variant: 'outline' as const },
 ];
 
