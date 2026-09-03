@@ -119,12 +119,17 @@ const monogram = (value: string) =>
             {doctors.map((doctor) => (
               <Card as="li" variant="elevated" class="items-center text-center">
                 {doctor.photo ? (
-                  <img
-                    src={doctor.photo}
-                    alt=""
-                    loading="lazy"
-                    class="border-line-base size-28 rounded-full border object-cover"
-                  />
+                  // Wrapper keeps the avatar out of Card's `img:first-child`
+                  // full-bleed rule, which would otherwise stretch the circular
+                  // portrait to card width and crop the head at tablet sizes.
+                  <div class="flex justify-center">
+                    <img
+                      src={doctor.photo}
+                      alt=""
+                      loading="lazy"
+                      class="border-line-base size-28 rounded-full border object-cover"
+                    />
+                  </div>
                 ) : (
                   <div
                     class="bg-brand-50 text-ink-brand font-heading flex size-28 items-center justify-center rounded-full text-2xl"
