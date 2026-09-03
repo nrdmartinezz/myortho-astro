@@ -28,7 +28,7 @@ const split = layout === 'split' && Boolean(body || action) && Boolean(eyebrow |
       class:list={[
         'flex w-full',
         split
-          ? 'flex-row items-end justify-between gap-8 max-md:flex-col max-md:gap-4'
+          ? 'flex-row items-end justify-between gap-8 max-md:flex-col max-md:items-start max-md:gap-4 max-md:text-start'
           : ['flex-col gap-3', centered && 'items-center text-center'],
       ]}
     >
