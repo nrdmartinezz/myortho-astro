@@ -1,25 +1,83 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
 ---
 
 <SubpageLayout
-  title="New Patient Info"
-  description="Everything you need before your first orthodontic appointment."
+  title="New Patient Information"
+  description="Everything you need to know before your first orthodontic appointment — from forms to what to bring."
+  eyebrow="New Patients"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources/"
-    },
-    {
-      "name": "New Patient Info",
-      "href": "/patient/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'New Patient Information', href: '/patient/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>We&rsquo;re accepting new patients</h2>
+    <p>
+      Some people dread going to the orthodontist — so at MyOrthodontist we do everything we can to
+      make your experience a happy one. We pair the friendly, personalized care of a neighborhood
+      practice with the modern amenities of a high-tech office. As specialists in gentle, painless
+      orthodontics, we want every visit to be stress-free.
+    </p>
+    <p>
+      We&rsquo;re glad you&rsquo;re considering us. If you can&rsquo;t find what you&rsquo;re looking
+      for here, don&rsquo;t hesitate to reach out to an office near you.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="Be Prepared"
+    title="What to bring to your appointment"
+    body="Completing your paperwork ahead of time means less time in the waiting room and more time focused on your smile. Please plan to bring the following to your first visit."
+    titleLevel={2}
+    bullets={[
+      'A photo ID for the patient or responsible party',
+      'Your dental or orthodontic insurance card',
+      'A list of any current medications',
+      'Completed new-patient forms (or arrive a few minutes early to finish them)',
+      'Any questions you would like our team to answer',
+    ]}
+  />
+
+  <ServicesGrid bare background="base" columns={3} eyebrow="Before You Arrive" title="A few things to know" titleLevel={2} items={[
+    {
+      icon: 'lucide:file-text',
+      title: 'Complete your forms',
+      body: 'We collect some information in advance so your visit runs smoothly. Fill out your new-patient forms online before you arrive.',
+      href: '/patient-portal/',
+      ctaLabel: 'Go to patient forms',
+    },
+    {
+      icon: 'lucide:clock',
+      title: 'Arrive a little early',
+      body: 'Getting here a few minutes early gives you time to settle in, wrap up any paperwork, and start your appointment relaxed.',
+    },
+    {
+      icon: 'lucide:credit-card',
+      title: 'Insurance & financing',
+      body: 'We honor many insurance plans and offer flexible financing. During your first visit we review the options that best fit your budget.',
+      href: '/insurance/',
+      ctaLabel: 'View insurance & financing',
+    },
+  ]} />
+
+  <Prose>
+    <h2>What to expect from our team</h2>
+    <p>
+      From your very first call, we do everything possible to support your orthodontic treatment —
+      accommodating your schedule, answering your questions, working with your insurance company, and
+      caring for your whole family. Expect a higher level of service and attention every step of the
+      way.
+    </p>
+    <p>
+      Still have questions? Our <a href="/faqs/">FAQs</a> page covers many of the things new patients
+      ask, and you can always contact us directly for anything else. To find a convenient office,
+      visit our <a href="/locations/">locations</a> page.
+    </p>
+  </Prose>
 </SubpageLayout>

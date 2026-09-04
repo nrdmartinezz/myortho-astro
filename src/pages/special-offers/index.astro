@@ -1,25 +1,62 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
   title="Special Offers"
-  description="Current promotions and savings on orthodontic treatment."
+  description="Current promotions on braces and clear aligners — plus a free consultation, always."
+  eyebrow="Discounts &amp; Specials"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources/"
-    },
-    {
-      "name": "Special Offers",
-      "href": "/special-offers/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Special Offers', href: '/special-offers/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Start your smile for just $299</h2>
+    <p>
+      A beautiful, confident smile shouldn&rsquo;t feel out of reach. MyOrthodontist is making it
+      easier than ever to get started: begin braces or clear aligners for just <strong>$299
+      down</strong> — previously $599 — with affordable monthly payments and financing options that
+      fit your budget. We also accept most insurance plans.
+    </p>
+    <p>
+      And no matter what, your <strong>consultation is always free</strong>. Come in and discover how
+      attainable your new smile can be.
+    </p>
+  </Prose>
+
+  <ServicesGrid bare background="base" columns={3} eyebrow="The Details" title="What&rsquo;s included" titleLevel={2} items={[
+    {
+      icon: 'lucide:gift',
+      title: '$299 to get started',
+      body: 'Begin braces or clear aligners for just $299 down — reduced from $599 — so cost is never a barrier to starting treatment.',
+    },
+    {
+      icon: 'lucide:credit-card',
+      title: 'Budget-friendly financing',
+      body: 'Flexible monthly payment plans make treatment manageable, and we accept most insurance to help lower your out-of-pocket cost.',
+    },
+    {
+      icon: 'lucide:calendar',
+      title: 'Always a free consult',
+      body: 'Every consultation is free. Meet our team, get a personalized plan, and learn exactly what your smile journey will look like.',
+    },
+  ]} />
+
+  <Prose>
+    <h2>Ready to begin?</h2>
+    <p>
+      At MyOrthodontist we believe in affordable, accessible smiles for everyone — that&rsquo;s why we
+      always put patients before profits. Schedule your free consultation to get started, and see our
+      <a href="/insurance/">insurance &amp; financing</a> page for more on payment options or our
+      <a href="/locations/">locations</a> page to find an office near you.
+    </p>
+    <p>
+      <em>Some restrictions apply. Offer details are subject to change — ask our team for the current
+      promotion and full details.</em>
+    </p>
+  </Prose>
 </SubpageLayout>
