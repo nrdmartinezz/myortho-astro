@@ -1,25 +1,115 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
 ---
 
 <SubpageLayout
   title="Insurance & Financing"
-  description="Flexible payment options and insurance guidance for orthodontic care."
+  description="We work hard to keep orthodontic care affordable — filing your claims, maximizing benefits, and offering flexible ways to pay."
+  eyebrow="Affordable Care"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources/"
-    },
-    {
-      "name": "Insurance & Financing",
-      "href": "/insurance/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Insurance & Financing', href: '/insurance/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Making orthodontics affordable for your family</h2>
+    <p>
+      High-quality orthodontic care shouldn't be out of reach. That's why we stay in-network with
+      more dental insurance companies than most providers in the area and offer a range of payment
+      options designed to fit different budgets. Our goal is simple: remove the financial hurdles so
+      you can focus on your smile.
+    </p>
+    <h2>We handle the insurance legwork</h2>
+    <p>
+      Insurance rules can be confusing, so we take that burden off your plate. Our team files the
+      necessary paperwork, submits claims, and calls your carrier to verify your benefits before
+      treatment begins. Where your plan allows, we also accept assignment of benefits to make using
+      your coverage as easy as possible.
+    </p>
+    <p>
+      We're committed to helping you receive your full benefits. Just keep in mind that any portion
+      not covered by insurance is ultimately your responsibility — and we'll always keep you
+      informed so there are no surprises.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    background="base"
+    eyebrow="In-Network Carriers"
+    title="Dental insurance we accept"
+    body="We accept most insurance plans and are in-network with many major carriers, including:"
+    titleLevel={2}
+    bullets={[
+      'Aetna',
+      'Cigna PPO & DHMO',
+      'MetLife',
+      'Guardian',
+      'Principal',
+      'Ameritas',
+      'Delta Dental Premier & Preferred',
+      'United Concordia',
+      'United Health Care',
+      'Humana',
+      'Connection Dental',
+      'Careington Dental',
+      'DenteMax Dental',
+      'NC & Virginia Medicaid',
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="Ways to Pay"
+    title="Flexible financing options"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:banknote',
+        title: 'Flexible Payment Plans',
+        body: 'Spread the cost of treatment over time with an in-house plan. Many patients qualify for $0 down, and automatic payments make staying on track effortless.',
+      },
+      {
+        icon: 'lucide:credit-card',
+        title: 'CareCredit Financing',
+        body: 'CareCredit is a healthcare credit card that can finance up to 100% of your treatment with low- or no-interest options. We\u2019ll help you apply right in the office.',
+      },
+      {
+        icon: 'lucide:wallet',
+        title: 'LendingPoint Financing',
+        body: 'For added flexibility, LendingPoint offers another simple way to finance your care. Ask our team and we\u2019ll help you find the option that fits your budget.',
+      },
+      {
+        icon: 'lucide:hand-helping',
+        title: 'Free Consultations',
+        body: 'Your initial consultation is always free. We\u2019ll review your treatment options and walk through the costs so you know exactly what to expect before you commit.',
+      },
+      {
+        icon: 'lucide:percent',
+        title: 'Available Discounts',
+        body: 'Ask about savings for paying in full at the start of treatment or for enrolling multiple family members. We\u2019re happy to help you find every discount you qualify for.',
+      },
+      {
+        icon: 'lucide:phone',
+        title: 'Personalized Guidance',
+        body: 'Not sure where to start? Call us at 1-800-MY-ORTHO or visit a nearby office and our team will help you build a payment plan that works for you.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>Questions? We're here to help</h2>
+    <p>
+      During your first visit we'll review every option and help you choose the plan that best fits
+      your needs. If you'd like to talk through insurance or financing sooner, contact your nearest
+      <a href="/locations/">MyOrthodontist office</a> or call
+      <a href="tel:+18006967846">1-800-MY-ORTHO</a> — we're glad to help.
+    </p>
+  </Prose>
 </SubpageLayout>
