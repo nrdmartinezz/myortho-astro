@@ -1,25 +1,81 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
   title="Careers"
-  description="Join the MyOrthodontist team across North Carolina."
+  description="Join a family-owned orthodontic team that puts patients first and takes care of its people."
+  eyebrow="Join Our Team"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources/"
-    },
-    {
-      "name": "Careers",
-      "href": "/careers/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Careers', href: '/careers/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Grow your career with MyOrthodontist</h2>
+    <p>
+      MyOrthodontist is always looking for motivated professionals to join our family. We hire across
+      our front-office staff, clinical teams, and corporate office, and we love meeting people who
+      are as passionate about caring for patients as we are.
+    </p>
+    <p>
+      Beyond competitive pay, we invest in our team with a wide range of benefits, including health
+      insurance, dental benefits, a 401(k), life insurance, long-term disability, and vacation
+      accrual. When you work here, you become part of a family-owned network that has served North
+      Carolina communities for more than two decades.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="Our Culture"
+    title="The core values we live by"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:heart-handshake',
+        title: 'Go Above & Beyond',
+        body: 'We look for ways to exceed expectations at every visit, going the extra mile to make each patient experience exceptional.',
+      },
+      {
+        icon: 'lucide:users',
+        title: 'Put Others First',
+        body: 'Patients and teammates come first. We lead with empathy and always consider how our work impacts the people around us.',
+      },
+      {
+        icon: 'lucide:smile',
+        title: 'Be Fun & Outgoing',
+        body: 'We bring warmth and energy to the office, creating an upbeat environment where patients and coworkers feel welcome.',
+      },
+      {
+        icon: 'lucide:shield-check',
+        title: 'Be Genuine',
+        body: 'We are honest, transparent, and authentic in everything we do — with our patients and with each other.',
+      },
+      {
+        icon: 'lucide:handshake',
+        title: 'Be a Team Player',
+        body: 'We support one another, share the load, and celebrate wins together. Great smiles are built by great teams.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>How to apply</h2>
+    <p>
+      Ready to join the team? We would love to hear from you. Reach out to the office you are
+      interested in or contact our team to learn about current openings — new opportunities open up
+      regularly across our locations.
+    </p>
+    <p>
+      MyOrthodontist NC is a SALT Dental Partners affiliate, and SALT Dental Partners manages career
+      opportunities on our behalf. When you connect with us, we will point you toward the current
+      list of open positions and the right next step to apply.
+    </p>
+  </Prose>
 </SubpageLayout>

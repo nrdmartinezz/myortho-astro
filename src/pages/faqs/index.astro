@@ -1,25 +1,106 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
 ---
 
 <SubpageLayout
   title="Orthodontic FAQs"
-  description="Answers to common questions about braces, aligners, and treatment."
+  description="Answers to common questions about braces, clear aligners, treatment timelines, cost, and financing."
+  eyebrow="Common Questions"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources/"
-    },
-    {
-      "name": "FAQs",
-      "href": "/faqs/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'FAQs', href: '/faqs/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>We are happy to answer your questions</h2>
+    <p>
+      You probably have plenty of questions about orthodontic care, and we want you to feel confident
+      that you are working with the right team before your first visit. Below are answers to the
+      questions we hear most often. If you don&apos;t see what you&apos;re looking for, call us
+      toll-free at <a href="tel:+18006967846">1-800-MY-ORTHO</a> or reach out to any of our offices —
+      a member of our team will gladly help.
+    </p>
+  </Prose>
+
+  <FAQ
+    bare
+    title="Orthodontic FAQs"
+    eyebrow="Common Questions"
+    titleLevel={2}
+    items={[
+      {
+        question: 'At what age should my child first see an orthodontist?',
+        answer:
+          'The American Association of Orthodontists recommends a screening by age 7. By then enough permanent teeth have come in for us to evaluate how the bite is developing, and early attention can sometimes prevent more involved treatment later.',
+      },
+      {
+        question: 'Do I need a referral from my dentist to schedule a visit?',
+        answer:
+          'No referral is required. Many patients are referred by their family dentist, but just as many schedule an examination on their own. You are welcome to call, email, or request an appointment online.',
+      },
+      {
+        question: 'Are consultations really free?',
+        answer:
+          'Yes. Your initial consultation is complimentary. We will examine your smile, explain whether treatment is needed, and review your options and costs — with no obligation.',
+      },
+      {
+        question: 'How much do braces or Invisalign cost, and are financing options available?',
+        answer:
+          'We can only give an exact price after examining you, so cost is reviewed during your free initial exam. We offer several flexible financing options and will also review your insurance to help maximize your benefits and file your claims.',
+      },
+      {
+        question: 'Do you accept my insurance?',
+        answer:
+          'We work with a wide range of insurance plans and will review your specific policy during your consultation to determine your benefits and coverage. Our team files your claims for you so you get the most from your plan.',
+      },
+      {
+        question: 'How long does orthodontic treatment take?',
+        answer:
+          'It depends on your specific needs, but most treatment lasts between 8 and 30 months, with the average patient in braces for about 18 to 24 months.',
+      },
+      {
+        question: 'Should I choose braces or clear aligners like Invisalign?',
+        answer:
+          'Both can produce excellent results — the best choice depends on your goals, lifestyle, and the complexity of your case. We offer braces, clear aligners, and advanced options, and we will recommend the approach that fits you best during your exam.',
+      },
+      {
+        question: 'Do braces hurt?',
+        answer:
+          'Braces generally do not hurt. Your teeth may feel sore for a few days after certain visits, and over-the-counter pain relievers such as Advil or Tylenol ease any discomfort. As we like to remind patients, it does not have to hurt to work.',
+      },
+      {
+        question: 'How often will I have appointments?',
+        answer:
+          'Most patients in braces are seen every 5 to 10 weeks. If your treatment calls for closer monitoring, we will schedule visits more frequently to keep everything on track.',
+      },
+      {
+        question: 'Are there foods I need to avoid with braces?',
+        answer:
+          'Yes. Once treatment begins we provide a full list, but in general avoid ice, hard candy, raw vegetables, and sticky foods like caramel and taffy. Following these guidelines helps you avoid broken brackets and emergency visits.',
+      },
+      {
+        question: 'How do I care for my teeth while wearing braces?',
+        answer:
+          'Brush after every meal and before bed — at least four times a day — and keep flossing. We will show you how to floss around your braces and can prescribe a special fluoride if needed. Keep seeing your family dentist for regular cleanings, too.',
+      },
+      {
+        question: 'What should I do in an orthodontic emergency?',
+        answer:
+          'If something breaks or you are in significant pain, call your office right away. Most issues can be resolved over the phone, and if you need to be seen we will set aside time for an emergency appointment.',
+      },
+      {
+        question: 'Is it too late to get braces as an adult?',
+        answer:
+          'It is never too late — roughly one in four orthodontic patients is an adult. Your health, confidence, and smile matter at any age, and no one is too old to benefit from treatment.',
+      },
+      {
+        question: 'Can I still play sports or a musical instrument with braces?',
+        answer:
+          'Yes. You can stay active in sports — we simply recommend wearing a mouth guard to protect your teeth and appliances.',
+      },
+    ]}
+  />
 </SubpageLayout>
