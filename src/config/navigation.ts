@@ -14,6 +14,8 @@ export interface NavLink {
 
 export interface MegaColumn {
   heading?: string;
+  /** Optional landing page for the column heading (used as the mobile top link). */
+  href?: string;
   links: NavLink[];
 }
 
@@ -59,6 +61,7 @@ export const navigation: NavigationConfig = {
         columns: [
           {
             heading: 'Braces',
+            href: '/types-of-braces/',
             links: [
               { label: 'Types of Braces', href: '/types-of-braces/' },
               { label: 'Adult Braces', href: '/braces-for-adults/' },
@@ -68,6 +71,7 @@ export const navigation: NavigationConfig = {
           },
           {
             heading: 'Invisalign',
+            href: '/types-of-invisalign/',
             links: [
               { label: 'How Invisalign Works', href: '/types-of-invisalign/' },
               { label: 'Adult Invisalign', href: '/invisalign-for-adults/' },
@@ -120,6 +124,7 @@ export const navigation: NavigationConfig = {
           },
           {
             heading: 'New Patient Info',
+            href: '/patient/',
             links: [
               { label: 'New Patient Info', href: '/patient/' },
               { label: 'Your First Visit', href: '/your-first-visit/' },
@@ -128,6 +133,7 @@ export const navigation: NavigationConfig = {
           },
           {
             heading: 'Contact Us',
+            href: '/contact/',
             links: [
               { label: 'Contact', href: '/contact/' },
               { label: 'Locations', href: '/locations/' },
