@@ -25,6 +25,8 @@ export interface ServiceItem {
 interface Props extends BlockProps {
   items: ServiceItem[];
   columns?: 1 | 2 | 3 | 4;
+  /** Stay one column until this breakpoint. Default `sm` keeps the tablet split. */
+  stackUntil?: 'sm' | 'lg';
 }
 
 const {
@@ -39,23 +41,22 @@ const {
   headerLayout,
   items,
   columns = 3,
+  stackUntil = 'sm',
   bare = false,
 } = Astro.props;
 
 // Owns its own grid rather than asking Container to model it.
 const columnClass = {
-  1: '',
-  2: 'sm:grid-cols-2',
-  3: 'sm:grid-cols-2 lg:grid-cols-3',
-  4: 'sm:grid-cols-2 lg:grid-cols-4',
-}[columns];
+  1: { sm: '', lg: '' },
+  2: { sm: 'sm:grid-cols-2', lg: 'lg:grid-cols-2' },
+  3: { sm: 'sm:grid-cols-2 lg:grid-cols-3', lg: 'lg:grid-cols-3' },
+  4: { sm: 'sm:grid-cols-2 lg:grid-cols-4', lg: 'lg:grid-cols-4' },
+}[columns][stackUntil];
 
-// Every multi-column layout drops to two columns at the `sm`–`lg` tablet
-// range, so an odd item count leaves the final card orphaned on the left.
-// Center that orphan across both columns (constrained to a single track:
-// 50% minus half the `gap-6` gutter) and restore the normal cell once the
-// grid reaches its full column count. A single column has no orphan.
-const hasTabletOrphan = columns !== 1 && items.length % 2 === 1;
+// The tablet two-column stage can leave an odd last card orphaned on the left.
+// Center that orphan until the grid reaches its full column count. Stacking
+// through `lg` (or a single column) never hits that in-between layout.
+const hasTabletOrphan = stackUntil === 'sm' && columns !== 1 && items.length % 2 === 1;
 const orphanClass = {
   1: '',
   2: 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.75rem)]',
@@ -95,8 +96,10 @@ const onDark =
                 alt={item.imageAlt ?? ''}
                 widths={[320, 480, 640]}
                 sizes={
-                  columns === 1
-                    ? '100vw'
+                  columns === 1 || stackUntil === 'lg'
+                    ? columns === 1
+                      ? '100vw'
+                      : '(max-width: 1023px) 100vw, 33vw'
                     : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                 }
                 loading="lazy"
