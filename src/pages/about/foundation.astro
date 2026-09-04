@@ -1,25 +1,60 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Prose from '../../components/ui/Prose.astro';
 ---
 
 <SubpageLayout
-  title="Our Foundation"
-  description="The Happy Tooth Foundation and our commitment to community."
+  title="The Happy Tooth Foundation"
+  description="Improving lives and giving back to the North Carolina communities we serve — through scholarships, community grants, and the Happy Tooth Foundation."
+  eyebrow="Charitable Giving"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'About',
-      href: '/about/',
-    },
-    {
-      name: 'Our Foundation',
-      href: '/about/foundation/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about/' },
+    { name: 'Our Foundation', href: '/about/foundation/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Our commitment to giving back</h2>
+    <p>
+      MyOrthodontist is about more than improving your smile. By providing every patient with
+      advanced treatment in a comfortable, friendly environment, we believe we can improve lives and
+      give back to the communities we serve.
+    </p>
+    <p>
+      Through the Happy Tooth Foundation — and in partnership with the Salvation Army to fund summer
+      camp scholarships — we help underserved North Carolina youth build self-esteem through healthy
+      living, teamwork, and sports. We also award local community grants through an open application
+      process, funding non-profit organizations and initiatives directly.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={2}
+    eyebrow="How to Apply"
+    title="Grant &amp; donation requests"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:building-2',
+        title: 'Organization Requests',
+        body: 'Eligible organizations must hold current 501(c)(3), (4), (6), or (19) tax-exempt status, or propose a project that benefits the community in education, health, or fitness. Applications must be completed in full and submitted online. One request per calendar year; submitting an application does not guarantee funding.',
+      },
+      {
+        icon: 'lucide:user-round',
+        title: 'Individual Requests',
+        body: 'We award donations up to $100 per individual, per calendar year, to current patients in good standing or current employees. Requests must support a project or event focused on self-improvement in education, health, or fitness, or the community at large. Checks are issued to organizations, not individuals.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <p>
+      <strong>Please note:</strong> all applications must be completed in full and submitted online
+      to be considered, and are limited to one request per calendar year. Patients must not have an
+      outstanding balance with MyOrthodontist central billing to be eligible.
+    </p>
+  </Prose>
 </SubpageLayout>

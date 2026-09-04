@@ -1,25 +1,81 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
   title="Office Policies"
-  description="Practice policies, appointments, and what to expect at our offices."
+  description="How we handle appointments, billing, and insurance so your visits stay simple and predictable."
+  eyebrow="Patient Information"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
-    {
-      name: 'Office Policies',
-      href: '/office-policies/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Office Policies', href: '/office-policies/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Working together for a smooth experience</h2>
+    <p>
+      A few simple policies keep our offices running on time and help every patient get the care
+      they deserve. Below is what to expect around scheduling, payments, and insurance. If you ever
+      have a question, our team is happy to walk you through the details — just reach out to the
+      <a href="/locations/">location</a> nearest you.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="What to Expect"
+    title="Our office policies at a glance"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:calendar',
+        title: 'Appointments & Scheduling',
+        body: 'Your appointment time is reserved just for you. We ask for at least 24 hours\u2019 notice if you need to reschedule or cancel so we can offer that time to another patient.',
+      },
+      {
+        icon: 'lucide:clock',
+        title: 'Late Arrivals & No-Shows',
+        body: 'We understand life happens. If you\u2019re running late or miss a visit, let us know as soon as possible and we\u2019ll do our best to find a new time that works for you.',
+      },
+      {
+        icon: 'lucide:wallet',
+        title: 'Payments',
+        body: 'Your estimated patient portion is due at the time of service. We offer flexible payment plans and financing so treatment stays affordable for your family.',
+      },
+      {
+        icon: 'lucide:file-text',
+        title: 'Insurance & Billing',
+        body: 'As a courtesy, we file claims with your insurance carrier and verify benefits in good faith. Because policies vary, coverage estimates aren\u2019t a guarantee of payment.',
+      },
+      {
+        icon: 'lucide:shield-check',
+        title: 'Your Responsibilities',
+        body: 'While we work to maximize your benefits, any balance not covered by insurance remains your responsibility. We\u2019ll always keep you informed about expected costs.',
+      },
+      {
+        icon: 'lucide:lock',
+        title: 'Privacy',
+        body: 'Your health information is kept confidential and handled in line with applicable privacy laws. We only share records as needed for your care or as you authorize.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>Insurance &amp; billing, explained</h2>
+    <p>
+      We're committed to helping you get the most from your benefits. Because insurance contracts
+      are complex and coverage differs from plan to plan, any estimate we provide is made in good
+      faith and can't be guaranteed. Your estimated portion is collected at the time of service,
+      and we'll bill your insurance company on your behalf.
+    </p>
+    <p>
+      Questions about a statement or your coverage? Our team is always glad to help — contact your
+      nearest <a href="/locations/">MyOrthodontist office</a> and we'll sort it out with you.
+    </p>
+  </Prose>
 </SubpageLayout>

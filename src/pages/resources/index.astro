@@ -1,92 +1,123 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import Prose from '../../components/ui/Prose.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
-  title="Resources"
-  description="Patient information, policies, and ways to connect with our team."
+  title="Patient Resources"
+  description="Everything you need in one place — insurance and financing, forms, policies, and ways to connect with our team."
+  eyebrow="Resources"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
   ]}
 >
+  <Prose>
+    <h2>Helpful information for every patient</h2>
+    <p>
+      We want your orthodontic journey to be simple from start to finish. Use the links below to
+      explore financing, review our policies, prepare for your first visit, and get in touch with the
+      MyOrthodontist team. If you can&apos;t find what you need, call us toll-free at
+      <a href="tel:+18006967846">1-800-MY-ORTHO</a> and we&apos;ll be happy to help.
+    </p>
+  </Prose>
+
   <ServicesGrid
     bare
     background="base"
-    columns={2}
+    columns={3}
+    eyebrow="Patient Resources"
+    title="For current patients"
+    titleLevel={2}
     items={[
       {
+        icon: 'lucide:wallet',
         title: 'Insurance & Financing',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Understand your coverage and explore flexible payment plans that fit your budget.',
         href: '/insurance/',
-        icon: 'lucide:credit-card',
       },
       {
+        icon: 'lucide:circle-help',
         title: 'Orthodontic FAQs',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Quick answers to common questions about braces, aligners, cost, and treatment.',
         href: '/faqs/',
-        icon: 'lucide:help-circle',
       },
       {
-        title: 'Patient Portal',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/patient-portal/',
-        icon: 'lucide:log-in',
-      },
-      {
-        title: 'Office Policies',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/office-policies/',
         icon: 'lucide:file-text',
+        title: 'Patient Forms & Portal',
+        body: 'Access your patient portal and complete new-patient forms before you arrive.',
+        href: '/patient-portal/',
       },
       {
-        title: 'Orthodontic Emergencies',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/orthodontic-emergencies/',
-        icon: 'lucide:alert-circle',
-      },
-      {
-        title: 'New Patient Info',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/patient/',
         icon: 'lucide:clipboard-list',
+        title: 'Office Policies',
+        body: 'Review our appointment, financial, and privacy policies at your convenience.',
+        href: '/office-policies/',
       },
       {
+        icon: 'lucide:alert-triangle',
+        title: 'Orthodontic Emergencies',
+        body: 'Learn how to handle a broken bracket, loose wire, or discomfort between visits.',
+        href: '/orthodontic-emergencies/',
+      },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="New Patients"
+    title="Getting started"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:user-plus',
+        title: 'New Patient Information',
+        body: 'Find out what to expect and how to prepare as a first-time patient with us.',
+        href: '/patient/',
+      },
+      {
+        icon: 'lucide:calendar',
         title: 'Your First Visit',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'See what happens during your complimentary consultation and initial exam.',
         href: '/your-first-visit/',
-        icon: 'lucide:calendar-check',
       },
       {
+        icon: 'lucide:gift',
         title: 'Special Offers',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Check out current promotions and savings on orthodontic treatment.',
         href: '/special-offers/',
-        icon: 'lucide:tag',
       },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="Get in Touch"
+    title="Connect with us"
+    titleLevel={2}
+    items={[
       {
-        title: 'Contact',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/contact/',
-        icon: 'lucide:mail',
-      },
-      {
-        title: 'Locations',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/locations/',
         icon: 'lucide:map-pin',
+        title: 'Locations',
+        body: 'Find a family-owned MyOrthodontist office near you across North Carolina.',
+        href: '/locations/',
       },
       {
-        title: 'Careers',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/careers/',
         icon: 'lucide:briefcase',
+        title: 'Careers',
+        body: 'Explore open positions and join a team that puts patients first.',
+        href: '/careers/',
+      },
+      {
+        icon: 'lucide:stethoscope',
+        title: 'Meet the Doctors',
+        body: 'Get to know the caring orthodontists behind your healthiest smile.',
+        href: '/doctors/',
       },
     ]}
   />

@@ -1,25 +1,89 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
   title="Orthodontic Emergencies"
-  description="What to do when something breaks or hurts between visits."
+  description="True orthodontic emergencies are rare — here's how to handle common issues at home and when to call us."
+  eyebrow="Emergency Care"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
-    {
-      name: 'Orthodontic Emergencies',
-      href: '/orthodontic-emergencies/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Orthodontic Emergencies', href: '/orthodontic-emergencies/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Most issues can wait — and many you can ease at home</h2>
+    <p>
+      Braces are durable, but a poking wire or loose bracket can happen between visits. The good
+      news is that genuine orthodontic emergencies are uncommon. Most minor problems can be managed
+      comfortably at home until we can see you, and a little know-how goes a long way toward keeping
+      you at ease between appointments.
+    </p>
+    <p>
+      If something breaks or is bothering you, don't panic. Review the common situations below, and
+      when in doubt, call your nearest <a href="/locations/">MyOrthodontist office</a> at
+      <a href="tel:+18006967846">1-800-MY-ORTHO</a> and we'll guide you through next steps.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="Common Issues"
+    title="What to do at home"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:alert-triangle',
+        title: 'Poking Wire',
+        body: 'Gently tuck the wire back with a clean eraser or cotton swab, or cover the end with orthodontic wax. If it stays irritating, snip the loose end close to the last bracket and cover with wax.',
+      },
+      {
+        icon: 'lucide:wrench',
+        title: 'Loose Bracket or Band',
+        body: 'If a bracket slips but is still on the wire, leave it in place and hold it steady with a little wax. Save any piece that comes off completely and bring it to your next visit.',
+      },
+      {
+        icon: 'lucide:circle-dot',
+        title: 'Lost Separator',
+        body: 'Separators sometimes fall out on their own as teeth shift. It usually isn\u2019t urgent, but let us know so we can check whether it needs to be replaced before your next appointment.',
+      },
+      {
+        icon: 'lucide:activity',
+        title: 'General Soreness',
+        body: 'Tenderness after an adjustment is normal for a few days. Rinse with warm salt water, stick to softer foods, and use an over-the-counter pain reliever as directed for relief.',
+      },
+      {
+        icon: 'lucide:heart-pulse',
+        title: 'Mouth Sores or Irritation',
+        body: 'Cover any spot rubbing against your cheek or lips with wax and rinse with warm salt water. A topical oral anesthetic can also soothe irritated areas while they heal.',
+      },
+      {
+        icon: 'lucide:smile',
+        title: 'Broken or Lost Aligner',
+        body: 'A cracked or misplaced clear aligner can slow your progress. Switch to your previous set if you have it and contact us so we can arrange a replacement without delay.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>When to call us right away</h2>
+    <p>
+      Some situations do need prompt attention. Contact us or seek care for any of the following:
+    </p>
+    <ul>
+      <li>Serious injury or trauma to the face, mouth, teeth, or gums</li>
+      <li>Swelling, infection, or bleeding of the gums or mouth</li>
+      <li>Severe or persistent pain in your teeth, mouth, face, or neck</li>
+    </ul>
+    <p>
+      For anything that feels beyond a simple fix — or if you're just not sure — call
+      <a href="tel:+18006967846">1-800-MY-ORTHO</a>. During office hours we can schedule an
+      emergency visit, and after hours we can help you manage the problem at home until we see you.
+    </p>
+  </Prose>
 </SubpageLayout>

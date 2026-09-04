@@ -1,25 +1,53 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
-  title="Patient Portal"
-  description="Access your account, appointments, and treatment information online."
+  title="Patient Forms &amp; Portal"
+  description="Complete your new-patient paperwork online and access your account before you arrive."
+  eyebrow="New Patients"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
-    {
-      name: 'Patient Portal',
-      href: '/patient-portal/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Patient Forms & Portal', href: '/patient-portal/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Online forms for a seamless visit</h2>
+    <p>
+      We want your visit to run as smoothly as possible. One of the easiest ways we save you time is
+      by letting you skip the paperwork in our waiting room — all of our patient forms are available
+      to complete and submit online, at a time and place that&rsquo;s convenient for you.
+    </p>
+    <p>
+      Every form is offered in both English and Spanish. Completing them before your appointment
+      means less time filling out paperwork and more time focused on your smile. If you have any
+      questions or need assistance, just contact us and we&rsquo;ll be happy to help.
+    </p>
+  </Prose>
+
+  <ServicesGrid bare background="base" columns={2} eyebrow="Get Started" title="What you can do online" titleLevel={2} items={[
+    {
+      icon: 'lucide:file-text',
+      title: 'New-patient forms',
+      body: 'Fill out your registration, health history, and consent forms digitally before your first appointment — available in English and Spanish.',
+    },
+    {
+      icon: 'lucide:laptop',
+      title: 'Patient portal access',
+      body: 'Sign in to review your account, appointments, and treatment details, and stay connected with your care team between visits.',
+    },
+  ]} />
+
+  <Prose>
+    <h2>New to MyOrthodontist?</h2>
+    <p>
+      If you&rsquo;re preparing for your first appointment, our <a href="/patient/">new patient
+      information</a> page covers what to bring and how to get ready. To learn about coverage and
+      payment plans, see our <a href="/insurance/">insurance &amp; financing</a> page, and find a
+      convenient office on our <a href="/locations/">locations</a> page.
+    </p>
+  </Prose>
 </SubpageLayout>

@@ -1,25 +1,81 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
 ---
 
 <SubpageLayout
   title="Your First Visit"
-  description="What happens at your complimentary consultation and how to prepare."
+  description="What to expect at your complimentary consultation — a warm welcome, a thorough exam, and a clear plan for your smile."
+  eyebrow="New Patients"
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
-    {
-      name: 'Your First Visit',
-      href: '/your-first-visit/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Your First Visit', href: '/your-first-visit/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>A visit designed to feel happy</h2>
+    <p>
+      From the moment you walk through the door, our goal is for you to feel comfortable, relaxed,
+      and cared for. Everyone on our team — from our front-desk staff to the doctors themselves —
+      works together to make sure your experience is a positive one.
+    </p>
+    <p>
+      We take customer service seriously, which means you always come first. If there is anything we
+      can do to improve your visit, just ask. And because we value your time, we work to keep your
+      number of appointments to a minimum.
+    </p>
+  </Prose>
+
+  <ServicesGrid bare background="base" columns={3} eyebrow="What Happens" title="Your first visit, step by step" titleLevel={2} items={[
+    {
+      icon: 'lucide:smile',
+      title: '1. A warm welcome',
+      body: 'You are greeted by a friendly team and settled in so your consultation starts on a relaxed, unhurried note.',
+    },
+    {
+      icon: 'lucide:clipboard-list',
+      title: '2. Exam & records',
+      body: 'A thorough 30-minute exam gives us insight into your needs. We may take diagnostic records — x-rays and digital scans — to build an accurate treatment plan.',
+    },
+    {
+      icon: 'lucide:file-text',
+      title: '3. Options & financing',
+      body: 'We walk through your treatment options, timeline, and costs, and review the payment and financing plans that best fit your budget.',
+    },
+    {
+      icon: 'lucide:calendar',
+      title: '4. Starting treatment',
+      body: 'Once your questions are answered and your plan is set, we schedule the next steps so you can start your journey toward a healthier smile.',
+    },
+  ]} />
+
+  <FeatureSplit
+    bare
+    eyebrow="We Encourage Questions"
+    title="Questions we help you answer"
+    body="During your first visit we cover the basics of orthodontic treatment. We can answer many of these questions right away, and address more specific ones once we have carefully reviewed your diagnostic records."
+    titleLevel={2}
+    bullets={[
+      'Is there a condition that orthodontics can address?',
+      'Is treatment needed now, or better delayed until further growth or tooth eruption?',
+      'What procedures will be used to correct the problem?',
+      'Do any permanent teeth need to be removed?',
+      'How long will treatment take?',
+      'How much will it cost, and what are my payment options?',
+    ]}
+  />
+
+  <Prose>
+    <h2>Thoughtful planning, better results</h2>
+    <p>
+      We believe in-depth planning leads to superior results and higher patient satisfaction, so we
+      take the time to analyze each patient&rsquo;s specific needs. To learn more about financing and
+      insurance, visit our <a href="/insurance/">insurance &amp; financing</a> page, or find a
+      convenient office on our <a href="/locations/">locations</a> page. You can also browse answers
+      on our <a href="/faqs/">FAQs</a> page.
+    </p>
+  </Prose>
 </SubpageLayout>
