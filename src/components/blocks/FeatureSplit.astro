@@ -63,11 +63,7 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
     class:list={[bare && 'mx-0! max-w-none! px-0!']}
   >
     <div
-      class:list={[
-        'w-full',
-        !bare && 'md:w-1/2',
-        !bare && (reverse ? 'md:order-2' : 'md:order-1'),
-      ]}
+      class:list={['w-full', !bare && 'md:w-1/2', !bare && (reverse ? 'md:order-2' : 'md:order-1')]}
     >
       {
         hasMediaSlot ? (
@@ -96,15 +92,15 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
     >
       {
         eyebrow && (
-          <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">
-            {eyebrow}
-          </p>
+          <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">{eyebrow}</p>
         )
       }
       {title && <Heading level={titleLevel} set:html={title} />}
-      {body && (
-        <p class:list={['max-w-reading', onDark ? 'text-white/80' : 'text-ink-muted']}>{body}</p>
-      )}
+      {
+        body && (
+          <p class:list={['max-w-reading', onDark ? 'text-white/80' : 'text-ink-muted']}>{body}</p>
+        )
+      }
 
       {
         bullets.length > 0 && (

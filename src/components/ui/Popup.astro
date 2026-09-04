@@ -49,7 +49,10 @@ const {
   aria-label={labelledBy ? undefined : label}
   {...rest}
 >
-  <div class:list={['popup-card', padded && 'popup-card-padded', className]} data-popup-card>
+  <div
+    class:list={['popup-card', padded ? 'popup-card-padded' : 'popup-card-flush', className]}
+    data-popup-card
+  >
     <button type="button" class="popup-close" data-popup-close aria-label="Close">
       <Icon name="lucide:x" class="size-5" aria-hidden="true" />
     </button>
@@ -65,7 +68,7 @@ const {
     max-height: none;
     margin: 0;
     padding: var(--spacing-gutter);
-    overflow: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
     border: none;
     background: transparent;
@@ -89,7 +92,7 @@ const {
     position: relative;
     display: flex;
     width: min(36rem, 100%);
-    max-height: min(90vh, 48rem);
+    max-height: 100%;
     flex-direction: column;
     align-items: flex-start;
     overflow: auto;
@@ -104,6 +107,25 @@ const {
   .popup-card-padded {
     gap: 1rem;
     padding: 2.25rem 3.5rem 2rem 2rem;
+  }
+
+  .popup-card-flush {
+    width: max-content;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .popup-card-flush :global(a),
+  .popup-card-flush :global(picture) {
+    display: block;
+    line-height: 0;
+  }
+
+  .popup-card-flush :global(img) {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
   }
 
   .popup-close {

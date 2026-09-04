@@ -26,13 +26,14 @@ until a project needs one.
 
 ## Commands
 
-| Command          | Does                                                     |
-| ---------------- | -------------------------------------------------------- |
-| `npm run dev`    | Generates the theme, then starts the dev server on :4321 |
-| `npm run build`  | Generates the theme, then builds to `dist/`              |
-| `npm run verify` | Generates the theme, then `astro check` + Prettier check |
-| `npm run format` | Writes Prettier formatting                               |
-| `npm run audit`  | Lighthouse CI + pa11y against the built site             |
+| Command              | Does                                                     |
+| -------------------- | -------------------------------------------------------- |
+| `npm run dev`        | Generates the theme, then starts the dev server on :4321 |
+| `npm run build`      | Generates the theme, then builds to `dist/`              |
+| `npm run verify`     | Generates the theme, then `astro check` + Prettier check |
+| `npm run format`     | Writes Prettier formatting                               |
+| `npm run audit`      | Lighthouse CI + pa11y against the built site             |
+| `npm run audit:deps` | OSV vulnerability report for `package-lock.json`         |
 
 Build the style guide into a production bundle with `STYLEGUIDE=1 npm run build`.
 

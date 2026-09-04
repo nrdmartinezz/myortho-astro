@@ -49,12 +49,7 @@ const jsonLd = {
 
 <Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
   <Container width={width} align={align} gap="lg" class:list={[bare && 'mx-0! max-w-none! px-0!']}>
-    <BlockHeader
-      eyebrow={eyebrow}
-      title={title}
-      body={body}
-      level={titleLevel}
-    />
+    <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
     <div class="w-full">
       {

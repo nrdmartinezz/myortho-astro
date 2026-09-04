@@ -143,37 +143,22 @@ export const navigation: NavigationConfig = {
 
   footer: [
     {
-      heading: 'Treatments',
+      heading: 'Quick Links',
       links: [
-        { label: 'Types of Braces', href: '/types-of-braces/' },
-        { label: 'Invisalign / Aligners', href: '/types-of-invisalign/' },
-        { label: 'Virtual Care', href: '/virtual-care/' },
-        { label: 'Retainers', href: '/retainers/' },
-      ],
-    },
-    {
-      heading: 'Company',
-      links: [
-        { label: 'About', href: '/about/' },
+        { label: 'Make an Appointment', href: '/book-appointment/' },
+        { label: 'Braces in North Carolina', href: '/types-of-braces/' },
+        { label: 'Invisalign in North Carolina', href: '/types-of-invisalign/' },
         { label: 'Meet the Doctors', href: '/doctors/' },
-        { label: 'Locations', href: '/locations/' },
-        { label: 'Contact', href: '/contact/' },
-        { label: 'Happy Tooth Foundation', href: '/about/foundation/' },
-      ],
-    },
-    {
-      heading: 'Patients',
-      links: [
-        { label: 'Insurance & Financing', href: '/insurance/' },
-        { label: 'FAQs', href: '/faqs/' },
+        { label: 'Patient Portal', href: '/patient-portal/' },
+        { label: 'Patient Forms', href: '/patient/' },
         { label: 'New Patient Info', href: '/patient/' },
-        { label: 'Your First Visit', href: '/your-first-visit/' },
+        { label: 'Locations', href: '/locations/' },
       ],
     },
   ],
 
   legal: [
     { label: 'Privacy Policy', href: '/privacy/' },
-    { label: 'Terms of Service', href: '/terms/' },
+    { label: 'Accessibility', href: '/accessibility/' },
   ],
 };

@@ -12,11 +12,16 @@ export interface Testimonial {
   role?: string;
   /** 1–5; omit to hide the star row. */
   rating?: number;
+  /** Treatment type shown as a pill in the card footer. */
+  tag?: string;
 }
 
 interface Props extends BlockProps {
   items: Testimonial[];
   columns?: 2 | 3;
+  /** Aggregate score shown as a pill under the heading (e.g. `4.9 / 5.0`). */
+  ratingScore?: string;
+  ratingSource?: string;
 }
 
 const {
@@ -30,47 +35,97 @@ const {
   titleLevel = 2,
   items,
   columns = 3,
+  ratingScore,
+  ratingSource,
 } = Astro.props;
 
 const columnClass = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }[columns];
+const centered = align === 'center';
+
+const starClass = (filled: boolean) =>
+  filled ? 'fill-accent-500 text-accent-500' : 'text-neutral-300';
 ---
 
 <Section background={background} spacing={spacing}>
   <Container width={width} align={align} gap="lg">
-    <BlockHeader
-      eyebrow={eyebrow}
-      title={title}
-      body={body}
-      level={titleLevel}
-    />
+    {
+      (eyebrow || title || body || ratingScore) && (
+        <div class:list={['flex w-full flex-col gap-5', centered && 'items-center']}>
+          <BlockHeader
+            eyebrow={eyebrow}
+            title={title}
+            body={ratingScore ? undefined : body}
+            level={titleLevel}
+            centered={centered}
+          />
 
-    <ul class:list={['grid w-full gap-6', columnClass]}>
+          {ratingScore && (
+            <div
+              class="inline-flex items-center gap-2.5 rounded-full bg-surface-base px-4 py-2 shadow-md"
+              role="img"
+              aria-label={`${ratingScore}${ratingSource ? ` ${ratingSource}` : ''}`}
+            >
+              <span class="flex gap-0.5" aria-hidden="true">
+                {Array.from({ length: 5 }).map(() => (
+                  <Icon name="lucide:star" class:list={['size-3.5', starClass(true)]} />
+                ))}
+              </span>
+              <span class="text-ink-heading text-sm font-semibold">{ratingScore}</span>
+              {ratingSource && <span class="text-ink-muted text-sm">{ratingSource}</span>}
+            </div>
+          )}
+        </div>
+      )
+    }
+
+    <ul class:list={['grid w-full gap-8', columnClass]}>
       {
         items.map((item) => (
-          <Card as="li" variant="elevated">
-            {item.rating && (
-              <div class="flex gap-0.5" role="img" aria-label={`${item.rating} out of 5 stars`}>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Icon
-                    name="lucide:star"
-                    class:list={[
-                      'size-4',
-                      index < item.rating! ? 'text-accent-500' : 'text-neutral-300',
-                    ]}
-                    aria-hidden="true"
-                  />
-                ))}
+          <Card as="li" variant="elevated" padded={false}>
+            <div class="flex flex-1 flex-col gap-5 p-7">
+              <div class="flex w-full items-center justify-between">
+                {item.rating ? (
+                  <div
+                    class="flex gap-0.5"
+                    role="img"
+                    aria-label={`${item.rating} out of 5 stars`}
+                  >
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Icon
+                        name="lucide:star"
+                        class:list={['size-3.5', starClass(index < item.rating!)]}
+                        aria-hidden="true"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <span />
+                )}
+
+                <span
+                  class="bg-accent-500/15 text-accent-500 flex size-8 shrink-0 items-center justify-center rounded-full"
+                  aria-hidden="true"
+                >
+                  <Icon name="lucide:quote" class="size-3.5" />
+                </span>
               </div>
-            )}
 
-            <blockquote class="text-ink-base flex-1">
-              <p>&ldquo;{item.quote}&rdquo;</p>
-            </blockquote>
+              <blockquote class="text-ink-base flex-1">
+                <p>{item.quote}</p>
+              </blockquote>
 
-            <footer class="text-sm">
-              <p class="font-medium">{item.name}</p>
-              {item.role && <p class="text-ink-muted">{item.role}</p>}
-            </footer>
+              <footer class="mt-auto flex w-full items-center justify-between gap-3">
+                <div class="min-w-0 text-sm">
+                  <p class="font-heading text-ink-heading font-bold">{item.name}</p>
+                  {item.role && <p class="text-ink-muted">{item.role}</p>}
+                </div>
+                {item.tag && (
+                  <span class="bg-accent-500/15 text-accent-600 shrink-0 rounded-full px-3 py-1 text-xs font-medium">
+                    {item.tag}
+                  </span>
+                )}
+              </footer>
+            </div>
           </Card>
         ))
       }

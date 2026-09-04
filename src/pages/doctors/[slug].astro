@@ -77,7 +77,9 @@ const colleagues = related(all, entry);
         {
           locations.length > 0 && (
             <div class="flex flex-col gap-2">
-              <p class="text-ink-muted text-xs font-semibold tracking-wide uppercase">Office locations</p>
+              <p class="text-ink-muted text-xs font-semibold tracking-wide uppercase">
+                Office locations
+              </p>
               <ul class="flex flex-col gap-2">
                 {locations.map((location) => (
                   <li>
@@ -115,7 +117,10 @@ const colleagues = related(all, entry);
             {colleagues.map((item) => (
               <Card as="li" variant="outlined">
                 <Heading level={3} size="sm">
-                  <a href={`/doctors/${item.id}/`} class="text-ink-base no-underline hover:underline">
+                  <a
+                    href={`/doctors/${item.id}/`}
+                    class="text-ink-base no-underline hover:underline"
+                  >
                     {item.data.name}
                   </a>
                 </Heading>

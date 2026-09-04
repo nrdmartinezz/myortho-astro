@@ -2,8 +2,11 @@
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import { navigation } from '../../config/navigation';
-import { site, formattedAddress } from '../../config/site';
+import { site } from '../../config/site';
+import { getPublished } from '../../lib/locations';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import logo from '../../images/myorthodontist-logo.png';
 
 const socialIcons: Record<string, string> = {
   facebook: 'lucide:facebook',
@@ -19,53 +22,111 @@ const socials = Object.entries(site.social).filter(([, href]) => Boolean(href)) 
   string,
 ][];
 const year = new Date().getFullYear();
+
+const locationOrder = [
+  'cary',
+  'raleigh',
+  'chapel-hill',
+  'sanford',
+  'wake-forest',
+  'concord',
+  'roanoke-rapids',
+  'fayetteville',
+  'durham',
+  'mount-airy',
+  'burgaw',
+  'washington',
+  'greensboro',
+  'rocky-mount',
+];
+
+const locations = await getPublished();
+const orderedLocations = [
+  ...locationOrder.flatMap((id) => {
+    const match = locations.find((entry) => entry.id === id);
+    return match ? [match] : [];
+  }),
+  ...locations.filter((entry) => !locationOrder.includes(entry.id)),
+];
+const midpoint = Math.ceil(orderedLocations.length / 2);
+const locationColumns = [orderedLocations.slice(0, midpoint), orderedLocations.slice(midpoint)];
+
+const quickLinks =
+  navigation.footer.find((group) => group.heading === 'Quick Links') ?? navigation.footer[0];
+
+const about =
+  'MyOrthodontist is a family-oriented practice whose priority is delivering exceptional and affordable orthodontic treatment in a warm and welcoming environment across North Carolina.';
 ---
 
-<Section as="footer" background="inverse" spacing="md">
+<Section as="footer" background="inverse" spacing="md" class="!bg-none">
   <Container gap="lg">
-    <div class="grid w-full gap-10 md:grid-cols-4">
-      <div class="flex flex-col gap-3 md:col-span-2">
-        <a href="/" class="text-ink-inverse flex items-center gap-2 font-semibold no-underline">
-          <Icon name="lucide:hexagon" class="size-7" aria-hidden="true" />
-          <span>{site.name}</span>
+    <div class="grid w-full gap-10 md:grid-cols-2 lg:grid-cols-[1.15fr_0.85fr_1.15fr] lg:gap-16">
+      <div class="flex flex-col gap-5">
+        <a href="/" class="inline-flex w-fit no-underline">
+          <Image src={logo} alt={site.name} class="h-auto w-48" />
         </a>
-        <p class="max-w-reading text-neutral-300">{site.tagline}</p>
+        <p class="max-w-reading text-sm leading-relaxed text-neutral-300">{about}</p>
 
-        <address class="mt-2 flex flex-col gap-2 text-neutral-300 not-italic">
+        <address class="flex flex-col gap-2 not-italic">
           <a
             href={`tel:${site.business.phoneHref}`}
-            class="text-ink-inverse inline-flex min-h-11 items-center gap-2 no-underline"
+            class="text-ink-inverse inline-flex min-h-11 items-center gap-3 no-underline"
           >
-            <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
+            <span
+              class="bg-accent-700 inline-flex size-9 shrink-0 items-center justify-center rounded-md"
+              aria-hidden="true"
+            >
+              <Icon name="lucide:phone" class="size-4" />
+            </span>
             {site.business.phone}
           </a>
           <a
-            href={`mailto:${site.business.email}`}
-            class="text-ink-inverse inline-flex min-h-11 items-center gap-2 no-underline"
+            href="/locations/"
+            class="text-ink-inverse inline-flex min-h-11 items-center gap-3 no-underline"
           >
-            <Icon name="lucide:mail" class="size-4" aria-hidden="true" />
-            {site.business.email}
+            <span
+              class="bg-accent-700 inline-flex size-9 shrink-0 items-center justify-center rounded-md"
+              aria-hidden="true"
+            >
+              <Icon name="lucide:map-pin" class="size-4" />
+            </span>
+            {locations.length} Locations Across NC
           </a>
-          <span class="flex items-start gap-2">
-            <Icon name="lucide:map-pin" class="mt-1 size-4 shrink-0" aria-hidden="true" />
-            {formattedAddress}
-          </span>
         </address>
 
-        <dl class="mt-2 text-neutral-300">
-          <dt class="sr-only">Opening hours</dt>
-          {site.business.hours.map((line) => <dd>{line}</dd>)}
-        </dl>
+        {
+          socials.length > 0 && (
+            <ul class="flex gap-2">
+              {socials.map(([platform, href]) => (
+                <li>
+                  <a
+                    href={href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    class="inline-flex size-11 items-center justify-center rounded-md bg-brand-800 text-neutral-300 no-underline hover:bg-brand-700 hover:text-ink-inverse"
+                  >
+                    <span class="sr-only">{platform}</span>
+                    <Icon
+                      name={socialIcons[platform] ?? 'lucide:link'}
+                      class="size-5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
       {
-        navigation.footer.map((group) => (
-          <nav aria-label={group.heading} class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold tracking-wide text-neutral-400 uppercase">
-              {group.heading}
+        quickLinks && (
+          <nav aria-label={quickLinks.heading} class="flex flex-col gap-3">
+            <h2 class="text-ink-inverse text-sm font-semibold tracking-wide uppercase">
+              {quickLinks.heading}
             </h2>
-            <ul class="flex flex-col gap-1">
-              {group.links.map((link) => (
+            <ul class="flex flex-col">
+              {quickLinks.links.map((link) => (
                 <li>
                   <a
                     href={link.href}
@@ -77,39 +138,57 @@ const year = new Date().getFullYear();
               ))}
             </ul>
           </nav>
-        ))
+        )
       }
+
+      <div class="flex flex-col gap-6">
+        <nav aria-label="Our locations" class="flex flex-col gap-3">
+          <h2 class="text-ink-inverse text-sm font-semibold tracking-wide uppercase">
+            Our Locations
+          </h2>
+          <div class="grid grid-cols-2 gap-x-6">
+            {
+              locationColumns.map((column) => (
+                <ul class="flex flex-col">
+                  {column.map((location) => (
+                    <li>
+                      <a
+                        href={`/locations/${location.data.slug ?? location.id}/`}
+                        class="hover:text-ink-inverse inline-flex min-h-11 items-center gap-2 text-neutral-300 no-underline"
+                      >
+                        <span
+                          class="bg-accent-500 size-1.5 shrink-0 rounded-full"
+                          aria-hidden="true"
+                        />
+                        {location.data.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ))
+            }
+          </div>
+        </nav>
+
+        <div class="rounded-lg border border-white/15 bg-brand-800/50 p-4">
+          <p
+            class="bg-accent-500 text-brand-800 inline-flex rounded-full px-2.5 py-0.5 text-[0.65rem] font-semibold tracking-wide uppercase"
+          >
+            Award
+          </p>
+          <p class="text-ink-inverse mt-2 font-semibold">Triangle Business Journal</p>
+          <p class="text-sm text-neutral-400">Leaders in Diversity — 2024</p>
+        </div>
+      </div>
     </div>
 
-    {
-      socials.length > 0 && (
-        <ul class="flex gap-2">
-          {socials.map(([platform, href]) => (
-            <li>
-              <a
-                href={href}
-                rel="noopener noreferrer"
-                target="_blank"
-                class="hover:text-ink-inverse inline-flex size-11 items-center justify-center rounded-md text-neutral-300 no-underline hover:bg-neutral-800"
-              >
-                <span class="sr-only">{platform}</span>
-                <Icon
-                  name={socialIcons[platform] ?? 'lucide:link'}
-                  class="size-5"
-                  aria-hidden="true"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
-
     <div
-      class="flex w-full flex-col gap-3 border-t border-neutral-800 pt-6 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between"
+      class="flex w-full flex-col gap-3 border-t border-white/10 pt-6 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between"
     >
-      <p>&copy; {year} {site.legalName ?? site.name}. All rights reserved.</p>
-      <ul class="flex flex-wrap gap-4">
+      <p>
+        &copy; {year} MyOrthodontist | Orthodontic Consultants New Patient Group
+      </p>
+      <ul class="flex flex-wrap gap-6">
         {
           navigation.legal.map((link) => (
             <li>

@@ -31,12 +31,7 @@ const compact = !eyebrow && !title && !body;
 
 <Section background={background} spacing={compact ? 'sm' : spacing}>
   <Container width={width} align={align} gap="lg">
-    <BlockHeader
-      eyebrow={eyebrow}
-      title={title}
-      body={body}
-      level={titleLevel}
-    />
+    <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
     <dl class:list={['grid w-full gap-8', columnClass]}>
       {

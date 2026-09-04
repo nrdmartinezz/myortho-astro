@@ -49,8 +49,7 @@ const {
   pills = [],
 } = Astro.props;
 
-const isInverse =
-  background === 'inverse' || background === 'brand' || background === 'accent';
+const isInverse = background === 'inverse' || background === 'brand' || background === 'accent';
 
 const pillChunkSize = Math.max(1, Math.ceil(pills.length / 3));
 ---
@@ -88,9 +87,7 @@ const pillChunkSize = Math.max(1, Math.ceil(pills.length / 3));
     >
       {
         eyebrow && (
-          <p class="block-eyebrow tracking-eyebrow text-xs font-light uppercase">
-            {eyebrow}
-          </p>
+          <p class="block-eyebrow tracking-eyebrow text-xs font-light uppercase">{eyebrow}</p>
         )
       }
 
@@ -116,10 +113,7 @@ const pillChunkSize = Math.max(1, Math.ceil(pills.length / 3));
       }
       {
         pills?.length > 0 && (
-          <ul
-            class="hero-pills flex flex-wrap gap-2"
-            style={`--hero-pill-cols: ${pillChunkSize}`}
-          >
+          <ul class="hero-pills flex flex-wrap gap-2" style={`--hero-pill-cols: ${pillChunkSize}`}>
             {pills.map((pill) => (
               <li>
                 <PillButton

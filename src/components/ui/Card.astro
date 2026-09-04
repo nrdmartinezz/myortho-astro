@@ -29,10 +29,7 @@ const variants: Record<CardVariant, string> = {
 };
 ---
 
-<Tag
-  class:list={['card', variants[variant], hover && 'card-lift', className]}
-  {...rest}
->
+<Tag class:list={['card', variants[variant], hover && 'card-lift', className]} {...rest}>
   <div class:list={['card-face', padded && 'card-padded gap-3 p-6']}>
     <slot />
   </div>

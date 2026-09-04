@@ -45,7 +45,9 @@ const copies = [items, items];
                     class="logo-cloud-mark opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
                   />
                 ) : (
-                  <span class="logo-cloud-mark text-ink-muted text-sm font-semibold">{logo.name}</span>
+                  <span class="logo-cloud-mark text-ink-muted text-sm font-semibold">
+                    {logo.name}
+                  </span>
                 );
 
                 return <li>{logo.href ? <a href={logo.href}>{mark}</a> : mark}</li>;
@@ -62,13 +64,7 @@ const copies = [items, items];
   .logo-cloud-viewport {
     overflow: hidden;
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 8%,
-      black 92%,
-      transparent
-    );
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
 
   .logo-cloud-track {

@@ -15,9 +15,11 @@ import { Icon } from 'astro-icon/components';
 
 interface Props {
   currentPath: string;
+  /** Toggle stays in the header; the drawer renders after it so it cannot cover the close button. */
+  part: 'toggle' | 'drawer';
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, part } = Astro.props;
 
 const isCurrent = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
@@ -26,17 +28,32 @@ const linkClass =
   'flex min-h-12 items-center gap-3 rounded-md px-2 text-base no-underline text-ink-base aria-[current=page]:text-ink-brand aria-[current=page]:font-medium';
 ---
 
-<button
-  type="button"
-  id="nav-toggle"
-  aria-expanded="false"
-  aria-controls="mobile-nav"
-  class="inline-flex size-11 items-center justify-center rounded-md hover:bg-neutral-100 md:hidden"
->
-  <span class="sr-only">Menu</span>
-  <Icon name="lucide:menu" class="size-6" aria-hidden="true" />
-</button>
+{
+  part === 'toggle' && (
+    <button
+      type="button"
+      id="nav-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      class="relative z-50 inline-flex size-11 items-center justify-center rounded-md hover:bg-neutral-100 md:hidden"
+    >
+      <span class="sr-only" data-nav-toggle-label>
+        Menu
+      </span>
+      <span class="nav-toggle-icons" aria-hidden="true">
+        <span class="nav-toggle-icon nav-toggle-icon--menu">
+          <Icon name="lucide:menu" class="size-6" />
+        </span>
+        <span class="nav-toggle-icon nav-toggle-icon--close">
+          <Icon name="lucide:x" class="size-6" />
+        </span>
+      </span>
+    </button>
+  )
+}
 
+{
+  part === 'drawer' && (
 <div
   id="mobile-nav"
   hidden
@@ -71,42 +88,42 @@ const linkClass =
           }
 
           const panelId = `mobile-panel-${index}`;
+          const parentAlreadyListed = Boolean(
+            item.href && sublinks.some((link) => link.href === item.href),
+          );
 
           return (
             <li class="border-line-base border-b">
-              <div class="flex items-center">
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    aria-current={isCurrent(item.href) ? 'page' : undefined}
-                    class={`${linkClass} flex-1`}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <span class={`${linkClass} flex-1`}>{item.label}</span>
-                )}
-
-                <button
-                  type="button"
-                  class="mobile-accordion inline-flex size-12 shrink-0 items-center justify-center rounded-md hover:bg-neutral-100"
-                  aria-expanded="false"
-                  aria-controls={panelId}
-                >
-                  <span class="sr-only">Show {item.label} links</span>
-                  <Icon
-                    name="lucide:chevron-down"
-                    class="size-5 transition-transform"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
+              <button
+                type="button"
+                class="mobile-accordion flex min-h-12 w-full items-center justify-between gap-3 rounded-md px-2 text-left text-base text-ink-base hover:bg-neutral-100"
+                aria-expanded="false"
+                aria-controls={panelId}
+              >
+                {item.label}
+                <Icon
+                  name="lucide:chevron-down"
+                  class="size-5 shrink-0 transition-transform"
+                  aria-hidden="true"
+                />
+              </button>
 
               <ul
                 id={panelId}
                 hidden
                 class="border-line-base mb-2 ml-2 flex flex-col border-l pl-3"
               >
+                {item.href && !parentAlreadyListed && (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={isCurrent(item.href) ? 'page' : undefined}
+                      class={linkClass}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                )}
                 {sublinks.map((link) => (
                   <li>
                     <a
@@ -141,15 +158,51 @@ const linkClass =
     </div>
   </Container>
 </div>
+  )
+}
 
 <style>
-  /* Overwritten from the real header height when the drawer opens. */
+  /* Distance from the viewport top to the header’s bottom edge; set on open. */
   #mobile-nav {
-    --header-h: 4rem;
+    --header-h: 8rem;
+  }
+
+  .nav-toggle-icons {
+    display: grid;
+    place-items: center;
+  }
+
+  .nav-toggle-icon {
+    grid-area: 1 / 1;
+    display: flex;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .nav-toggle-icon--close {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  #nav-toggle[aria-expanded='true'] .nav-toggle-icon--menu {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  #nav-toggle[aria-expanded='true'] .nav-toggle-icon--close {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
   }
 
   .mobile-accordion[aria-expanded='true'] :global(svg) {
     transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-toggle-icon {
+      transition: none;
+    }
   }
 </style>
 
@@ -164,8 +217,17 @@ const linkClass =
       (el) => el !== header && el !== drawer,
     ) as HTMLElement[];
 
+    const label = toggle.querySelector<HTMLElement>('[data-nav-toggle-label]');
+
     const setDrawer = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+
+      if (open) {
+        const top = header?.getBoundingClientRect().bottom ?? 0;
+        drawer.style.setProperty('--header-h', `${Math.max(0, top)}px`);
+      }
+
       drawer.hidden = !open;
       document.body.style.overflow = open ? 'hidden' : '';
 
@@ -175,7 +237,6 @@ const linkClass =
       }
 
       if (open) {
-        drawer.style.setProperty('--header-h', `${header?.offsetHeight ?? 0}px`);
         drawer.querySelector<HTMLAnchorElement>('a')?.focus();
       } else {
         toggle.focus();

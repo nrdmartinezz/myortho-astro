@@ -20,8 +20,8 @@ const inverse = variant === 'inverse';
   class:list={[
     'h-full w-full',
     inverse
-      ? 'bg-linear-to-r from-brand-500 to-brand-600'
-      : 'bg-linear-to-br from-surface-base to-surface-muted',
+      ? 'from-brand-500 to-brand-600 bg-linear-to-r'
+      : 'from-surface-base to-surface-muted bg-linear-to-br',
   ]}
   variant={inverse ? 'inverse' : 'plain'}
 >
@@ -32,9 +32,7 @@ const inverse = variant === 'inverse';
           class="tracking-eyebrow text-xs font-semibold uppercase"
           data-slot="eyebrow"
           set:html={eyebrow}
-        >
-         
-        </p>
+        />
       )
     }
 
@@ -49,12 +47,7 @@ const inverse = variant === 'inverse';
               ]}
               set:html={stat.value}
             />
-            <dt
-              class:list={[
-                'text-sm',
-                inverse ? 'text-white/70' : 'text-ink-muted',
-              ]}
-            >
+            <dt class:list={['text-sm', inverse ? 'text-white/70' : 'text-ink-muted']}>
               {stat.label}
             </dt>
           </div>
@@ -65,15 +58,8 @@ const inverse = variant === 'inverse';
     {
       note && (
         <>
-          <hr
-            class:list={[
-              'w-full',
-              inverse ? 'border-white/20' : 'border-line-base',
-            ]}
-          />
-          <p class:list={['text-sm', inverse ? 'text-white/70' : 'text-ink-muted']}>
-            {note}
-          </p>
+          <hr class:list={['w-full', inverse ? 'border-white/20' : 'border-line-base']} />
+          <p class:list={['text-sm', inverse ? 'text-white/70' : 'text-ink-muted']}>{note}</p>
         </>
       )
     }

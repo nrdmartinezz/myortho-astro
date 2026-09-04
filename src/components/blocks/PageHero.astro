@@ -15,14 +15,7 @@ interface Props {
   spacing?: SectionSpacing;
 }
 
-const {
-  eyebrow,
-  title,
-  body,
-  actions = [],
-  background = 'muted',
-  spacing = 'md',
-} = Astro.props;
+const { eyebrow, title, body, actions = [], background = 'muted', spacing = 'md' } = Astro.props;
 ---
 
 <Section background={background} spacing={spacing}>

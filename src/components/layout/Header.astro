@@ -27,9 +27,10 @@ const { sticky = 'sticky' } = Astro.props;
 const currentPath = Astro.url.pathname;
 const positioned = sticky !== 'static';
 ---
+
 <div class="utility">
-  <div class="container w-full px-gutter">
-    <span class="utility-message text-xs text-neutral-300 font-medium max-md:hidden">
+  <div class="px-gutter container w-full">
+    <span class="utility-message text-xs font-medium text-neutral-300 max-md:hidden">
       {site.tagline}
     </span>
     <div class="utility-links">
@@ -78,7 +79,7 @@ const positioned = sticky !== 'static';
     <div class="flex items-center gap-2">
       <a
         href={`tel:${site.business.phoneHref}`}
-        class="text-brand-800 hidden min-h-11 items-center gap-2 px-2 font-medium no-underline lg:inline-flex text-xs"
+        class="text-brand-800 hidden min-h-11 items-center gap-2 px-2 text-xs font-medium no-underline lg:inline-flex"
       >
         <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
         {site.business.phone}
@@ -86,16 +87,17 @@ const positioned = sticky !== 'static';
 
       {
         navigation.cta && (
-          <Button href={navigation.cta.href} size="sm" class="max-md:hidden text-xs">
+          <Button href={navigation.cta.href} size="sm" class="text-xs max-md:hidden">
             {navigation.cta.label}
           </Button>
         )
       }
 
-      <MobileNav currentPath={currentPath} />
+      <MobileNav part="toggle" currentPath={currentPath} />
     </div>
   </Container>
 </header>
+<MobileNav part="drawer" currentPath={currentPath} />
 
 <style>
   header {
@@ -110,18 +112,18 @@ const positioned = sticky !== 'static';
     padding: 8px 0;
     justify-content: center;
     align-items: center;
-    .container{
-      display:flex;
-      flex-direction:row;
-      justify-content:space-between;
-      justify-self:center;
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      justify-self: center;
     }
   }
 
   .utility-message {
-    margin:auto 0;
+    margin: auto 0;
   }
-  
+
   .utility-links {
     display: flex;
     align-items: center;

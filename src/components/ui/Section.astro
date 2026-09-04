@@ -5,7 +5,8 @@
  */
 import type { HTMLAttributes } from 'astro/types';
 
-export type SectionBackground = 'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient' | 'accent';
+export type SectionBackground =
+  'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient' | 'accent';
 export type SectionSpacing = 'none' | 'sm' | 'md' | 'lg';
 
 interface Props extends Omit<HTMLAttributes<'section'>, 'class'> {
