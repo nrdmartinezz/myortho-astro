@@ -1,57 +1,109 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Prose from '../../components/ui/Prose.astro';
 ---
 
 <SubpageLayout
-  title="About Us"
-  description="Our story, team, and commitment to North Carolina communities."
+  title="About MyOrthodontist"
+  description="A network of family-owned orthodontic offices serving communities across North Carolina and South Virginia — putting patients before profits for over 22 years."
+  eyebrow="Our Story"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "About",
-      "href": "/about/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about/' },
   ]}
 >
+  <Prose>
+    <h2>Who we are and why you should choose us</h2>
+    <p>
+      When it comes to the health of your teeth, nothing is more important than working with a
+      trusted provider. MyOrthodontist is a network of family-owned orthodontic offices that serves
+      numerous communities throughout North Carolina and South Virginia. We truly care about helping
+      you and your family achieve your healthiest smiles.
+    </p>
+    <p>
+      The caring professionals at MyOrthodontist are your partners in oral care. We take the time to
+      address concerns and questions for you and your family, and we work with you to give you a
+      healthy, dazzling smile through personal dental and orthodontic care — making it accessible,
+      affordable, and pleasant.
+    </p>
+  </Prose>
+
   <ServicesGrid
     bare
     background="base"
-    columns={2}
+    columns={3}
+    eyebrow="What Makes Us Different"
+    title="What sets us apart"
+    titleLevel={2}
     items={[
-    {
-        title: 'Our Story',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/about/',
-        icon: 'lucide:book-open'
-    },
-    {
-        title: 'Why Choose Us',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/about/what-sets-us-apart/',
-        icon: 'lucide:star'
-    },
-    {
-        title: 'Our Foundation',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/about/foundation/',
-        icon: 'lucide:heart-handshake'
-    },
-    {
-        title: 'Meet the Doctors',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/doctors/',
-        icon: 'lucide:stethoscope'
-    },
-    {
-        title: 'Meet Dr. Moray',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        href: '/doctors/larry-j-moray/',
-        icon: 'lucide:user-round'
-    }
-]}
+      {
+        icon: 'lucide:heart-handshake',
+        title: 'Patients Before Profits',
+        body: 'Every recommendation we make starts with what is best for you, not our bottom line. We take the time to understand your goals and build a plan that respects your budget.',
+      },
+      {
+        icon: 'lucide:user-round',
+        title: 'Exceptional Individualized Care',
+        body: 'No two smiles are the same, and neither are two financial situations. We customize both your clinical care and your payment plan to fit your life.',
+      },
+      {
+        icon: 'lucide:users',
+        title: 'Working With the Community',
+        body: 'From our roots in North Carolina, we serve the communities around us — committed to making orthodontic care accessible for every family, including those on Medicaid.',
+      },
+    ]}
   />
+
+  <Prose>
+    <h2>Our mission</h2>
+    <p>
+      Our mission is to deliver high-quality, professional oral health care. We treat our patients
+      as family — irrespective of ethnicity, race, religion, or gender identity — giving them the
+      same respect and consideration we would want ourselves through a pleasant and personalized
+      experience. We strive to serve others in a caring and comfortable environment, and in the
+      process grow as individuals and as a team.
+    </p>
+    <p>
+      MyOrthodontist complies with applicable federal civil rights laws and does not discriminate on
+      the basis of race, color, national origin, age, disability, or sex. We take reasonable steps
+      to provide free-of-charge language assistance services to patients who do not speak English
+      well enough to discuss the care we provide.
+    </p>
+
+    <h2>The MyOrthodontist story</h2>
+    <p>
+      Previously named The Happy Tooth Orthodontics, we have served North Carolina with great dental
+      and orthodontic care for more than 22 years, and we have so many great stories to tell about
+      the difference we have made in the lives of your friends, families, and neighbors.
+    </p>
+    <p>
+      From humble beginnings and with roots here in North Carolina, we have built a culture and
+      family that live our core values and build connection with all of our patients. Our offices
+      and staff come to work every day striving to:
+    </p>
+    <ul>
+      <li>Go above and beyond</li>
+      <li>Put others first</li>
+      <li>Be fun and outgoing</li>
+      <li>Be genuine</li>
+      <li>Be a team player</li>
+    </ul>
+    <p>
+      We exist for you — to make a difference in your life and your smile. Since we exist for you,
+      it is not about us, it is about you. We want you to have ownership in our offices, the process,
+      and your results. So from your perspective, we are <strong>MyOrthodontist</strong>. A new name
+      was born: simple, to the point, and one that makes you a part of the entire experience. This is
+      not our name change — we are your new partner, MyOrthodontist.
+    </p>
+    <p><em>— Dr. Larry J. Moray</em></p>
+
+    <h2>Honest, caring service</h2>
+    <p>
+      At MyOrthodontist, we care about our patients and treat them like family. We promise to speak
+      honestly with you about any symptoms that may require further treatment. Our experienced dental
+      professionals outline every treatment option in a way you can understand and answer your
+      questions, so you can make your orthodontic treatment decisions with confidence.
+    </p>
+  </Prose>
 </SubpageLayout>

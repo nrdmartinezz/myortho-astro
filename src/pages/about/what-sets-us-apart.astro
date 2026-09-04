@@ -1,25 +1,77 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Prose from '../../components/ui/Prose.astro';
 ---
 
 <SubpageLayout
-  title="Why Choose Us"
-  description="What sets MyOrthodontist apart across North Carolina."
+  title="Why Choose MyOrthodontist"
+  description="Family-owned, community-rooted, and focused on you — here is what makes orthodontic care at MyOrthodontist different."
+  eyebrow="Why Choose Us"
   breadcrumbs={[
-    {
-      "name": "Home",
-      "href": "/"
-    },
-    {
-      "name": "About",
-      "href": "/about/"
-    },
-    {
-      "name": "Why Choose Us",
-      "href": "/about/what-sets-us-apart/"
-    }
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about/' },
+    { name: 'Why Choose Us', href: '/about/what-sets-us-apart/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Care built around you</h2>
+    <p>
+      For more than 22 years, families across North Carolina have trusted MyOrthodontist with their
+      smiles. As a network of family-owned offices, we combine the resources of a large practice
+      with the personal attention of a neighborhood one — and we measure success by your experience,
+      not just your results.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="The Difference"
+    title="Six reasons families choose us"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:heart-handshake',
+        title: 'Patients Before Profits',
+        body: 'Every recommendation starts with what is best for you. We take the time to understand your goals and answer your questions honestly before recommending treatment.',
+      },
+      {
+        icon: 'lucide:user-round',
+        title: 'Individualized Care',
+        body: 'No two smiles — or two budgets — are the same. We tailor both your clinical plan and your payment plan to fit your life.',
+      },
+      {
+        icon: 'lucide:users',
+        title: 'Community First',
+        body: 'From our North Carolina roots, we invest in the communities we serve and make care accessible for every family, including those on Medicaid.',
+      },
+      {
+        icon: 'lucide:map-pin',
+        title: '14 Convenient Locations',
+        body: 'With offices across the state, there is a MyOrthodontist near you — so appointments fit around school, work, and family.',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Advanced Technology',
+        body: 'From clear aligners to 3D imaging and virtual monitoring, we use modern tools that mean fewer, faster, and more comfortable visits.',
+      },
+      {
+        icon: 'lucide:wallet',
+        title: 'Affordable Financing',
+        body: 'Flexible payment plans, $0-down options, and partnerships with major insurers and CareCredit keep treatment within reach.',
+      },
+    ]}
+  />
+
+  <Prose>
+    <h2>Honest, caring service</h2>
+    <p>
+      We treat our patients like family. That means speaking honestly about what your smile needs,
+      outlining every option in a way you can understand, and giving you the confidence to make the
+      right decision for yourself and your children. Whenever you walk into one of our offices, you
+      are the reason we are here.
+    </p>
+  </Prose>
 </SubpageLayout>
