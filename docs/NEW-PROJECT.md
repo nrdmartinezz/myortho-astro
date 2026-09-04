@@ -54,8 +54,10 @@ not, skip this entirely — no collection ships by default and nothing needs rem
 
 ## 7. Forms and tracking
 
-- `site.ts` → `formspreeId` (the ID only, not the URL). Submit the form once and
-  confirm it lands, including the redirect to `/thank-you/`.
+- `site.ts` → `formEndpoint` (defaults to `/api/submit.php`) and optional
+  `recaptchaSiteKey`. Configure SMTP server-side and submit the form once to
+  confirm it lands, including the redirect to `/thank-you/`. See
+  `docs/FORMS-AND-EMAIL.md`.
 - Analytics IDs are optional and per-platform. **Leave them blank unless the client
   is running paid ads** — server log analytics covers traffic reporting and costs
   the page nothing. See `docs/HOSTING.md`.

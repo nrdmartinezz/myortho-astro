@@ -1,7 +1,8 @@
 # Hosting (cPanel)
 
-Everything runs on your own infrastructure. The only external services are GitHub
-(source + CI) and Formspree (form delivery).
+Everything runs on your own infrastructure. The only external service is GitHub
+(source + CI); form delivery is handled by the self-hosted PHP mailer under
+`public/api/` (see `docs/FORMS-AND-EMAIL.md`).
 
 ## URL shape — decided once, do not change casually
 
@@ -46,6 +47,30 @@ the same page.
 malformed frontmatter fails in CI instead of shipping.
 
 Manual fallback: `npm run build` and upload the contents of `dist/`.
+
+## Forms & email (PHP mailer)
+
+Contact forms POST to `public/api/submit.php`, which Astro copies to `dist/api/` at build.
+Delivery is server-side — no third-party form service. Full reference: `docs/FORMS-AND-EMAIL.md`.
+
+Server setup, once per site:
+
+1. **Secrets file, outside the document root.** Copy `public/api/config.example.php` to
+   `~/private/site-mail.php` (rename per client, then update the first path in
+   `public/api/lib/mailer.php`). Keeping it outside `public_html/` means an FTP deploy never
+   overwrites or exposes it. Set at least `recaptcha_secret`, `notify_to`, `from_email`, and
+   `from_name`. Mail sends via PHP `mail()` by default; set `smtp_host`/`smtp_user`/`smtp_pass`
+   for authenticated SMTP (better deliverability on some hosts).
+2. **PHPMailer.** The deploy workflow runs `composer install --no-dev --working-dir=public/api`
+   before the build, so `vendor/` ships inside `dist/api/`. If you deploy manually, run that
+   command first. Composer must be available on the machine that builds.
+3. **reCAPTCHA v3 (optional).** Put the site key in `src/config/site.ts` (`recaptchaSiteKey`) and
+   the matching secret in the server config (`recaptcha_secret`); add the domain in the Google
+   reCAPTCHA admin.
+4. **Verify.** After deploy, submit each form on the live site and confirm the notification lands
+   (check spam). A missing/incomplete server config returns a graceful "Form is temporarily
+   unavailable" instead of sending. If mail lands in spam, configure SPF/DKIM in
+   cPanel → Email Deliverability.
 
 ## What `.htaccess` does
 

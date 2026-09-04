@@ -60,8 +60,14 @@ export interface SiteConfig {
   /** Absolute or site-relative path to the fallback Open Graph image. */
   defaultOgImage: string;
 
-  /** Formspree form ID only, not the full URL. Blank disables the form. */
-  formspreeId: string;
+  /** Relative path to the PHP form handler. Blank disables all forms. */
+  formEndpoint: string;
+
+  /**
+   * Google reCAPTCHA v3 site key (public). Blank skips the widget. The matching
+   * secret is configured server-side in ~/private/site-mail.php.
+   */
+  recaptchaSiteKey: string;
 
   analytics: {
     ga4: string;
@@ -115,7 +121,8 @@ export const site: SiteConfig = {
 
   defaultOgImage: '/og-default.png',
 
-  formspreeId: '',
+  formEndpoint: '/api/submit.php',
+  recaptchaSiteKey: '',
 
   analytics: {
     ga4: '',

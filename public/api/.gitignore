@@ -1,0 +1,5 @@
+# Server-side mail secrets — copy from config.example.php
+config.local.php
+
+# Installed by composer in CI before deploy
+vendor/

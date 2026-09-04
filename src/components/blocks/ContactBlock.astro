@@ -1,12 +1,6 @@
 ---
 /**
- * Formspree contact form.
- *
- * `_next` must be an ABSOLUTE url — Formspree ignores relative paths and the
- * failure looks like a broken form. Trailing slash matches trailingSlash:'always'.
- *
- * Without JS the form does a normal POST and Formspree redirects to /thank-you/.
- * With JS it submits via fetch for inline feedback and fires the conversion.
+ * Contact form block — posts to /api/submit.php via SiteFormHandler.
  */
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
@@ -22,7 +16,6 @@ import type { BlockProps } from './types';
 export type ContactOffice = OfficeItem;
 
 interface Props extends BlockProps {
-  subject?: string;
   /** Values for the optional select field (services, locations, etc.). */
   services?: string[];
   /** Label for the select field when `services` is non-empty. */
@@ -40,7 +33,6 @@ const {
   title = 'Get in touch',
   body,
   titleLevel = 2,
-  subject = `New enquiry from ${site.name}`,
   services = [],
   selectLabel = 'What do you need?',
   selectName = 'service',
@@ -48,7 +40,7 @@ const {
   offices = [],
 } = Astro.props;
 
-const action = site.formspreeId ? `https://formspree.io/f/${site.formspreeId}` : '';
+const action = site.formEndpoint || '';
 const thankYou = new URL('/thank-you/', site.url).href;
 ---
 
@@ -60,7 +52,7 @@ const thankYou = new URL('/thank-you/', site.url).href;
       {
         !action && (
           <p class="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
-            No <code>formspreeId</code> in <code>src/config/site.ts</code> — this form will not
+            No <code>formEndpoint</code> in <code>src/config/site.ts</code> — this form will not
             submit until one is set.
           </p>
         )
@@ -72,9 +64,11 @@ const thankYou = new URL('/thank-you/', site.url).href;
         method="POST"
         novalidate
         class="flex w-full flex-col gap-4"
+        data-site-form
+        data-thank-you={thankYou}
+        data-track-source="contact-form"
       >
-        <input type="hidden" name="_subject" value={subject} />
-        <input type="hidden" name="_next" value={thankYou} />
+        {action && <input type="hidden" name="form_type" value="contact" />}
 
         {/* Honeypot: bots fill it, humans never see it. */}
         <div class="absolute left-[-9999px]" aria-hidden="true">
@@ -161,50 +155,7 @@ const thankYou = new URL('/thank-you/', site.url).href;
 </Section>
 
 <script>
-  import { trackConversion, bindOutboundConversions } from '../../lib/track';
+  import { bindOutboundConversions } from '../../lib/track';
 
   bindOutboundConversions();
-
-  const form = document.querySelector<HTMLFormElement>('#contact-form');
-  const message = document.querySelector<HTMLElement>('.form-message');
-  const messageText = message?.querySelector<HTMLElement>('.form-message-text');
-
-  const show = (state: 'error' | 'success', text: string) => {
-    if (!message || !messageText) return;
-    message.dataset.state = state;
-    messageText.textContent = text;
-    message.hidden = false;
-  };
-
-  form?.addEventListener('submit', async (event) => {
-    if (!form.action) return;
-
-    // novalidate suppresses the native bubbles; :user-invalid styles the fields.
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      show('error', 'Please correct the highlighted fields.');
-      form.querySelector<HTMLElement>(':invalid')?.focus();
-      return;
-    }
-
-    event.preventDefault();
-    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-    submit?.setAttribute('disabled', '');
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
-      });
-
-      if (!response.ok) throw new Error(String(response.status));
-
-      trackConversion('lead', { source: 'contact-form' });
-      window.location.href = form.querySelector<HTMLInputElement>('[name="_next"]')?.value ?? '/';
-    } catch {
-      submit?.removeAttribute('disabled');
-      show('error', 'Something went wrong sending that. Please call us instead.');
-    }
-  });
 </script>
