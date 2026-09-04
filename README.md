@@ -35,6 +35,10 @@ until a project needs one.
 | `npm run format`     | Writes Prettier formatting                               |
 | `npm run audit`      | Lighthouse CI + pa11y against the built site             |
 | `npm run audit:deps` | OSV vulnerability report for `package-lock.json`         |
+| `npm run php:check`  | Verify a local PHP binary is found                       |
+| `npm run php:install`| Install PHPMailer into `public/api/vendor/` (Composer)   |
+| `npm run php:serve`  | Serve built `dist/` with PHP so `/api/submit.php` runs   |
+| `npm run php:dev`    | `build` + `php:install` + `php:serve` in one step        |
 
 Build the style guide into a production bundle with `STYLEGUIDE=1 npm run build`.
 
@@ -47,6 +51,7 @@ Build the style guide into a production bundle with `STYLEGUIDE=1 npm run build`
 | `docs/RESPONSIVE-RULES.md`    | Desktop-first defaults for tablet and mobile       |
 | `docs/ADDING-A-COLLECTION.md` | Adding a blog or similar, if the project needs one |
 | `docs/HOSTING.md`             | cPanel setup, deploy secrets, log analytics        |
+| `docs/FORMS-AND-EMAIL.md`     | Contact form + self-hosted PHP SMTP mailer setup   |
 | `docs/DESIGNER-BRIEF.md`      | Hand to a designer when Figma is involved          |
 
 ## Theming
@@ -81,3 +86,25 @@ Responsive is **desktop-first** using Tailwind `max-*` variants. See `docs/RESPO
 Static output in `dist/` uploads as-is. `public/.htaccess` handles HTTPS, non-www, trailing
 slashes, compression, cache headers, and the 404. `trailingSlash: 'always'` + `build.format:
 'directory'` are pinned together — changing one without the other breaks URLs on Apache.
+
+## Forms & email
+
+Contact forms POST to a self-hosted PHP handler on the same domain (`public/api/submit.php`) —
+no Formspree, no third-party form service. Full reference: `docs/FORMS-AND-EMAIL.md`.
+
+- **Client config** (`src/config/site.ts`): `formEndpoint` (defaults to `/api/submit.php`; blank
+  disables all forms) and optional `recaptchaSiteKey` (reCAPTCHA v3 public key).
+- **Server secrets** (not in git): copy `public/api/config.example.php` to a file **outside
+  `public_html`** — `~/private/site-mail.php` — and set `recaptcha_secret`, `notify_to`,
+  `from_email`, and `from_name`. Update the first path in `public/api/lib/mailer.php` if you rename
+  it. Mail sends via PHP `mail()` by default; set `smtp_host`/`smtp_user`/`smtp_pass` for
+  authenticated SMTP.
+- **Dependencies**: PHPMailer installs into `public/api/vendor/` via `composer install`. CI
+  (`.github/workflows/deploy.yml`) runs this automatically before the build; run it manually for
+  local testing.
+- **Local testing**: needs PHP 8.x — `npm run php:dev` builds, installs PHPMailer, and serves
+  `dist/` so `/api/submit.php` executes. Copy `config.example.php` to `public/api/config.local.php`
+  for dev secrets (gitignored).
+- **Adding a form**: mark the `<form>` with `data-site-form` + `action={site.formEndpoint}`, add a
+  hidden `form_type`, and (optionally) a `forms.<type>` block in the mail config. `RecaptchaV3` and
+  `SiteFormHandler` are mounted globally in `BaseLayout.astro`.
