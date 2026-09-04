@@ -1,0 +1,89 @@
+---
+/**
+ * reCAPTCHA v3 for site forms. Renders nothing until recaptchaSiteKey is set.
+ * On submit, attaches g-recaptcha-response then lets the form proceed (fetch
+ * handler or native POST fallback).
+ */
+import { site } from '../../config/site';
+
+const siteKey = site.recaptchaSiteKey;
+const formEndpoint = site.formEndpoint;
+---
+
+{
+  siteKey && formEndpoint && (
+    <>
+      <script is:inline src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`} />
+      <div id="recaptcha-config" hidden data-sitekey={siteKey} data-endpoint={formEndpoint} />
+    </>
+  )
+}
+
+<script is:inline>
+  const config = document.getElementById('recaptcha-config');
+  const siteKey = config?.dataset.sitekey ?? '';
+  const formEndpoint = config?.dataset.endpoint ?? '';
+
+  if (siteKey && formEndpoint) {
+    const isSiteForm = (form) =>
+      form instanceof HTMLFormElement &&
+      (form.dataset.siteForm !== undefined || form.action.includes('/api/submit.php'));
+
+    const waitForRecaptcha = () =>
+      new Promise((resolve, reject) => {
+        const started = Date.now();
+        const tick = () => {
+          const grecaptcha = window.grecaptcha;
+          if (grecaptcha?.execute) {
+            grecaptcha.ready(() => resolve(grecaptcha));
+            return;
+          }
+          if (Date.now() - started > 8000) {
+            reject(new Error('recaptcha-timeout'));
+            return;
+          }
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+
+    const attachToken = async (form) => {
+      const grecaptcha = await waitForRecaptcha();
+      const token = await grecaptcha.execute(siteKey, { action: 'contact' });
+      let input = form.querySelector('input[name="g-recaptcha-response"]');
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'g-recaptcha-response';
+        form.appendChild(input);
+      }
+      input.value = token;
+    };
+
+    let releasing = null;
+
+    document.addEventListener(
+      'submit',
+      (event) => {
+        const form = event.target;
+        if (!isSiteForm(form)) return;
+        if (!form.checkValidity()) return;
+        if (releasing === form) {
+          releasing = null;
+          return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        attachToken(form)
+          .catch(() => undefined)
+          .then(() => {
+            releasing = form;
+            form.requestSubmit();
+          });
+      },
+      true,
+    );
+  }
+</script>

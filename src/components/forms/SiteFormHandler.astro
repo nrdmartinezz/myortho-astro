@@ -1,0 +1,23 @@
+---
+/**
+ * Progressive-enhancement form handler for /api/submit.php.
+ */
+import { site } from '../../config/site';
+
+const enabled = Boolean(site.formEndpoint);
+const thankYouUrl = new URL('/thank-you/', site.url).href;
+---
+
+{
+  enabled && (
+    <>
+      <div
+        id="form-handler-config"
+        hidden
+        data-endpoint={site.formEndpoint}
+        data-thank-you={thankYouUrl}
+      />
+      <script>import {initSiteForms} from '../../lib/formSubmit'; initSiteForms();</script>
+    </>
+  )
+}
