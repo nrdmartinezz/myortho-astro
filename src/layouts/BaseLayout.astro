@@ -7,6 +7,8 @@ import Analytics from '../components/analytics/Analytics.astro';
 import CookieConsent from '../components/analytics/CookieConsent.astro';
 import Header, { type HeaderSticky } from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import RecaptchaV3 from '../components/forms/RecaptchaV3.astro';
+import SiteFormHandler from '../components/forms/SiteFormHandler.astro';
 import { site, hasAnalytics } from '../config/site';
 
 interface Props {
@@ -65,6 +67,8 @@ const { breadcrumbs, faqs, service, sticky = 'sticky', ...seo } = Astro.props;
     </main>
 
     <Footer />
+    <RecaptchaV3 />
+    <SiteFormHandler />
     {site.consent === 'banner' && <CookieConsent />}
   </body>
 </html>

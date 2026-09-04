@@ -19,7 +19,8 @@ until a project needs one.
 | `public/favicon.svg` + `src/assets/logo.svg` | Client marks                                             | required   |
 | `public/robots.txt`                          | Point the `Sitemap:` line at the real domain             | required   |
 | `astro.config.mjs` → `site`                  | Production origin, no trailing slash                     | required   |
-| `site.ts` → `formspreeId`                    | Formspree form ID (not the full URL)                     | optional   |
+| `site.ts` → `formEndpoint`                   | PHP form handler path (default `/api/submit.php`)        | required   |
+| `site.ts` → `recaptchaSiteKey`               | reCAPTCHA v3 site key — see `docs/FORMS-AND-EMAIL.md`    | optional   |
 | `site.ts` → `analytics` / `verification`     | Per-platform IDs — blank means that vendor ships nothing | optional   |
 | `.github/workflows/deploy.yml`               | FTP host/path secrets                                    | to publish |
 | `_templates/collection/`                     | Copy only if the site needs a blog or similar            | optional   |
