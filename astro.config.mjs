@@ -24,5 +24,14 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    // Windows + a Documents/OneDrive path: watching node_modules (and friends)
+    // can sit silent for tens of seconds and look like a hang. Keep the
+    // predev logs on screen so startup isn't a blank wait.
+    clearScreen: false,
+    server: {
+      watch: {
+        ignored: ['**/.git/**', '**/node_modules/**', '**/dist/**', '**/.astro/**'],
+      },
+    },
   },
 });

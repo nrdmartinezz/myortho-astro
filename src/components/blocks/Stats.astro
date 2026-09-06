@@ -27,19 +27,39 @@ const {
 
 const columnClass = items.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3';
 const compact = !eyebrow && !title && !body;
+
+const countMarkup = items.map((stat) => {
+  const match = stat.value.match(/(\d+(?:\.\d+)?)/);
+  if (!match || match.index === undefined) {
+    return { html: stat.value, target: undefined as number | undefined, decimals: 0 };
+  }
+
+  const [raw] = match;
+  return {
+    html:
+      stat.value.slice(0, match.index) +
+      `<span data-count-num>${raw}</span>` +
+      stat.value.slice(match.index + raw.length),
+    target: Number(raw),
+    decimals: raw.includes('.') ? raw.split('.')[1].length : 0,
+  };
+});
 ---
 
 <Section background={background} spacing={compact ? 'sm' : spacing}>
   <Container width={width} align={align} gap="lg">
     <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
-    <dl class:list={['grid w-full gap-8', columnClass]}>
+    <dl class:list={['stats-bar grid w-full gap-8', columnClass]}>
       {
-        items.map((stat) => (
+        items.map((stat, index) => (
           <div class="font-heading flex flex-col gap-1 text-center">
             <dd
               class="stat-value text-3xl tracking-tight text-white md:text-4xl"
-              set:html={stat.value}
+              data-count-to={countMarkup[index].target}
+              data-count-decimals={countMarkup[index].decimals}
+              data-count-index={index}
+              set:html={countMarkup[index].html}
             />
             <dt class="stat-label text-sm font-extrabold text-[rgba(255,255,255,0.83)]">
               {stat.label}
@@ -68,4 +88,69 @@ const compact = !eyebrow && !title && !body;
     font-style: normal;
     font-weight: 700;
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .stat-value {
+      opacity: 0;
+      transform: translateY(0.4rem);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    .stat-value.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
 </style>
+
+<script>
+  const DURATION = 1400;
+  const STAGGER = 120;
+
+  const format = (value: number, decimals: number) =>
+    decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
+
+  const easeOut = (t: number) => 1 - (1 - t) ** 3;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const play = (stat: HTMLElement) => {
+    stat.classList.add('is-visible');
+
+    const node = stat.querySelector<HTMLElement>('[data-count-num]');
+    const target = Number(stat.dataset.countTo);
+    const decimals = Number(stat.dataset.countDecimals ?? 0);
+    if (!node || Number.isNaN(target) || reduced) return;
+
+    const delay = Number(stat.dataset.countIndex ?? 0) * STAGGER;
+    node.textContent = format(0, decimals);
+
+    window.setTimeout(() => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / DURATION);
+        node.textContent = format(target * easeOut(t), decimals);
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+  };
+
+  const stats = document.querySelectorAll<HTMLElement>('.stats-bar .stat-value');
+  if (stats.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          play(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.45 },
+    );
+
+    for (const stat of stats) observer.observe(stat);
+  }
+</script>

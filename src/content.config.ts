@@ -17,7 +17,20 @@ const locations = defineCollection({
     coordinates: z.object({ lat: z.number(), lng: z.number() }).optional(),
     seoTitle: z.string(),
     seoDescription: z.string(),
+    /** Fayetteville is the exception on the live site. */
+    acceptsMedicaid: z.boolean().default(true),
     /** Lets a future office be added before it's ready to go live. */
+    draft: z.boolean().default(false),
+  }),
+});
+
+const offers = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/offers' }),
+  schema: z.object({
+    headline: z.string(),
+    /** One-line teaser for location pages and other compact bands. */
+    summary: z.string(),
+    expires: z.coerce.date().optional(),
     draft: z.boolean().default(false),
   }),
 });
@@ -39,4 +52,4 @@ const doctors = defineCollection({
   }),
 });
 
-export const collections = { locations, doctors };
+export const collections = { locations, doctors, offers };

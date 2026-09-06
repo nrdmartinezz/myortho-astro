@@ -9,8 +9,12 @@ import Prose from '../../components/ui/Prose.astro';
 import Card from '../../components/ui/Card.astro';
 import MapEmbed from '../../components/blocks/MapEmbed.astro';
 import LocationHero, { type LocationDoctor } from '../../components/blocks/LocationHero.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import CTABanner from '../../components/blocks/CTABanner.astro';
 import { getPublished, related, type Entry } from '../../lib/locations';
 import { atLocation, getPublished as getDoctors } from '../../lib/doctors';
+import { getCurrentOffer } from '../../lib/offers';
+import { bookHref } from '../../config/site';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getPublished();
@@ -41,6 +45,11 @@ interface Props {
 const { entry, all, doctors } = Astro.props;
 const { Content } = await render(entry);
 const nearby = related(all, entry);
+const offer = await getCurrentOffer();
+const hasNotes = Boolean(entry.body?.trim());
+const expiresLabel = offer?.data.expires
+  ? offer.data.expires.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+  : undefined;
 ---
 
 <BaseLayout
@@ -66,13 +75,58 @@ const nearby = related(all, entry);
 
   <MapEmbed query={`${entry.data.addressLine}, ${entry.data.cityStateZip}`} />
 
-  <Section background="base" spacing="md">
-    <Container width="narrow">
-      <Prose>
-        <Content />
-      </Prose>
-    </Container>
-  </Section>
+  {
+    hasNotes && (
+      <Section background="base" spacing="md">
+        <Container width="narrow">
+          <Prose>
+            <Content />
+          </Prose>
+        </Container>
+      </Section>
+    )
+  }
+
+  <ServicesGrid
+    background={hasNotes ? 'muted' : 'base'}
+    columns={2}
+    eyebrow="This office"
+    title="Insurance & services"
+    body="For information about holiday and summer hours please call the office."
+    items={[
+      {
+        icon: 'lucide:shield-check',
+        title: 'Insurance & financing',
+        body: entry.data.acceptsMedicaid
+          ? 'We accept NC Medicaid and most insurance plans, plus CareCredit and in-house financing.'
+          : 'We accept most insurance plans, plus CareCredit and in-house financing.',
+        href: '/insurance/',
+        ctaLabel: 'See insurance options',
+      },
+      {
+        icon: 'lucide:smile',
+        title: 'Treatments',
+        body: 'Invisalign, braces, Carriere Motion, and the Dental Pain Eraser.',
+        href: '/services/',
+        ctaLabel: 'View treatments',
+      },
+    ]}
+  />
+
+  {
+    offer && (
+      <CTABanner
+        background="brand"
+        eyebrow="Current special"
+        title={offer.data.headline}
+        body={expiresLabel ? `${offer.data.summary} Offer ends ${expiresLabel}.` : offer.data.summary}
+        actions={[
+          { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
+          { label: 'Learn more', href: '/special-offers/', variant: 'outline' },
+        ]}
+      />
+    )
+  }
 
   {
     nearby.length > 0 && (
@@ -81,18 +135,19 @@ const nearby = related(all, entry);
           <Heading level={2}>Nearby locations</Heading>
           <ul class="grid w-full gap-6 sm:grid-cols-3">
             {nearby.map((item) => (
-              <Card as="li" variant="outlined">
-                <Heading level={3} size="sm">
-                  <a
-                    href={`/locations/${item.data.slug ?? item.id}/`}
-                    class="text-ink-base no-underline hover:underline"
-                    data-slot="cta"
-                  >
+              <li>
+                <Card
+                  as="a"
+                  href={`/locations/${item.data.slug ?? item.id}/`}
+                  variant="outlined"
+                  class="location-card-link text-ink-base h-full no-underline"
+                >
+                  <Heading level={3} size="sm">
                     {item.data.name}
-                  </a>
-                </Heading>
-                <p class="text-ink-muted text-sm">{item.data.cityStateZip}</p>
-              </Card>
+                  </Heading>
+                  <p class="text-ink-muted text-sm">{item.data.cityStateZip}</p>
+                </Card>
+              </li>
             ))}
           </ul>
         </Container>

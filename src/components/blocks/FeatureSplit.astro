@@ -75,7 +75,12 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
             widths={[480, 768, 1024]}
             sizes={bare ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, 50vw'}
             loading="lazy"
-            class="w-full rounded-lg object-cover"
+            class:list={[
+              'rounded-lg object-cover',
+              // Nested (`bare`) stacks media above copy at the full 2/3 column
+              // width — a portrait then becomes a mural. Cap it to a photo size.
+              bare ? 'mx-auto w-full max-w-sm' : 'w-full',
+            ]}
           />
         ) : (
           <div class="bg-surface-muted aspect-4/3 w-full rounded-lg" aria-hidden="true" />

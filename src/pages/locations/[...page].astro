@@ -52,19 +52,21 @@ const { page } = Astro.props;
       <ul class="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           page.data.map((entry) => (
-            <Card as="li" variant="outlined">
-              <p class="text-ink-muted text-sm">{entry.data.region}</p>
-              <Heading level={2} size="md">
-                <a
-                  href={`/locations/${entry.id}/`}
-                  class="text-ink-base no-underline hover:underline"
-                >
+            <li>
+              <Card
+                as="a"
+                href={`/locations/${entry.data.slug ?? entry.id}/`}
+                variant="outlined"
+                class="location-card-link text-ink-base h-full no-underline"
+              >
+                <p class="text-ink-muted text-sm">{entry.data.region}</p>
+                <Heading level={2} size="md">
                   {entry.data.name}
-                </a>
-              </Heading>
-              <p class="text-ink-muted">{entry.data.cityStateZip}</p>
-              <p class="text-ink-muted text-sm">{entry.data.hours}</p>
-            </Card>
+                </Heading>
+                <p class="text-ink-muted">{entry.data.cityStateZip}</p>
+                <p class="text-ink-muted text-sm">{entry.data.hours}</p>
+              </Card>
+            </li>
           ))
         }
       </ul>

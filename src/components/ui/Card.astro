@@ -4,7 +4,8 @@ import type { HTMLAttributes } from 'astro/types';
 export type CardVariant = 'plain' | 'outlined' | 'elevated' | 'inverse';
 
 interface Props extends Omit<HTMLAttributes<'div'>, 'class'> {
-  as?: 'div' | 'article' | 'li';
+  as?: 'div' | 'article' | 'li' | 'a';
+  href?: string;
   variant?: CardVariant;
   padded?: boolean;
   class?: string;
@@ -44,13 +45,19 @@ const variants: Record<CardVariant, string> = {
     text-align: start;
     transition:
       transform 0.25s ease,
-      box-shadow 0.25s ease;
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
   }
 
   .card-lift:hover,
   .card-lift:focus-within {
     transform: translateY(-8px);
     box-shadow: 0 22px 40px -12px rgb(7 19 28 / 0.22);
+  }
+
+  .card:global(.location-card-link):hover,
+  .card:global(.location-card-link):focus-visible {
+    border-color: var(--color-accent-500);
   }
 
   .card-face {
