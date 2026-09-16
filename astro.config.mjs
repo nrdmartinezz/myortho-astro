@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 
-const EXCLUDED_FROM_SITEMAP = ['/thank-you/', '/styleguide/'];
+const EXCLUDED_FROM_SITEMAP = ['/thank-you/', '/styleguide/', '/request-consult/'];
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,6 +19,7 @@ export default defineConfig({
       '/blog/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/',
     '/uncategorized/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/':
       '/blog/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/',
+    '/request-consult/': 'https://forms.formlync.com/myorthodontist/register',
   },
   integrations: [
     mdx(),
