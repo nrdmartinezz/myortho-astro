@@ -18,9 +18,9 @@ import Popup from '../components/ui/Popup.astro';
 import { Image } from 'astro:assets';
 import { site, bookHref, virtualHref, phoneAction } from '../config/site';
 import { getPublished } from '../lib/locations';
+import { getPublished as getPublishedPosts, toPostItem } from '../lib/posts';
 
 import heroBackground from '../images/hero-bg.jpg';
-import aboutPractice from '../images/about-practice-care.webp';
 import virtualConsult from '../images/foundation/virtual-consult.jpg';
 import happyTooth from '../images/foundation/happy-tooth.jpg';
 import consultationCta from '../images/consultation-cta.jpg';
@@ -32,7 +32,6 @@ import carriere from '../images/services/carriere.jpg';
 import brius from '../images/services/brius.jpg';
 import virtualMonitoring from '../images/services/virtual-dental-monitoring.jpg';
 import smile360 from '../images/services/smile-360.jpg';
-import adultAligners from '../images/invisalign/adult-aligners.jpg';
 
 import logoAetna from '../images/insurance/Aetna.png';
 import logoAmeritas from '../images/insurance/Ameritas.png';
@@ -47,6 +46,7 @@ import logoUnited from '../images/insurance/United-Healthcare.png';
 
 const locations = await getPublished();
 const locationNames = locations.map((location) => location.data.name);
+const latestPosts = (await getPublishedPosts()).slice(0, 3).map(toPostItem);
 const insuranceLogos = [
   { name: 'Aetna', image: logoAetna },
   { name: 'Ameritas', image: logoAmeritas },
@@ -354,39 +354,8 @@ const insuranceLogos = [
     background="base"
     eyebrow="The Tooth Wisdom Blog"
     title="Latest Posts &<br/><em>Smile Tips</em>"
-    action={{ label: 'Read More Posts', href: 'https://myorthodontistnc.com/blog/' }}
-    items={[
-      {
-        tag: 'Family Care',
-        date: 'May 2, 2026',
-        dateTime: '2026-05-02',
-        title: "Your Child's Dental Health Journey: A Step-by-Step Guide from MyOrthodontist",
-        body: "From the first tooth to the final retainer, we guide families through every milestone of their child's orthodontic journey.",
-        href: 'https://myorthodontistnc.com/uncategorized/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/',
-        image: consultationCta,
-        imageAlt: 'Family smiling together outdoors',
-      },
-      {
-        tag: 'Preventive Care',
-        date: 'April 28, 2026',
-        dateTime: '2026-04-28',
-        title: "Dental Sealants: A Simple Step to Shield Your Child's Smile from Cavities",
-        body: "Learn how dental sealants provide an extra layer of protection against cavities and why they're recommended for children.",
-        href: 'https://myorthodontistnc.com/uncategorized/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/',
-        image: aboutPractice,
-        imageAlt: 'Orthodontist caring for a young patient',
-      },
-      {
-        tag: 'Nutrition & Health',
-        date: 'April 20, 2026',
-        dateTime: '2026-04-20',
-        title: "More Than Just Sugar: How Hidden Acids in Your Child's Diet Threaten Their Enamel",
-        body: "Discover the surprising foods and drinks that erode tooth enamel and what you can do to protect your family's smiles.",
-        href: 'https://myorthodontistnc.com/uncategorized/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/',
-        image: adultAligners,
-        imageAlt: 'Patient smiling outdoors after treatment',
-      },
-    ]}
+    action={{ label: 'Read More Posts', href: '/blog/' }}
+    items={latestPosts}
   />
 
   <div id="contact">

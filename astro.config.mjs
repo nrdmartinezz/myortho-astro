@@ -12,6 +12,14 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory' },
+  redirects: {
+    '/uncategorized/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/':
+      '/blog/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/',
+    '/uncategorized/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/':
+      '/blog/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/',
+    '/uncategorized/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/':
+      '/blog/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/',
+  },
   integrations: [
     mdx(),
     icon(),

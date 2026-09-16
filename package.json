@@ -22,7 +22,8 @@
     "php:check": "node scripts/php-check.mjs",
     "php:install": "node scripts/php-install.mjs",
     "php:serve": "node scripts/php-serve.mjs",
-    "php:dev": "npm run build && npm run php:install && npm run php:serve"
+    "php:dev": "npm run build && npm run php:install && npm run php:serve",
+    "new:entry": "node scripts/new-entry.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.0",

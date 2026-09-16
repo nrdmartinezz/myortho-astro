@@ -52,4 +52,22 @@ const specialOffers = defineCollection({
   }),
 });
 
-export const collections = { locations, doctors, specialOffers };
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      publishDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      /** Filtered out of production builds; still visible in `dev`. */
+      draft: z.boolean().default(false),
+      author: z.string().optional(),
+      category: z.string().optional(),
+      tags: z.array(z.string()).default([]),
+      heroImage: image().optional(),
+      heroImageAlt: z.string().optional(),
+    }),
+});
+
+export const collections = { locations, doctors, specialOffers, posts };

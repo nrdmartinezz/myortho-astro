@@ -1,0 +1,79 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/blocks/PageHero.astro';
+import PostGrid from '../../components/blocks/PostGrid.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import { bookHref, virtualHref, phoneAction } from '../../config/site';
+import { getPublished, toPostItem, type Entry } from '../../lib/posts';
+
+const pageActions = [
+  { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
+  {
+    icon: 'lucide:laptop',
+    label: 'Virtual Consult',
+    href: virtualHref,
+    variant: 'outline' as const,
+  },
+  { ...phoneAction, variant: 'outline' as const },
+];
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const entries = await getPublished();
+  return paginate(entries, { pageSize: 9 });
+};
+
+interface Props {
+  page: Page<Entry>;
+}
+
+const { page } = Astro.props;
+const items = page.data.map(toPostItem);
+---
+
+<BaseLayout
+  title="Tooth Wisdom Blog"
+  description="Latest posts and smile tips from the MyOrthodontist team."
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog/' },
+  ]}
+>
+  <PageHero
+    eyebrow="The Tooth Wisdom Blog"
+    title="Latest Posts & Smile Tips"
+    body="Guides and smile tips from the MyOrthodontist team — written for families across North Carolina."
+    actions={pageActions}
+  />
+
+  <PostGrid items={items} />
+
+  {
+    (page.url.prev || page.url.next) && (
+      <Section background="base" spacing="sm">
+        <Container>
+          <nav class="flex w-full items-center justify-between" aria-label="Pagination">
+            {page.url.prev ? (
+              <a href={page.url.prev} class="text-ink-brand inline-flex min-h-11 items-center">
+                ← Newer
+              </a>
+            ) : (
+              <span />
+            )}
+            <p class="text-ink-muted text-sm">
+              Page {page.currentPage} of {page.lastPage}
+            </p>
+            {page.url.next ? (
+              <a href={page.url.next} class="text-ink-brand inline-flex min-h-11 items-center">
+                Older →
+              </a>
+            ) : (
+              <span />
+            )}
+          </nav>
+        </Container>
+      </Section>
+    )
+  }
+</BaseLayout>

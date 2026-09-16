@@ -116,6 +116,7 @@ export const navigation: NavigationConfig = {
               { label: 'Patient Portal', href: '/patient-portal/' },
               { label: 'Office Policies', href: '/office-policies/' },
               { label: 'Orthodontic Emergencies', href: '/orthodontic-emergencies/' },
+              { label: 'Tooth Wisdom Blog', href: '/blog/' },
             ],
           },
           {
@@ -153,6 +154,7 @@ export const navigation: NavigationConfig = {
         { label: 'Patient Forms', href: '/patient/' },
         { label: 'New Patient Info', href: '/patient/' },
         { label: 'Locations', href: '/locations/' },
+        { label: 'Tooth Wisdom Blog', href: '/blog/' },
       ],
     },
   ],
