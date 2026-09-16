@@ -1,25 +1,199 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Testimonials from '../../components/blocks/Testimonials.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { Image } from 'astro:assets';
+import { bookHref, virtualHref } from '../../config/site';
+import painEraser from '../../images/treatments/dental-pain-eraser.jpg';
+import aboutPractice from '../../images/about-practice-care.webp';
 ---
 
 <SubpageLayout
+  eyebrow="Comfort technology"
   title="Dental Pain Eraser"
-  description="Comfort technology to reduce discomfort during orthodontic treatment."
+  description="The Synapse Dental Pain Eraser uses gentle electronic pulses to block orthodontic discomfort — needle-free, drug-free, and FDA-cleared for kids and adults."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Dental Pain Eraser',
-      href: '/dental-pain-eraser/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Dental Pain Eraser', href: '/dental-pain-eraser/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Eliminate patient pain with the Dental Pain Eraser</h2>
+    <p>
+      Our team at MyOrthodontist understands how stressful dental and orthodontic appointments can
+      feel. Patients are often nervous about committing to treatment because they are anxious it
+      will hurt. Dr. Moray and our entire team have invested in a revolutionary electronic
+      anesthesia device that can eliminate your pain before, during, and after your procedures.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="How it works"
+    title="Gentle pulses, not needles"
+    body="Two things ease anxious patients: being well-informed, and knowing treatment will not cause pain. The Synapse Dental Pain Eraser “pen” sends gentle electronic pulses to nerves in the mouth, blocking and preventing orthodontic pain. Our patients can enjoy a pain-free, needle-free, and numbing-free process with this award-winning, FDA-cleared device. Relief can last up to 48 hours after use."
+    bullets={[
+      'Needle-free, drug-free, and numb-free',
+      'Relief that can last up to 48 hours',
+      'Cleared for children and adults',
+      'Prescription available for at-home use',
+    ]}
+  >
+    <Image
+      slot="media"
+      src={painEraser}
+      alt="Synapse Dental Pain Eraser pen standing upright"
+      widths={[320, 480, 576]}
+      sizes="(max-width: 1024px) 100vw, 33vw"
+      loading="lazy"
+      class="mx-auto max-h-[28rem] w-auto rounded-lg bg-neutral-950 object-contain p-6"
+    />
+  </FeatureSplit>
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="When we use it"
+    title="Comfort before, during, and after visits"
+    body="Apply the device to the tooth or gum that hurts; in less than two minutes most patients feel relief. We also prescribe a unit for home so the whole treatment journey stays comfortable."
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: 'New braces and aligners',
+        body: 'Ease the first days in braces, aligners, or bite-correction appliances.',
+      },
+      {
+        icon: 'lucide:wrench',
+        title: 'Adjustments and wire changes',
+        body: 'Use it for braces adjustments, wire changes, and rubber band changes.',
+      },
+      {
+        icon: 'lucide:circle-dot',
+        title: 'Sensitivity and sores',
+        body: 'Helps with bite sensitivity and aphthous ulcers (canker sores).',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Other dental applications',
+        body: 'Also used around bracket removal, whitening, extractions, and TMJ/TMD relief.',
+      },
+    ]}
+  />
+
+  <Testimonials
+    bare
+    background="base"
+    columns={2}
+    align="start"
+    eyebrow="Patient voices"
+    title="What people notice in the first 48 hours"
+    items={[
+      {
+        quote:
+          'Super awesome tool!! I had pain from my braces and I use Synapse and NO MORE PAIN! Thank you!!',
+        name: 'T Cote',
+        rating: 5,
+      },
+      {
+        quote: 'My son’s pain went from an 8 to a 1 when using it during braces adjustments.',
+        name: 'Maegen Phelan',
+        rating: 5,
+      },
+      {
+        quote:
+          'Great experience using it the first 48 hrs after getting my braces on. No pain nor discomfort at all. I’m completely amazed!',
+        name: 'Farah Rivas',
+        rating: 5,
+      },
+      {
+        quote:
+          'Definitely recommended for any dental discomfort, works quick and more efficiently than any off the shelf pain relief medications.',
+        name: 'Ashutosh Singh',
+        rating: 5,
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Take it home"
+    title="Our care extends beyond the chair"
+    body="We can prescribe a Dental Pain Eraser for at-home use so your entire treatment journey stays comfortable. Gently place both metal tips on the sensitive tooth or gums; pain typically begins disappearing in seconds. The home model is disposable and programmed for 100 minutes of use — enough for comprehensive orthodontic treatment for most patients."
+    image={aboutPractice}
+    imageAlt="Orthodontist with a patient in the treatment chair"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Dental Pain Eraser"
+    title="FAQs"
+    items={[
+      {
+        question: 'How does the Dental Pain Eraser work?',
+        answer:
+          'It uses Pulsewave™ technology, sending gentle subsensory electric pulses to calm the nerves and block oral pain. You may feel a light pulse or tingle when using it.',
+      },
+      {
+        question: 'How do I use it?',
+        answer:
+          'Gently place both metal tips on your sensitive tooth or gums. Pain typically begins disappearing in seconds, with relief lasting for up to 48 hours.',
+      },
+      {
+        question: 'What kinds of oral pain can I use it for?',
+        answer:
+          'It can be used on hard or soft oral tissue to prevent and relieve pain and sensitivity from cleanings, extractions, surgery, implants, orthodontics, canker sores, and TMJ/TMD.',
+      },
+      {
+        question: 'How fast does it work, and how long does relief last?',
+        answer:
+          'It can prevent or relieve pain within 30 seconds, with relief lasting up to 48 hours and no known side effects.',
+      },
+      {
+        question: 'How long can I apply it?',
+        answer:
+          'It is extremely safe and can be applied for an extended period, but we recommend a maximum of 10 minutes per session.',
+      },
+      {
+        question: 'Is it safe for kids?',
+        answer:
+          'Yes. The Dental Pain Eraser has been cleared for use with all age groups, including children and adults. It is drug-free, needle-free, and numb-free, without known adverse effects or allergic reactions.',
+      },
+      {
+        question: 'How do I clean it? Can I put it under water?',
+        answer:
+          'Rinse lightly with water and disinfect the probe tips with a cotton application of 70% alcohol. Do not submerge the device underwater.',
+      },
+      {
+        question: 'How do I purchase one?',
+        answer:
+          'The Dental Pain Eraser requires a prescription from a licensed dental professional. Ask us how you can purchase your own for home use.',
+      },
+      {
+        question: 'How long does it last? Is it rechargeable?',
+        answer:
+          'The patient Rx home model is disposable and not rechargeable. It is programmed to last 100 minutes, then discarded when the blue light no longer turns on. That duration is sufficient for comprehensive orthodontic treatment (about 18–24 months) for nearly all dental disorders; TMJ/TMD can be an exception.',
+      },
+      {
+        question: 'Are there any contraindications?',
+        answer:
+          'The Dental Pain Eraser has not been cleared for use in those who are pregnant, or those with seizures or pacemakers.',
+      },
+      {
+        question: 'Is it cleared by the FDA?',
+        answer:
+          'Yes. The Dental Pain Eraser has been rigorously tested for safety and effectiveness as part of FDA clearance.',
+      },
+    ]}
+  />
 </SubpageLayout>

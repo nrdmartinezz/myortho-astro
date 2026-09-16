@@ -1,25 +1,174 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import ProcessSteps from '../../components/blocks/ProcessSteps.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import aboutPractice from '../../images/about-practice-care.webp';
+import metalBraces from '../../images/treatments/metal-braces.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Braces for growing smiles"
   title="Children Braces"
-  description="Early orthodontic care to guide healthy growth and lasting smiles."
+  description="Orthodontic screening as early as age 7, Phase One treatment when it helps, and metal braces that give kids a strong, colorful start toward a healthy smile."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Children Braces',
-      href: '/braces-for-children/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Children Braces', href: '/braces-for-children/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Starting young: braces for school-age patients</h2>
+    <p>
+      A beautiful smile can have an incredibly positive impact on your child’s health throughout his
+      or her life. At MyOrthodontist, we provide treatments for children starting at age 7 — not
+      because every seven-year-old needs braces, but because an early look lets us catch problems
+      before they become more severe.
+    </p>
+    <p>
+      Early treatment, also called Phase One, is orthodontic care for children who still have some
+      baby teeth. It is usually started between ages 7 and 10, after baby teeth have come in and
+      some adult teeth have appeared. At that point we assess how the jaw, face, and teeth are
+      developing.
+    </p>
+    <p>
+      Baby teeth create paths for the adult teeth. Depending on the situation, misaligned baby teeth
+      can even contribute to speech issues, difficulty breathing, and discomfort. Addressing those
+      problems while they are still developing can save time and money later — and help your child
+      feel more comfortable sooner.
+    </p>
+  </Prose>
+
+  <ProcessSteps
+    bare
+    numbered
+    columns={3}
+    align="start"
+    eyebrow="The path"
+    title="How early treatment usually unfolds"
+    items={[
+      {
+        title: 'Screening around age 7',
+        body: 'The American Association of Orthodontists recommends an evaluation by age 7, once several permanent teeth have erupted.',
+      },
+      {
+        title: 'Phase One when needed',
+        body: 'If a problem is significant enough, Phase One typically lasts about 16–21 months and aims to keep it from becoming more severe.',
+      },
+      {
+        title: 'A resting period',
+        body: 'After Phase One we monitor growth and tooth eruption — often about a year — and keep you informed of future recommendations.',
+      },
+      {
+        title: 'Full treatment later',
+        body: 'It is best to assume your child will still need full braces once adult teeth are in. Early work usually makes that second phase simpler.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Phase One can help"
+    title="Problems early treatment can address"
+    body="If your child shows signs of any of these issues, it is best to bring them in for an exam. We will tell you honestly whether treatment should start now or wait."
+    image={aboutPractice}
+    imageAlt="Orthodontist meeting with a young patient in the treatment chair"
+    bullets={[
+      'Misaligned or overcrowded teeth',
+      'Overbites, underbites, and protruding teeth',
+      'Gaps that will not close on their own',
+      'Concerns with speech, breathing, or confidence',
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Choosing a style"
+    title="The best braces for most kids"
+    body="There is a lot of variety in orthodontics. For most children, traditional metal braces are the strongest, most precise, and most cost-effective option — and many kids enjoy picking new elastic colors at every visit."
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: 'Traditional metal braces',
+        body: 'Steel and titanium that can tackle even severe misalignment. Wires and brackets give us a high degree of control, popped wires are uncommon, and colored elastics make treatment feel like theirs.',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Ceramic braces',
+        body: 'Tooth-colored and less noticeable, but more fragile and larger than metal. We usually reserve ceramic for older teenagers and adults with cosmetic concerns.',
+        href: '/types-of-braces/',
+        ctaLabel: 'Compare styles',
+      },
+      {
+        icon: 'lucide:scan',
+        title: 'When Invisalign can wait',
+        body: 'Clear aligners are a great option later, once second molars are in and a child has the maturity to wear trays 20–22 hours a day. Phase One cases are often beyond the scope of aligners.',
+        href: '/invisalign-for-children/',
+        ctaLabel: 'Children Invisalign',
+      },
+      {
+        icon: 'lucide:brush',
+        title: 'Habits that protect braces',
+        body: 'Brush after every meal and before bed, floss around the brackets, and skip ice, raw vegetables, and sticky candy. We will walk you through the full list at the start of treatment.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Lifelong benefits"
+    title="Healthy, confident smiles start early"
+    body="Straighter teeth are easier to clean and less prone to cavities and gum disease. Braces can reduce the risk of injury from protruding teeth and, in some cases, ease headaches or speech issues. Just as important: your child never has to feel that crooked teeth are holding them back."
+    image={metalBraces}
+    imageAlt="Close-up of metal braces on a smiling patient"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Parents ask"
+    title="Children, braces, and early treatment"
+    items={[
+      {
+        question: 'At what age should I schedule an orthodontic screening?',
+        answer:
+          'The American Association of Orthodontists recommends an orthodontic screening at age 7. By this age, several permanent teeth in most children have erupted, allowing us to evaluate your child’s orthodontic condition. Early treatment can sometimes help avoid more difficult or extensive treatment later.',
+      },
+      {
+        question: 'Can orthodontic correction happen while a child still has baby teeth?',
+        answer:
+          'Yes. Some orthodontic problems are significant enough to require early intervention. If a patient is not yet ready, we follow growth and development until the time is right to begin.',
+      },
+      {
+        question: 'What is Phase One (early) treatment?',
+        answer:
+          'Phase One, if necessary, is usually initiated on children between the ages of 7 and 10 and typically lasts about 16–21 months. The goal is to address significant problems so they do not become more severe, and to support a child’s self-esteem.',
+      },
+      {
+        question: 'Will my child still need full braces after Phase One?',
+        answer:
+          'It is best to assume that your child will need full braces even after Phase One. The period that follows is a resting period, during which we closely monitor growth and tooth eruption and keep you informed of future recommendations.',
+      },
+      {
+        question: 'Will my child need an expander?',
+        answer:
+          'At the completion of the initial examination, we will determine whether a patient will need an expander.',
+      },
+      {
+        question: 'Can I drop my child off for an appointment?',
+        answer:
+          'Yes. We understand your busy schedule and are happy to help you make the most of your time. On some occasions we may need to speak with a parent when they return, so please check in with your patient manager before dropping off.',
+      },
+    ]}
+  />
 </SubpageLayout>
