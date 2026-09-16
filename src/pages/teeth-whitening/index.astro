@@ -1,25 +1,124 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import smile360 from '../../images/services/smile-360.jpg';
+import dreamSmile from '../../images/invisalign/dream-smile.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Brighter smiles, professionally"
   title="Teeth Whitening"
-  description="Professional whitening options to complement your orthodontic results."
+  description="In-office Sinsational Smile whitening in about 20 minutes, plus customized take-home trays — faster and safer than guessing with drugstore strips."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Teeth Whitening',
-      href: '/teeth-whitening/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Teeth Whitening', href: '/teeth-whitening/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Professional whitening at MyOrthodontist</h2>
+    <p>
+      Coffee, wine, everyday foods, trauma, and the natural aging process can all change the color
+      of your teeth. At MyOrthodontist we offer in-office and take-home whitening treatments that
+      reverse everyday staining with guidance from our team — so you are not guessing with drugstore
+      strips.
+    </p>
+    <p>
+      Store-bought toothpaste, strips, and trays are easy to find, but strength varies from product
+      to product and even batch to batch. Used incorrectly they can irritate gums and leave you
+      waiting weeks for results that never quite show up. Tartar can also block gel from reaching
+      the tooth, which is why a professional look at your mouth first makes whitening faster and
+      more predictable.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Your options"
+    title="Whitening with a little help from your dentist"
+    body="We offer in-office and take-home treatments that can supplement your regular dental cleaning. We match the approach to your teeth, history, and the shade you want."
+    items={[
+      {
+        icon: 'lucide:timer',
+        title: 'Sinsational Smile in-office',
+        body: 'The only green-certified whitening product in use today. This eco-friendly, comfortable in-office treatment takes about 20 minutes — a strong fit for busy schedules.',
+      },
+      {
+        icon: 'lucide:house',
+        title: 'Take-home whitening trays',
+        body: 'A marked improvement over one-size drugstore trays. We review your teeth and dental history, then send you home with gel at a strength matched to your goals.',
+      },
+      {
+        icon: 'lucide:ruler',
+        title: 'Custom-fit when you need it',
+        body: 'When a stock tray will not do, we make a tray from your exact measurements so gel stays on the teeth — not the gums — and wear stays comfortable.',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Whitening during Invisalign',
+        body: 'Clear aligners can come out so you can brush, floss, and even whiten during treatment with our guidance. Braces are a different story — wait until they are off.',
+        href: '/types-of-invisalign/',
+        ctaLabel: 'How Invisalign works',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Skip the guesswork"
+    title="Why dentist-guided whitening is faster"
+    body="Mass-produced home kits cannot account for tartar, uneven enamel, or sensitivity. Our team removes the uncertainty, chooses the right strength, and times treatment around cleanings so gel actually reaches the tooth."
+    image={smile360}
+    imageAlt="Digital smile imaging used to plan cosmetic treatment"
+    bullets={[
+      'Professional cleaning so stains and tartar are not in the way',
+      'Gel strength matched to your desired shade',
+      'Trays that fit instead of sliding and irritating gums',
+      'Results you can actually see on a realistic timeline',
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Timing matters"
+    title="Wait to whiten if you have braces"
+    body="Avoid whitening toothpaste, mouthwash, and treatments while brackets are on. Whitening agents make the exposed tooth surface lighter than the enamel under the bracket, which can look like staining when braces come off. Finish alignment first, then brighten."
+    image={dreamSmile}
+    imageAlt="Adult smiling confidently after orthodontic treatment"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Common questions"
+    title="Teeth whitening FAQs"
+    items={[
+      {
+        question: 'Is professional whitening faster than drugstore kits?',
+        answer:
+          'Yes. In-office and dentist-supervised take-home trays use the right strength for your teeth, and we can clean away tartar that blocks store-bought gel. Sinsational Smile in-office takes about 20 minutes.',
+      },
+      {
+        question: 'Can I whiten while I have braces?',
+        answer:
+          'No. Whitening while brackets are bonded can leave two-tone enamel when they come off. Wait until braces are removed. Patients in Invisalign can often whiten during treatment with our guidance because aligners come out.',
+      },
+      {
+        question: 'Do I still need regular cleanings?',
+        answer:
+          'Yes. Bright, healthy teeth normally need a professional cleaning every six months, plus good home care in between. In some cases we recommend more frequent cleanings based on your history.',
+      },
+    ]}
+  />
 </SubpageLayout>

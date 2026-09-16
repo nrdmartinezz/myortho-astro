@@ -1,25 +1,142 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import ProcessSteps from '../../components/blocks/ProcessSteps.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import virtualConsultPhoto from '../../images/virtual-consult.jpg';
+import alignerTrays from '../../images/services-aligners.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Protect your new smile"
   title="Retainers"
-  description="Protect your investment with custom retainers designed to keep your smile straight."
+  description="Once braces or aligners come off, a retainer keeps teeth from drifting back. Wear it as directed — then keep it clean, stored, and checked, including virtually."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Retainers',
-      href: '/retainers/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Retainers', href: '/retainers/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Retainers keep your results in place</h2>
+    <p>
+      Braces and aligners move teeth by applying gentle, continuous pressure. Once they are removed,
+      it is important to wear a retainer so your teeth don’t move back to their original position.
+      Without one, months or years of treatment can slowly undo themselves.
+    </p>
+    <p>
+      It only takes about 72 hours to move a tooth to a new position, but it can take up to 90 days
+      to regrow the bone that holds it there — and up to 10 additional months for that bone to fully
+      stabilize. Your retainer is what protects that work while everything settles.
+    </p>
+  </Prose>
+
+  <ProcessSteps
+    bare
+    numbered
+    columns={3}
+    align="start"
+    eyebrow="Wear schedule"
+    title="How long you’ll wear it"
+    body="Your exact plan is customized, but most patients follow a similar rhythm after braces or Invisalign."
+    items={[
+      {
+        title: 'Full-time at first',
+        body: 'For the first three to six months, wear your retainer most of the day — up to 22 hours — removing it to eat, brush, and floss.',
+      },
+      {
+        title: 'Nights after that',
+        body: 'After the initial period you can usually transition to wearing the retainer only at night, for as long as we recommend.',
+      },
+      {
+        title: 'Check-ins that fit life',
+        body: 'We can evaluate retainer fit remotely with a virtual retainer check, so you do not always have to squeeze in an office visit.',
+      },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Care basics"
+    title="How to keep your retainer clean"
+    body="A retainer sits in your mouth for a big part of the day. Cleaning it regularly protects your oral health and keeps alignment on track."
+    items={[
+      {
+        icon: 'lucide:droplets',
+        title: 'Skip toothpaste and hot water',
+        body: 'Most toothpastes are mildly abrasive and can scratch a retainer. Never boil it or use hot water — even mild warping can change how it fits.',
+      },
+      {
+        icon: 'lucide:brush',
+        title: 'Mild soap, dedicated brush',
+        body: 'Use a small amount of liquid dish soap, hand soap, or baking soda and a toothbrush that is only for the retainer — not the one you use on your teeth.',
+      },
+      {
+        icon: 'lucide:ban',
+        title: 'Never bleach',
+        body: 'Bleach can warp plastic, wash out gum-colored areas, and leave an unpleasant smell that is hard to remove.',
+      },
+      {
+        icon: 'lucide:shield',
+        title: 'Store it safely',
+        body: 'Put a towel in the sink while you clean so a short drop does not crack it. When you are not wearing it, keep it in a secure case — pets love to chew retainers left out.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Virtual retainer checks"
+    title="Stay on track without extra drive time"
+    body="After treatment, our dental monitoring and virtual retainer checks let our orthodontists evaluate your progress remotely. That can cut in-office visits by as much as 50% while we still keep a close eye on fit and results."
+    image={virtualConsultPhoto}
+    imageAlt="Patient completing a virtual orthodontic check from home"
+    actions={[
+      { label: 'Virtual Care details', href: '/virtual-care/', variant: 'outline' },
+      { label: 'Virtual Consult', href: virtualHref },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="After braces or aligners"
+    title="Your smile is an investment — keep it"
+    body="Wear time and time out of the mouth both matter. Take the retainer out to eat and brush, then put it right back in. If it feels tight, cracked, or missing, call us before teeth have a chance to drift."
+    image={alignerTrays}
+    imageAlt="Clear retainer trays held in a patient’s hands"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Call 1-800-MY-ORTHO', href: 'tel:+18006967846', variant: 'outline' },
+    ]}
+  />
+
+  <FAQ
+    bare
+    schema
+    eyebrow="Common questions"
+    title="Retainer FAQs"
+    items={[
+      {
+        question: 'Why do I need a retainer after braces come off?',
+        answer:
+          'Retainers keep teeth in their new positions. Without them, teeth can shift and undo months or years of treatment. Wearing your retainer as instructed is what keeps your smile aligned long-term.',
+      },
+      {
+        question: 'How many hours a day should I wear it?',
+        answer:
+          'For the first three to six months, wear it most of the day — up to 22 hours — then typically nights only. We will confirm the schedule that matches your case.',
+      },
+      {
+        question: 'Can I check my retainer virtually?',
+        answer:
+          'Yes. Virtual retainer checks are part of our <a href="/virtual-care/">virtual care</a> offering, alongside remote dental monitoring after you start treatment.',
+      },
+    ]}
+  />
 </SubpageLayout>

@@ -1,25 +1,144 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ProcessSteps from '../../components/blocks/ProcessSteps.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import carriere from '../../images/treatments/carriere-appliance.jpg';
+import carriereCard from '../../images/services/carriere.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="No more headgear"
   title="Carriere Motion"
-  description="Advanced appliance therapy for efficient bite correction."
+  description="The Carriere Motion 3D appliance corrects overbites and underbites in about three to four months — attaching to just three teeth and replacing bulky headgear."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Carriere Motion',
-      href: '/carrier-motion/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Carriere Motion', href: '/carrier-motion/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Introducing the Carriere 3D Bracket System</h2>
+    <p>
+      The Motion 3D appliance is a modern take on an older, time-tested technique of orthodontic
+      treatment. By using the Carriere Motion 3D, your orthodontist can correct your overbite or
+      underbite much faster than in years past — and without old-fashioned headgear or other bulky
+      appliances. The Motion 3D is designed to replace those, and it only works properly if you wear
+      the rubber bands as directed.
+    </p>
+    <p>
+      Teeth that are misaligned can be embarrassing, hard to clean, and can even increase the risk
+      of gum disease and tooth decay. Standard braces are often the answer, but severe posterior
+      occlusions — misaligned back teeth — can sometimes mean braces are not an option without
+      surgery or extractions to prepare the mouth first.
+    </p>
+    <p>
+      Fortunately, there is now another way to deal with those bite problems <strong>before</strong>
+      braces. The Carriere® Motion™ Appliance corrects misalignment of the canine teeth and molars on
+      either side of the upper arch while attaching to only three teeth.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    columns={3}
+    align="start"
+    eyebrow="At a glance"
+    title="Built to replace bulky appliances"
+    items={[
+      {
+        icon: 'lucide:link',
+        title: 'Three teeth per side',
+        body: 'The appliance corrects canines and molars while attaching to just three teeth on each side of the upper arch.',
+      },
+      {
+        icon: 'lucide:timer',
+        title: 'Three to four months',
+        body: 'Typical wear time before you move on to braces or aligners — with highly visible bite changes along the way.',
+      },
+      {
+        icon: 'lucide:ban',
+        title: 'No headgear',
+        body: 'Motion 3D replaces old-fashioned headgear, as long as you wear the rubber bands as directed.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Before braces"
+    title="A discreet first step for bite correction"
+    body="Treatment with the Carriere Motion appliance typically takes three to four months, cutting significant time off traditional orthodontic procedures, and can quickly deliver highly visible results — as long as elastics are worn as prescribed."
+    image={carriere}
+    imageAlt="Carriere Motion 3D appliance on a dental model"
+    bullets={[
+      'Corrects overbite or underbite without bulky headgear',
+      'Attaches to just three teeth on each side of the upper arch',
+      'Prepares posterior occlusions so braces can finish the job',
+      'Works only when rubber bands are worn as directed',
+    ]}
+  />
+
+  <ProcessSteps
+    bare
+    numbered
+    columns={3}
+    align="start"
+    eyebrow="What to expect"
+    title="How Carriere Motion fits into treatment"
+    items={[
+      {
+        title: 'Complimentary consult',
+        body: 'We evaluate your bite, imaging, and goals to see whether Motion 3D is the right first step.',
+      },
+      {
+        title: 'Short appliance phase',
+        body: 'The device is bonded to three teeth per side. Consistent elastic wear over about three to four months is what makes it work.',
+      },
+      {
+        title: 'Finish with braces or aligners',
+        body: 'Once the bite is corrected, we complete alignment with braces or clear aligners — often in less time than starting those appliances alone.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Say goodbye to headgear"
+    title="Ready to see if Motion 3D is right for you?"
+    body="Walk into any of our offices or schedule a virtual consult. If elastics and a short first phase can spare you bulkier appliances, we will show you the plan before you commit."
+    image={carriereCard}
+    imageAlt="Patient considering Carriere appliance treatment"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Related treatments"
+    title="What often comes next"
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: 'Types of Braces',
+        body: 'Metal or ceramic braces finish alignment after the bite has been corrected.',
+        href: '/types-of-braces/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:scan',
+        title: 'How Invisalign Works',
+        body: 'Some patients move into clear aligners once Motion 3D has done its job.',
+        href: '/types-of-invisalign/',
+        ctaLabel: 'Learn more',
+      },
+    ]}
+  />
 </SubpageLayout>

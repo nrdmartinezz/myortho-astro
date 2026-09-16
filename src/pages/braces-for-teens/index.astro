@@ -1,25 +1,117 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import servicesBraces from '../../images/services-braces.jpg';
+import metalCeramic from '../../images/services/metal-ceramic-braces.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Braces for Teens in North Carolina"
   title="Teen Braces"
-  description="Confident smiles for teens with braces options that fit their active lives."
+  description="Ceramic or metal braces customized with school colors and team elastics — plus a complimentary in-office or virtual consultation at every MyOrthodontist location."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Teen Braces',
-      href: '/braces-for-teens/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Teen Braces', href: '/braces-for-teens/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Braces for Teens at MyOrthodontist</h2>
+    <p>
+      Our trusted orthodontists here at MyOrthodontist are experts in all things braces. We know it
+      can be hard to trust the care of your teenager to someone else, which is why we make it our
+      mission to answer all of your questions to help ease your anxieties.
+    </p>
+    <p>
+      When your teen first comes into any one of our locations for their complimentary consultation,
+      they will immediately be welcomed by our friendly staff. Taking their medical histories,
+      imaging, and listening to their smile concerns, our orthodontist will create a one-of-a-kind,
+      custom treatment plan meant specifically to address their needs.
+    </p>
+    <p>
+      Whether it’s a crossbite, overbite, gap, crowding, or simply a tooth they would like moved, we
+      have the treatment plan for you. Offering both ceramic and metal braces, your teen is bound to
+      find a treatment option that works for their lifestyle.
+    </p>
+  </Prose>
+
+  <FeatureSplit
+    bare
+    eyebrow="Tried and true"
+    title="Braces: what’s the deal?"
+    body="Braces have been the tried-and-true method of perfecting smiles for decades. They are made up of two main parts: the bracket and the archwire. Your teen will have two bracket options to choose from: ceramic, which is tooth-colored and less noticeable, or a traditional metal bracket. Then you have the archwire, which is what actually moves the teeth into their preferred position."
+    image={servicesBraces}
+    imageAlt="Teen patient smiling during braces treatment"
+    bullets={[
+      'Custom treatment plan after imaging and a complimentary consultation',
+      'Ceramic or metal brackets to match their lifestyle',
+      'Archwires that gently move teeth into place over time',
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Your options"
+    title="Two braces styles — plenty of personality"
+    body="The best part about braces is your teen will get to customize them at every visit with elastics. Whether they want to rep their favorite sports team or school colors, they can choose from a wide variety of elastics at each appointment."
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: 'Metal Braces',
+        body: 'The most common, durable option. High-grade stainless steel brackets and archwires straighten teeth reliably — and colored elastics make them uniquely theirs.',
+        href: '/types-of-braces/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:sparkles',
+        title: 'Ceramic Braces',
+        body: 'Tooth-colored brackets that blend in more than metal. A discreet choice for teens who want a lower-profile look while still getting the control of braces.',
+        href: '/types-of-braces/',
+        ctaLabel: 'Learn more',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Complimentary consult"
+    title="Questions are 100% normal"
+    body="Now offering virtual or in-office complimentary consultations, you can bring your teen into any one of our locations to be evaluated. We’d love to meet you — and hope you stop in."
+    image={metalCeramic}
+    imageAlt="Patient smiling with metal and ceramic braces"
+    actions={[
+      { label: 'Book a FREE Consult', href: bookHref },
+      { label: 'Virtual Consult', href: virtualHref, variant: 'outline' },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Also exploring"
+    title="More teen smile options"
+    items={[
+      {
+        icon: 'lucide:scan',
+        title: 'Teen Invisalign',
+        body: 'Virtually invisible aligners built around school, sports, and homecoming — with extra trays if they get lost.',
+        href: '/invisalign-for-teens/',
+        ctaLabel: 'Learn more',
+      },
+      {
+        icon: 'lucide:heart',
+        title: 'Children Braces',
+        body: 'Early screening around age 7 and Phase One treatment when growing smiles need a head start.',
+        href: '/braces-for-children/',
+        ctaLabel: 'Learn more',
+      },
+    ]}
+  />
 </SubpageLayout>

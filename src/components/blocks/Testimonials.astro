@@ -37,6 +37,7 @@ const {
   columns = 3,
   ratingScore,
   ratingSource,
+  bare = false,
 } = Astro.props;
 
 const columnClass = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }[columns];
@@ -46,8 +47,8 @@ const starClass = (filled: boolean) =>
   filled ? 'fill-accent-500 text-accent-500' : 'text-neutral-300';
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} align={align} gap="lg">
+<Section as={bare ? 'div' : 'section'} background={background} spacing={bare ? 'none' : spacing}>
+  <Container width={width} align={align} gap="lg" class:list={[bare && 'mx-0! max-w-none! px-0!']}>
     {
       (eyebrow || title || body || ratingScore) && (
         <div class:list={['flex w-full flex-col gap-5', centered && 'items-center']}>
@@ -61,7 +62,7 @@ const starClass = (filled: boolean) =>
 
           {ratingScore && (
             <div
-              class="inline-flex items-center gap-2.5 rounded-full bg-surface-base px-4 py-2 shadow-md"
+              class="bg-surface-base inline-flex items-center gap-2.5 rounded-full px-4 py-2 shadow-md"
               role="img"
               aria-label={`${ratingScore}${ratingSource ? ` ${ratingSource}` : ''}`}
             >
@@ -85,11 +86,7 @@ const starClass = (filled: boolean) =>
             <div class="flex flex-1 flex-col gap-5 p-7">
               <div class="flex w-full items-center justify-between">
                 {item.rating ? (
-                  <div
-                    class="flex gap-0.5"
-                    role="img"
-                    aria-label={`${item.rating} out of 5 stars`}
-                  >
+                  <div class="flex gap-0.5" role="img" aria-label={`${item.rating} out of 5 stars`}>
                     {Array.from({ length: 5 }).map((_, index) => (
                       <Icon
                         name="lucide:star"

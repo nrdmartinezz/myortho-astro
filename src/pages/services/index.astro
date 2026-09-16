@@ -1,104 +1,156 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Prose from '../../components/ui/Prose.astro';
+import metalCeramic from '../../images/services/metal-ceramic-braces.jpg';
+import sparkAligners from '../../images/services/spark-clear-aligners.jpg';
+import carriere from '../../images/services/carriere.jpg';
+import virtualMonitoring from '../../images/services/virtual-dental-monitoring.jpg';
+import adultAligners from '../../images/invisalign/adult-aligners.jpg';
+import youngWomanAligners from '../../images/invisalign/young-woman-aligners.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Braces, Invisalign, and more"
   title="Treatments"
-  description="Braces, Invisalign, and advanced orthodontic options for every age."
+  description="Braces, Invisalign, retainers, whitening, Carriere Motion, virtual care, and comfort technology — options for every age at 14 North Carolina locations."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
   ]}
 >
+  <Prose>
+    <h2>Crafting smiles with options that fit real life</h2>
+    <p>
+      Whether you want colorful metal braces, nearly invisible ceramic, or clear aligners you can
+      take out for lunch, we will help you choose the path that matches your smile, schedule, and
+      budget. Complimentary in-office and virtual consultations are always free.
+    </p>
+  </Prose>
+
   <ServicesGrid
     bare
-    background="base"
     columns={2}
+    align="start"
+    eyebrow="Braces"
+    title="Tried-and-true alignment"
     items={[
       {
         title: 'Types of Braces',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Metal and ceramic options that straighten teeth, improve your bite, and protect long-term oral health.',
         href: '/types-of-braces/',
-        icon: 'lucide:smile',
+        ctaLabel: 'Learn more',
+        image: metalCeramic,
+        imageAlt: 'Patient smiling with metal and ceramic braces',
       },
       {
         title: 'Adult Braces',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'You are never too old for the smile of your dreams — metal or discreet ceramic, with a complimentary consult.',
         href: '/braces-for-adults/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:user',
       },
       {
         title: 'Teen Braces',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Custom treatment plans plus elastics in school colors and team spirit at every visit.',
         href: '/braces-for-teens/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:users',
       },
       {
         title: 'Children Braces',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Screening as early as age 7, Phase One when it helps, and durable metal braces kids can actually live with.',
         href: '/braces-for-children/',
-        icon: 'lucide:baby',
+        ctaLabel: 'Learn more',
+        icon: 'lucide:heart',
       },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Invisalign"
+    title="Clear aligners for every stage"
+    items={[
       {
         title: 'How Invisalign Works',
-        body: 'Clear aligners from first 3D scan to retainers — virtually invisible treatment at all 14 locations.',
+        body: 'From the first 3D scan to retainers — virtually invisible, removable treatment at all 14 locations.',
         href: '/types-of-invisalign/',
-        icon: 'lucide:scan',
+        ctaLabel: 'Learn more',
+        image: sparkAligners,
+        imageAlt: 'Clear aligner trays',
       },
       {
         title: 'Adult Invisalign',
         body: 'Removable, nearly invisible aligners so you can eat, present, and smile without brackets in the way.',
         href: '/invisalign-for-adults/',
-        icon: 'lucide:user-check',
+        ctaLabel: 'Learn more',
+        image: adultAligners,
+        imageAlt: 'Adult holding a clear Invisalign aligner',
       },
       {
         title: 'Teen Invisalign',
         body: 'Invisalign Teen for school, sports, and homecoming — extra trays if they get lost, and no pokey wires.',
         href: '/invisalign-for-teens/',
-        icon: 'lucide:sparkles',
+        ctaLabel: 'Learn more',
+        image: youngWomanAligners,
+        imageAlt: 'Teen holding a clear aligner and smiling',
       },
       {
         title: 'Children Invisalign',
         body: 'When growing smiles are ready for aligners, plus an orthodontic screening as early as age 7.',
         href: '/invisalign-for-children/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:heart',
       },
+    ]}
+  />
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="More options"
+    title="Finish, brighten, and stay comfortable"
+    items={[
       {
         title: 'Retainers',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Wear them as directed after braces or aligners so teeth do not drift — including virtual retainer checks.',
         href: '/retainers/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:shield',
       },
       {
         title: 'Teeth Whitening',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Sinsational Smile in about 20 minutes, plus custom take-home trays. Wait until braces are off.',
         href: '/teeth-whitening/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:sun',
       },
       {
         title: 'Dental Pain Eraser',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'FDA-cleared electronic pulses that block orthodontic discomfort — needle-free, and available by prescription for home.',
         href: '/dental-pain-eraser/',
+        ctaLabel: 'Learn more',
         icon: 'lucide:zap',
       },
       {
         title: 'Carriere Motion',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Correct overbites and underbites in about three to four months without bulky headgear.',
         href: '/carrier-motion/',
-        icon: 'lucide:move',
+        ctaLabel: 'Learn more',
+        image: carriere,
+        imageAlt: 'Carriere Motion appliance',
       },
       {
         title: 'Virtual Care',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        body: 'Virtual consults, remote dental monitoring, and retainer checks — up to 50% fewer office visits.',
         href: '/virtual-care/',
-        icon: 'lucide:video',
+        ctaLabel: 'Learn more',
+        image: virtualMonitoring,
+        imageAlt: 'Virtual dental monitoring on a phone',
       },
     ]}
   />

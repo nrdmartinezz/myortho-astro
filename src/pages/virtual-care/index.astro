@@ -1,25 +1,112 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { bookHref, virtualHref } from '../../config/site';
+import virtualMonitoring from '../../images/services/virtual-dental-monitoring.jpg';
+import virtualConsult from '../../images/foundation/virtual-consult.jpg';
+import virtualConsultWide from '../../images/virtual-consult.jpg';
 ---
 
 <SubpageLayout
+  eyebrow="Orthodontic care from home"
   title="Virtual Care"
-  description="Remote monitoring and virtual appointments for busy schedules."
+  description="Virtual consultations, remote dental monitoring, and virtual retainer checks — so you can start treatment and stay on track with up to 50% fewer office visits."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Treatments',
-      href: '/services/',
-    },
-    {
-      name: 'Virtual Care',
-      href: '/virtual-care/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Treatments', href: '/services/' },
+    { name: 'Virtual Care', href: '/virtual-care/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>Orthodontic care in the comfort of your own home</h2>
+    <p>
+      We know your time is valuable, which is why we offer MyOrthodontist virtual care. Through our
+      innovative technology and flexible virtual appointment times, it has never been easier or more
+      convenient to get the smile of your dreams. Our virtual consultations let you kickstart your
+      treatment from home. During your consult we will assess your specific needs, discuss treatment
+      options, and answer any questions you have.
+    </p>
+    <p>
+      Convenience does not stop once treatment starts. Forget trying to squeeze an office
+      appointment into an already busy schedule — dental monitoring and virtual retainer checks let
+      our orthodontists evaluate your progress remotely. That can save you time, reduce in-office
+      visits by as much as 50%, and still keep a close eye on results.
+    </p>
+  </Prose>
+
+  <ServicesGrid
+    bare
+    columns={2}
+    align="start"
+    eyebrow="Virtual options"
+    title="Three ways to stay connected"
+    body="Embrace the future of orthodontic care: expert guidance plus modern technology, without extra time in the car."
+    items={[
+      {
+        icon: 'lucide:laptop',
+        title: 'Virtual new-patient consult',
+        body: 'Start from home. We review your smile, talk through braces and aligner options, and answer questions before you ever walk into an office.',
+        href: virtualHref,
+        ctaLabel: 'Request a virtual consult',
+      },
+      {
+        icon: 'lucide:smartphone',
+        title: 'Dental monitoring',
+        body: 'Track progress from your phone so many routine check-ins do not require a chair. Virtual dental monitoring can mean up to 50% fewer office visits.',
+      },
+      {
+        icon: 'lucide:shield',
+        title: 'Virtual retainer checks',
+        body: 'After braces or aligners, we can confirm retainer fit remotely so your results stay put without an extra trip for every check.',
+        href: '/retainers/',
+        ctaLabel: 'Retainer care',
+      },
+      {
+        icon: 'lucide:camera',
+        title: 'Progress photos that work',
+        body: 'For aligner check-ins we will show you how to photograph your bite — front, sides, and chewing surfaces — so recommendations stay accurate.',
+      },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Up to 50% fewer visits"
+    title="Remote monitoring that still feels personal"
+    body="We combine expert guidance with modern technology for an orthodontic experience that respects your calendar. You still have a doctor watching every stage — you just do not have to sit in traffic for every update."
+    image={virtualMonitoring}
+    imageAlt="Virtual dental monitoring on a smartphone"
+    bullets={[
+      'Flexible virtual appointment times',
+      'Progress checks from home after treatment starts',
+      'Retainer fit reviewed remotely',
+      'In-office visits when you truly need the chair',
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    reverse
+    eyebrow="Virtual new-patient consult"
+    title="Kickstart treatment without leaving the house"
+    body="Request a virtual consultation and one of our team members will follow up to confirm time and next steps. If you prefer to walk in, every location still offers a complimentary in-office exam."
+    image={virtualConsult}
+    imageAlt="Patient meeting with an orthodontist over a virtual consultation"
+    actions={[
+      { label: 'Request a Virtual Consult', href: virtualHref },
+      { label: 'Book in-office', href: bookHref, variant: 'outline' },
+    ]}
+  />
+
+  <FeatureSplit
+    bare
+    eyebrow="Always nearby"
+    title="Home when you want it, offices when you need them"
+    body="MyOrthodontist is a family-oriented practice whose priority is delivering exceptional and affordable treatment in a warm and welcoming environment — including 14 locations across North Carolina if an in-person visit is the better fit."
+    image={virtualConsultWide}
+    imageAlt="Patient using virtual orthodontic care from home"
+    actions={[{ label: 'Find a location', href: '/locations/', variant: 'outline' }]}
+  />
 </SubpageLayout>
