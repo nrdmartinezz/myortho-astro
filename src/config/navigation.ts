@@ -125,6 +125,7 @@ export const navigation: NavigationConfig = {
               { label: 'New Patient Info', href: '/patient/' },
               { label: 'Your First Visit', href: '/your-first-visit/' },
               { label: 'Special Offers', href: '/special-offers/' },
+              { label: 'Refer a Friend', href: '/refer-a-friend/' },
             ],
           },
           {
@@ -133,6 +134,7 @@ export const navigation: NavigationConfig = {
               { label: 'Contact', href: '/contact/' },
               { label: 'Locations', href: '/locations/' },
               { label: 'Careers', href: '/careers/' },
+              { label: 'Doctor Referrals', href: '/patient-referrals/' },
             ],
           },
         ],

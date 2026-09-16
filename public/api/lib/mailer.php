@@ -86,7 +86,111 @@ function allowedFormTypes(array $config): array
 {
     $configured = array_keys($config['forms'] ?? []);
 
-    return array_values(array_unique(array_merge(['contact'], $configured)));
+    return array_values(array_unique(array_merge(
+        ['contact', 'refer-a-friend', 'doctor-referral'],
+        $configured,
+    )));
+}
+
+/** @return list<string> */
+function requiredFieldsForForm(string $formType): array
+{
+    return match ($formType) {
+        'refer-a-friend' => ['name', 'email', 'phone', 'friend_name', 'friend_phone', 'location'],
+        'doctor-referral' => [
+            'patient_first_name',
+            'patient_last_name',
+            'email',
+            'date_of_birth',
+            'parent_name',
+            'home_phone',
+            'referring_dentist_name',
+            'referring_dentist_phone',
+            'reason_for_referral',
+            'cleared_for_treatment',
+            'location',
+        ],
+        default => ['name', 'email', 'message'],
+    };
+}
+
+/** Extra POST keys allowed into email templates. Never include recipient addresses. */
+function extraFieldKeys(): array
+{
+    return [
+        'friend_name',
+        'friend_phone',
+        'friend_email',
+        'location',
+        'patient_first_name',
+        'patient_last_name',
+        'date_of_birth',
+        'parent_name',
+        'insurance_carrier',
+        'insurance_policy',
+        'home_phone',
+        'cell_phone',
+        'referring_dentist_name',
+        'referring_dentist_phone',
+        'referring_dentist_email',
+        'reason_for_referral',
+        'last_exam',
+        'last_cleaning',
+        'pan_fmx',
+        'cleared_for_treatment',
+    ];
+}
+
+/** @return array<string, string> */
+function loadLocationEmails(): array
+{
+    $path = dirname(__DIR__) . '/location-emails.php';
+    if (!is_readable($path)) {
+        return [];
+    }
+
+    $map = require $path;
+
+    return is_array($map) ? $map : [];
+}
+
+function officeEmailForLocation(string $location): string
+{
+    if ($location === '') {
+        return '';
+    }
+
+    $map = loadLocationEmails();
+    $email = trim((string) ($map[$location] ?? ''));
+
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : '';
+}
+
+/**
+ * Referral forms go To the selected office and CC notify_to.
+ * Unknown location (or any other form) goes To notify_to only.
+ *
+ * @return array{to: list<string>, cc: list<string>}
+ */
+function notificationRecipients(array $config, string $formType, string $location): array
+{
+    $central = parseEmailList($config['notify_to'] ?? '');
+
+    if (!in_array($formType, ['refer-a-friend', 'doctor-referral'], true)) {
+        return ['to' => $central, 'cc' => []];
+    }
+
+    $office = officeEmailForLocation($location);
+    if ($office === '') {
+        return ['to' => $central, 'cc' => []];
+    }
+
+    $cc = array_values(array_filter(
+        $central,
+        static fn(string $email) => strcasecmp($email, $office) !== 0,
+    ));
+
+    return ['to' => [$office], 'cc' => $cc];
 }
 
 function getFormMailSettings(array $config, string $formType): array
@@ -98,6 +202,18 @@ function getFormMailSettings(array $config, string $formType): array
             'source_label' => 'Contact form',
             'subject' => "New enquiry — {$fromName}",
             'autoreply_subject' => "We received your message — {$fromName}",
+            'send_autoreply' => false,
+        ],
+        'refer-a-friend' => [
+            'source_label' => 'Refer a friend',
+            'subject' => 'New friend referral',
+            'autoreply_subject' => "We received your referral — {$fromName}",
+            'send_autoreply' => false,
+        ],
+        'doctor-referral' => [
+            'source_label' => 'Doctor referral',
+            'subject' => 'New doctor referral',
+            'autoreply_subject' => "We received your referral — {$fromName}",
             'send_autoreply' => false,
         ],
     ];
@@ -170,8 +286,16 @@ function parseEmailList(string|array $value): array
     return $emails;
 }
 
-function sendMail(array $config, string|array $to, string $toName, string $subject, string $htmlBody, ?string $replyTo = null, ?string $replyToName = null): void
-{
+function sendMail(
+    array $config,
+    string|array $to,
+    string $toName,
+    string $subject,
+    string $htmlBody,
+    ?string $replyTo = null,
+    ?string $replyToName = null,
+    string|array|null $cc = null,
+): void {
     $mail = new PHPMailer(true);
     $recipients = parseEmailList($to);
 
@@ -186,6 +310,15 @@ function sendMail(array $config, string|array $to, string $toName, string $subje
         foreach ($recipients as $index => $address) {
             $mail->addAddress($address, $index === 0 ? $toName : '');
         }
+
+        if ($cc !== null) {
+            foreach (parseEmailList($cc) as $address) {
+                if (!in_array($address, $recipients, true)) {
+                    $mail->addCC($address);
+                }
+            }
+        }
+
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $htmlBody;

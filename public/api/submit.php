@@ -19,6 +19,31 @@ function jsonSuccess(): never
     exit;
 }
 
+function postedString(string $key): string
+{
+    return trim((string) ($_POST[$key] ?? ''));
+}
+
+function displayValue(string $value): string
+{
+    return $value !== '' ? $value : '—';
+}
+
+function assertValidEmail(string $value, bool $required): void
+{
+    if ($value === '') {
+        if ($required) {
+            jsonError(400, 'Please enter a valid email address.');
+        }
+
+        return;
+    }
+
+    if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        jsonError(400, 'Please enter a valid email address.');
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonError(405, 'Method not allowed.');
 }
@@ -45,27 +70,39 @@ if (!verifyRecaptcha($recaptchaToken, $config['recaptcha_secret'], $minScore, $r
     jsonError(400, 'Verification failed. Please refresh and try again.');
 }
 
-$formType = trim((string) ($_POST['form_type'] ?? ''));
+$formType = postedString('form_type');
 if (!in_array($formType, allowedFormTypes($config), true)) {
     jsonError(400, 'Invalid form submission.');
 }
 
+foreach (requiredFieldsForForm($formType) as $field) {
+    if (postedString($field) === '') {
+        jsonError(400, 'Please fill in all required fields.');
+    }
+}
+
+assertValidEmail(postedString('email'), true);
+assertValidEmail(postedString('friend_email'), false);
+assertValidEmail(postedString('referring_dentist_email'), false);
+
 $formMail = getFormMailSettings($config, $formType);
 $fromName = (string) ($config['from_name'] ?? 'Site');
 
-$name = trim((string) ($_POST['name'] ?? ''));
-$email = trim((string) ($_POST['email'] ?? ''));
-$phone = trim((string) ($_POST['phone'] ?? ''));
-$message = trim((string) ($_POST['message'] ?? ''));
-$hearAbout = trim((string) ($_POST['hear_about_us'] ?? ''));
-$service = trim((string) ($_POST['service'] ?? ''));
+$name = postedString('name');
+$email = postedString('email');
+$phone = postedString('phone');
+$message = postedString('message');
+$hearAbout = postedString('hear_about_us');
+$service = postedString('service');
+$location = postedString('location');
+$reason = postedString('reason_for_referral');
 
-if ($name === '' || $email === '' || $message === '') {
-    jsonError(400, 'Please fill in all required fields.');
-}
-
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    jsonError(400, 'Please enter a valid email address.');
+if ($formType === 'doctor-referral') {
+    $name = trim(postedString('patient_first_name') . ' ' . postedString('patient_last_name'));
+    $phone = postedString('home_phone');
+    if ($message === '' && $reason !== '') {
+        $message = $reason;
+    }
 }
 
 $services = [];
@@ -91,16 +128,33 @@ if ($services !== []) {
     $servicesDisplay = implode(', ', $services);
 } elseif ($service !== '') {
     $servicesDisplay = $service;
+} elseif ($location !== '') {
+    $servicesDisplay = $location;
 }
 
-$hearAboutDisplay = $hearAbout !== '' ? $hearAbout : '—';
-$phoneDisplay = $phone !== '' ? $phone : '—';
+$hearAboutDisplay = displayValue($hearAbout);
+$phoneDisplay = displayValue($phone);
+$messageDisplay = displayValue($message);
 
 $timezone = (string) ($config['timezone'] ?? 'America/New_York');
 $submittedAt = (new DateTimeImmutable('now', new DateTimeZone($timezone)))->format('M j, Y g:i A T');
 
 $subjectLine = $formMail['subject'];
+if (in_array($formType, ['refer-a-friend', 'doctor-referral'], true) && $location !== '') {
+    $subjectLine .= " — {$location}";
+}
+
 $autoreplySubject = $formMail['autoreply_subject'];
+
+$replyTo = $email;
+$replyToName = $name;
+if ($formType === 'doctor-referral') {
+    $dentistEmail = postedString('referring_dentist_email');
+    if ($dentistEmail !== '') {
+        $replyTo = $dentistEmail;
+        $replyToName = postedString('referring_dentist_name');
+    }
+}
 
 $templateVars = [
     'subject_line' => escapeHtml($subjectLine),
@@ -110,7 +164,7 @@ $templateVars = [
     'phone' => escapeHtml($phoneDisplay),
     'services' => escapeHtml($servicesDisplay),
     'hear_about_us' => escapeHtml($hearAboutDisplay),
-    'message' => escapeHtml($message),
+    'message' => escapeHtml($messageDisplay),
     'form_source' => escapeHtml($formSource),
     'submitted_at' => escapeHtml($submittedAt),
     'sender_ip' => escapeHtml($remoteIp),
@@ -120,18 +174,29 @@ $templateVars = [
     'site_phone_href' => escapeHtml((string) ($config['site_phone_href'] ?? '')),
 ];
 
+foreach (extraFieldKeys() as $key) {
+    $templateVars[$key] = escapeHtml(displayValue(postedString($key)));
+}
+
+$templateVars['friend_email_raw'] = postedString('friend_email');
+$templateVars['referring_dentist_email_raw'] = postedString('referring_dentist_email');
+
+$recipients = notificationRecipients($config, $formType, $location);
+$toName = officeEmailForLocation($location) !== '' ? $location : $fromName;
+
 try {
     $notificationTemplate = resolveTemplateForForm($config, $formType, 'notification');
     $notificationHtml = renderTemplate($notificationTemplate, $templateVars);
 
     sendMail(
         $config,
-        $config['notify_to'],
-        $fromName,
+        $recipients['to'],
+        $toName,
         $subjectLine,
         $notificationHtml,
-        $email,
-        $name,
+        $replyTo,
+        $replyToName,
+        $recipients['cc'],
     );
 
     if ($formMail['send_autoreply']) {

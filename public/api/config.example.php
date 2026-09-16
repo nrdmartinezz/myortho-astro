@@ -32,6 +32,14 @@ return [
             'notification' => 'notification-contact.html',
             // Autoreply disabled by default — set send_autoreply => true to enable.
         ],
+        'refer-a-friend' => [
+            'subject' => 'New friend referral',
+            'notification' => 'notification-refer-a-friend.html',
+        ],
+        'doctor-referral' => [
+            'subject' => 'New doctor referral',
+            'notification' => 'notification-doctor-referral.html',
+        ],
     ],
 
     'recaptcha_min_score' => 0.5,

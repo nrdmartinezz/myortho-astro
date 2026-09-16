@@ -1,0 +1,225 @@
+---
+/**
+ * Patient (friend) or dentist (doctor) referral form. Posts to /api/submit.php.
+ */
+import Field from '../ui/Field.astro';
+import FormMessage from '../ui/FormMessage.astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site';
+
+interface Props {
+  variant: 'friend' | 'doctor';
+  locations: string[];
+}
+
+const { variant, locations } = Astro.props;
+
+const action = site.formEndpoint || '';
+const thankYou = new URL('/thank-you/', site.url).href;
+const isDoctor = variant === 'doctor';
+const formType = isDoctor ? 'doctor-referral' : 'refer-a-friend';
+const formId = isDoctor ? 'doctor-referral-form' : 'refer-a-friend-form';
+const trackSource = formType;
+const locationLabel = isDoctor ? 'MyOrthodontist location' : 'Preferred location';
+const submitLabel = isDoctor ? 'Send referral' : 'Send referral';
+
+const locationOptions = [
+  { label: `Select ${locationLabel.toLowerCase()}`, value: '' },
+  ...locations.map((location) => ({ label: location, value: location })),
+];
+
+const fieldsetClass = 'flex flex-col gap-4 border-0 p-0';
+const legendClass = 'mb-1 px-0 text-lg font-semibold';
+---
+
+{
+  !action && (
+    <p class="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+      No <code>formEndpoint</code> in <code>src/config/site.ts</code> — this form will not submit
+      until one is set.
+    </p>
+  )
+}
+
+<form
+  id={formId}
+  action={action}
+  method="POST"
+  novalidate
+  class="flex w-full flex-col gap-8"
+  data-site-form
+  data-thank-you={thankYou}
+  data-track-source={trackSource}
+>
+  {action && <input type="hidden" name="form_type" value={formType} />}
+
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label for={`${formId}-gotcha`}>Leave this field empty</label>
+    <input
+      type="text"
+      id={`${formId}-gotcha`}
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  {
+    isDoctor ? (
+      <>
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Patient</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field name="patient_first_name" label="Patient's first name" autocomplete="off" required />
+            <Field name="patient_last_name" label="Patient's last name" autocomplete="off" required />
+            <Field
+              name="email"
+              label="Patient's email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+            <Field name="date_of_birth" label="Date of birth" type="date" autocomplete="bday" required />
+            <Field
+              name="parent_name"
+              label="Responsible party / parent"
+              autocomplete="name"
+              class="sm:col-span-2"
+              required
+            />
+            <Field name="home_phone" label="Home phone" type="tel" autocomplete="tel" required />
+            <Field name="cell_phone" label="Cell / work phone" type="tel" autocomplete="tel" />
+          </div>
+        </fieldset>
+
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Insurance</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field name="insurance_carrier" label="Insurance carrier" autocomplete="off" />
+            <Field name="insurance_policy" label="Insurance policy #" autocomplete="off" />
+          </div>
+        </fieldset>
+
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Referring dentist</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field
+              name="referring_dentist_name"
+              label="Dentist name"
+              autocomplete="name"
+              required
+            />
+            <Field
+              name="referring_dentist_phone"
+              label="Dentist phone"
+              type="tel"
+              autocomplete="tel"
+              required
+            />
+            <Field
+              name="referring_dentist_email"
+              label="Dentist email"
+              type="email"
+              autocomplete="email"
+              class="sm:col-span-2"
+            />
+          </div>
+        </fieldset>
+
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Clinical details</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field
+              name="reason_for_referral"
+              label="Reason for referral"
+              type="textarea"
+              rows={4}
+              class="sm:col-span-2"
+              required
+            />
+            <Field name="last_exam" label="Date of last exam" type="date" />
+            <Field name="last_cleaning" label="Date of last cleaning" type="date" />
+            <Field name="pan_fmx" label="Date of PAN/FMX" type="date" />
+            <Field
+              name="cleared_for_treatment"
+              label="Cleared for treatment"
+              type="radio"
+              options={[
+                { label: 'Yes', value: 'Yes' },
+                { label: 'No', value: 'No' },
+              ]}
+              required
+            />
+            <Field
+              name="location"
+              label={locationLabel}
+              type="select"
+              options={locationOptions}
+              class="sm:col-span-2"
+              required
+            />
+          </div>
+        </fieldset>
+      </>
+    ) : (
+      <>
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Your information</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field name="name" label="Your name" autocomplete="name" required />
+            <Field name="email" label="Your email" type="email" autocomplete="email" required />
+            <Field
+              name="phone"
+              label="Your phone"
+              type="tel"
+              autocomplete="tel"
+              class="sm:col-span-2"
+              required
+            />
+          </div>
+        </fieldset>
+
+        <fieldset class={fieldsetClass}>
+          <legend class={legendClass}>Your friend's information</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <Field name="friend_name" label="Friend's name" autocomplete="off" required />
+            <Field
+              name="friend_phone"
+              label="Friend's phone"
+              type="tel"
+              autocomplete="off"
+              required
+            />
+            <Field
+              name="friend_email"
+              label="Friend's email"
+              type="email"
+              autocomplete="off"
+              class="sm:col-span-2"
+            />
+            <Field
+              name="location"
+              label={locationLabel}
+              type="select"
+              options={locationOptions}
+              class="sm:col-span-2"
+              required
+            />
+          </div>
+        </fieldset>
+
+        <Field
+          name="message"
+          label="Anything we should know?"
+          type="textarea"
+          rows={4}
+          help="Optional — a short note is plenty."
+        />
+      </>
+    )
+  }
+
+  <FormMessage />
+
+  <Button type="submit" size="lg" class="self-start">{submitLabel}</Button>
+</form>

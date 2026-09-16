@@ -1,0 +1,35 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ReferralForm from '../../components/forms/ReferralForm.astro';
+import { getPublished } from '../../lib/locations';
+
+const locations = (await getPublished()).map((location) => location.data.name);
+---
+
+<SubpageLayout
+  title="Refer a Friend"
+  description="Share MyOrthodontist with someone you care about. We’ll reach out to them and follow up with you."
+  eyebrow="Share a Smile"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Refer a Friend', href: '/refer-a-friend/' },
+  ]}
+>
+  <Prose>
+    <h2>Know someone who would love their smile?</h2>
+    <p>
+      The kindest thing you can do for a friend or family member is point them toward care you
+      trust. Tell us who we should contact, pick the office that is most convenient for them, and
+      our team will take it from there.
+    </p>
+    <p>
+      Ask your office about family and referral savings when you visit — eligibility varies, and we
+      are happy to walk through what applies. Dentists referring a patient can use our
+      <a href="/patient-referrals/">doctor referral form</a> instead.
+    </p>
+  </Prose>
+
+  <ReferralForm variant="friend" locations={locations} />
+</SubpageLayout>

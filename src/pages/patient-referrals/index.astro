@@ -1,0 +1,35 @@
+---
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ReferralForm from '../../components/forms/ReferralForm.astro';
+import { getPublished } from '../../lib/locations';
+
+const locations = (await getPublished()).map((location) => location.data.name);
+---
+
+<SubpageLayout
+  title="Patient Referrals"
+  description="Refer a patient to MyOrthodontist. Complete the form below and the selected office will follow up."
+  eyebrow="For Referring Dentists"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Patient Referrals', href: '/patient-referrals/' },
+  ]}
+>
+  <Prose>
+    <h2>Referrals for orthodontic treatment</h2>
+    <p>
+      The dedicated staff at MyOrthodontist pride ourselves on providing the highest quality of care
+      to patients. We appreciate your confidence and referrals. For your convenience, our referral
+      form can be completed and submitted online.
+    </p>
+    <p>
+      Submissions are sent over a secure connection and used only to follow up on this referral.
+      Please choose the MyOrthodontist location that should receive the patient. Current patients
+      introducing a friend can use our <a href="/refer-a-friend/">refer a friend</a> form instead.
+    </p>
+  </Prose>
+
+  <ReferralForm variant="doctor" locations={locations} />
+</SubpageLayout>

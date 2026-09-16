@@ -6,7 +6,7 @@
  */
 import type { HTMLAttributes } from 'astro/types';
 
-export type FieldType = 'text' | 'email' | 'tel' | 'url' | 'textarea' | 'select';
+export type FieldType = 'text' | 'email' | 'tel' | 'url' | 'date' | 'textarea' | 'select' | 'radio';
 
 interface Props extends Omit<HTMLAttributes<'input'>, 'class' | 'type' | 'name'> {
   name: string;
@@ -43,10 +43,14 @@ const controlClass =
 ---
 
 <div class:list={['field flex flex-col gap-1.5', className]}>
-  <label for={name} class="font-medium">
-    {label}
-    {!required && <span class="text-ink-muted font-normal"> (optional)</span>}
-  </label>
+  {
+    type !== 'radio' && (
+      <label for={name} class="font-medium">
+        {label}
+        {!required && <span class="text-ink-muted font-normal"> (optional)</span>}
+      </label>
+    )
+  }
 
   {
     help && (
@@ -80,6 +84,33 @@ const controlClass =
           <option value={option.value}>{option.label}</option>
         ))}
       </select>
+    ) : type === 'radio' ? (
+      <fieldset class="flex flex-col gap-3" aria-describedby={helpId} aria-required={required}>
+        <legend class="font-medium">
+          {label}
+          {!required && <span class="text-ink-muted font-normal"> (optional)</span>}
+        </legend>
+        <div class="flex flex-wrap gap-3">
+          {options.map((option) => {
+            const optionId = `${name}-${option.value}`;
+            return (
+              <label
+                for={optionId}
+                class="border-line-base inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border bg-surface-base px-4 py-2"
+              >
+                <input
+                  id={optionId}
+                  name={name}
+                  type="radio"
+                  value={option.value}
+                  required={required}
+                />
+                {option.label}
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
     ) : (
       <input
         id={name}

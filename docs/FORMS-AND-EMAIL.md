@@ -137,6 +137,7 @@ For each email kind (`notification` or `autoreply`), the handler picks a templat
 | `{{services}}`        | Selected services or em dash          |
 | `{{hear_about_us}}`   | Referral source or em dash            |
 | `{{message}}`         | Message body                          |
+| `{{location}}`        | Selected office name or em dash       |
 | `{{form_source}}`     | Human-readable form label             |
 | `{{submitted_at}}`    | Timestamp                             |
 | `{{sender_ip}}`       | Submitter IP address                  |
@@ -144,6 +145,10 @@ For each email kind (`notification` or `autoreply`), the handler picks a templat
 | `{{site_url}}`        | Site URL from config                  |
 | `{{site_phone}}`      | Phone display string                  |
 | `{{site_phone_href}}` | Phone tel: href                       |
+
+Referral templates also receive the extra fields posted by that form
+(`friend_name`, `patient_first_name`, `cleared_for_treatment`, and so on).
+Empty values render as an em dash.
 
 **Autoreply** (`autoreply.html`):
 
@@ -158,11 +163,31 @@ Use inline CSS — email clients strip `<style>` blocks inconsistently.
 
 ## Form surfaces
 
-| `form_type` | Component            | Notification template       |
-| ----------- | -------------------- | --------------------------- |
-| `contact`   | `ContactBlock.astro` | `notification-contact.html` |
+| `form_type`         | Component                          | Notification template                    |
+| ------------------- | ---------------------------------- | ---------------------------------------- |
+| `contact`           | `ContactBlock.astro`               | `notification-contact.html`              |
+| `refer-a-friend`    | `ReferralForm.astro` (`friend`)    | `notification-refer-a-friend.html`       |
+| `doctor-referral`   | `ReferralForm.astro` (`doctor`)    | `notification-doctor-referral.html`      |
+
+`refer-a-friend` and `doctor-referral` are allowed by default (same as `contact`),
+so they work before `site-mail.php` lists them under `forms`.
 
 Shared client-side wiring: `RecaptchaV3.astro` + `SiteFormHandler.astro` in `BaseLayout.astro`.
+
+### Office routing (referral forms)
+
+Referral submissions look up the selected location in
+[`public/api/location-emails.php`](../public/api/location-emails.php) (keyed by
+location **name**, matching the form select values and `src/content/locations/*.mdx`).
+
+- **To:** that office’s email
+- **CC:** `notify_to`
+- Unknown or blank location → `notify_to` only, so the lead is never dropped
+
+The office address is never taken from the form POST. Keep the PHP map in sync
+when a location email changes. Contact form routing is unchanged (central inbox
+only); the homepage “Preferred Location” value is now included in the contact
+email body.
 
 ### Adding a new form
 
