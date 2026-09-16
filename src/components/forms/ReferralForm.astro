@@ -24,7 +24,7 @@ const locationLabel = isDoctor ? 'MyOrthodontist location' : 'Preferred location
 const submitLabel = isDoctor ? 'Send referral' : 'Send referral';
 
 const locationOptions = [
-  { label: `Select ${locationLabel.toLowerCase()}`, value: '' },
+  { label: 'Select a location', value: '' },
   ...locations.map((location) => ({ label: location, value: location })),
 ];
 
