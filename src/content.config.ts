@@ -39,4 +39,17 @@ const doctors = defineCollection({
   }),
 });
 
-export const collections = { locations, doctors };
+const specialOffers = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/specials' }),
+  schema: z.object({
+    name: z.string(),
+    expiration: z.string().optional(),
+    href: z.string(),
+    cta: z.string(),
+    /** Site-relative path, e.g. `/images/offers/current.jpg`. Swap the file and this field together. */
+    image: z.string(),
+    imageAlt: z.string().optional(),
+  }),
+});
+
+export const collections = { locations, doctors, specialOffers };

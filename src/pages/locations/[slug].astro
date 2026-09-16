@@ -7,10 +7,16 @@ import Container from '../../components/ui/Container.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Prose from '../../components/ui/Prose.astro';
 import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
 import MapEmbed from '../../components/blocks/MapEmbed.astro';
 import LocationHero, { type LocationDoctor } from '../../components/blocks/LocationHero.astro';
+import SpecialOffer from '../../components/blocks/SpecialOffer.astro';
+import CTABanner from '../../components/blocks/CTABanner.astro';
 import { getPublished, related, type Entry } from '../../lib/locations';
 import { atLocation, getPublished as getDoctors } from '../../lib/doctors';
+import { getCurrent } from '../../lib/specials';
+import { bookHref, virtualHref } from '../../config/site';
+import { Icon } from 'astro-icon/components';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getPublished();
@@ -27,6 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         role: doctor.data.role,
         photo: doctor.data.photo,
         href: `/doctors/${doctor.id}/`,
+        shortBio: doctor.data.shortBio,
       })),
     },
   }));
@@ -38,9 +45,35 @@ interface Props {
   doctors: LocationDoctor[];
 }
 
-const { entry, all, doctors } = Astro.props;
+const { entry, all, doctors } = Astro.props as unknown as Props;
 const { Content } = await render(entry);
 const nearby = related(all, entry);
+const special = await getCurrent();
+const { Content: SpecialContent } = special ? await render(special) : { Content: undefined };
+const address = `${entry.data.addressLine}, ${entry.data.cityStateZip}`;
+const hourLines = entry.data.hours.split(/\s*·\s*/).filter(Boolean);
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+const telHref = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
+};
+
+/** "Dr. Jackie Massouda" → "Jackie" for the meet-the-doctor link. */
+const givenName = (value: string) =>
+  value
+    .replace(/\b(dr|drs|mr|mrs|ms)\.?\s/gi, '')
+    .split(/\s+/)
+    .find(Boolean) ?? 'the doctor';
+
+const pageActions = [
+  { icon: 'lucide:calendar', label: 'Book a FREE Consult', href: bookHref },
+  {
+    icon: 'lucide:laptop',
+    label: 'Virtual Consult',
+    href: virtualHref,
+    variant: 'outline' as const,
+  },
+];
 ---
 
 <BaseLayout
@@ -54,25 +87,141 @@ const nearby = related(all, entry);
 >
   <LocationHero
     name={entry.data.name}
-    region={entry.data.region}
     addressLine={entry.data.addressLine}
     cityStateZip={entry.data.cityStateZip}
     phone={entry.data.phone}
     fax={entry.data.fax}
-    email={entry.data.email}
-    hours={entry.data.hours}
-    doctors={doctors}
   />
 
-  <MapEmbed query={`${entry.data.addressLine}, ${entry.data.cityStateZip}`} />
+  <Section background="muted" spacing="md">
+    <Container layout="row" gap="lg" class="md:items-stretch">
+      <Card class="w-full md:w-1/2" hover={false}>
+        <p
+          class="text-accent-500 tracking-eyebrow text-xs font-semibold uppercase"
+          data-slot="eyebrow"
+        >
+          Visit
+        </p>
+        <Heading level={2} size="md">Office hours</Heading>
+        <ul class="flex flex-col gap-2">
+          {
+            hourLines.map((line) => (
+              <li class="flex items-start gap-3">
+                <Icon
+                  name="lucide:clock"
+                  class="text-ink-brand mt-1 size-4 shrink-0"
+                  aria-hidden="true"
+                />
+                <span>{line}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={`mailto:${entry.data.email}`}
+          class="text-ink-brand inline-flex items-center gap-3 no-underline hover:underline"
+        >
+          <Icon name="lucide:mail" class="size-4 shrink-0" aria-hidden="true" />
+          {entry.data.email}
+        </a>
+        <p class="text-ink-muted text-sm">
+          For information about holiday and summer hours please call the office.
+        </p>
+        <div
+          class="mt-auto flex flex-wrap gap-3 pt-2 max-md:w-full max-md:flex-col max-md:[&_a]:w-full"
+        >
+          <Button href={directionsHref} variant="outline" rel="noopener noreferrer" target="_blank">
+            Get directions
+          </Button>
+          <Button href={telHref(entry.data.phone)} variant="primary">
+            Call {entry.data.phone}
+          </Button>
+        </div>
+      </Card>
 
-  <Section background="base" spacing="md">
+      <div class="flex w-full flex-col md:w-1/2">
+        <MapEmbed bare query={address} />
+      </div>
+    </Container>
+  </Section>
+
+  {
+    doctors.length > 0 && (
+      <Section background="base" spacing="md">
+        <Container gap="lg">
+          <Heading level={2}>Doctors at this office</Heading>
+          <ul class="grid w-full gap-8">
+            {doctors.map((doctor) => (
+              <Card as="li" variant="outlined" padded={false} hover={false} class="w-full">
+                <div class="grid w-full md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
+                  {doctor.photo ? (
+                    <img
+                      src={doctor.photo}
+                      alt=""
+                      loading="lazy"
+                      class="aspect-4/5 h-full w-full rounded-none! object-cover object-top"
+                    />
+                  ) : (
+                    <div class="bg-surface-muted aspect-4/5 w-full" aria-hidden="true" />
+                  )}
+                  <div class="flex flex-col items-start gap-3 p-6 md:p-8">
+                    <Heading level={3} size="md">
+                      {doctor.href ? (
+                        <a href={doctor.href} class="text-ink-base no-underline hover:underline">
+                          {doctor.name}
+                        </a>
+                      ) : (
+                        doctor.name
+                      )}
+                    </Heading>
+                    {(doctor.credentials || doctor.role) && (
+                      <p class="text-ink-muted text-sm">
+                        {[doctor.credentials, doctor.role].filter(Boolean).join(' · ')}
+                      </p>
+                    )}
+                    {doctor.shortBio && (
+                      <p class="text-ink-muted max-w-reading">{doctor.shortBio}</p>
+                    )}
+                    {doctor.href && (
+                      <a
+                        href={doctor.href}
+                        class="text-accent-500 mt-auto inline-flex min-h-11 items-center text-sm font-semibold no-underline hover:underline"
+                      >
+                        Meet {givenName(doctor.name)}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    )
+  }
+
+  <!-- <Section background="muted" spacing="md">
     <Container width="narrow">
       <Prose>
         <Content />
       </Prose>
     </Container>
-  </Section>
+  </Section> -->
+
+  {
+    special && SpecialContent && (
+      <SpecialOffer
+        name={special.data.name}
+        expiration={special.data.expiration}
+        href={special.data.href}
+        cta={special.data.cta}
+        image={special.data.image}
+        imageAlt={special.data.imageAlt}
+      >
+        <SpecialContent />
+      </SpecialOffer>
+    )
+  }
 
   {
     nearby.length > 0 && (
@@ -88,6 +237,8 @@ const nearby = related(all, entry);
                     class="text-ink-base no-underline hover:underline"
                     data-slot="cta"
                   >
+                    <Icon name="lucide:map-pin" class="size-4" />
+
                     {item.data.name}
                   </a>
                 </Heading>
@@ -99,4 +250,11 @@ const nearby = related(all, entry);
       </Section>
     )
   }
+
+  <CTABanner
+    background="inverse"
+    title="Ready for your free consultation?"
+    body="Schedule in minutes — virtual or in-office."
+    actions={pageActions}
+  />
 </BaseLayout>

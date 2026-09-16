@@ -1,12 +1,11 @@
 ---
 /**
- * Opening band of a location page: the office identity, the numbers a patient
- * needs to reach that office, and the doctor(s) who see patients there.
+ * Opening band of a location page: office name, locale, and the three
+ * ways a patient reaches the office (address, phone, fax).
  */
 import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
-import Card from '../ui/Card.astro';
 import { Icon } from 'astro-icon/components';
 import type { BlockProps } from './types';
 
@@ -17,33 +16,26 @@ export interface LocationDoctor {
   /** Site-relative path to the headshot; a monogram stands in when absent. */
   photo?: string;
   href?: string;
+  shortBio?: string;
 }
 
 interface Props extends Pick<BlockProps, 'background' | 'spacing' | 'width'> {
   name: string;
-  region?: string;
   addressLine: string;
   cityStateZip: string;
   phone: string;
   fax?: string;
-  email?: string;
-  hours?: string;
-  doctors?: LocationDoctor[];
 }
 
 const {
-  background = 'muted',
-  spacing = 'md',
+  background = 'inverse',
+  spacing = 'sm',
   width = 'page',
   name,
-  region,
   addressLine,
   cityStateZip,
   phone,
   fax,
-  email,
-  hours,
-  doctors = [],
 } = Astro.props;
 
 /** Content stores display numbers like "(919) 782-9588"; `tel:` wants E.164. */
@@ -52,112 +44,66 @@ const telHref = (value: string) => {
   return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
 };
 
-const contacts = [
-  { label: 'Phone', icon: 'lucide:phone', value: phone, href: telHref(phone) },
-  fax && { label: 'Fax', icon: 'lucide:printer', value: fax },
-  email && { label: 'Email', icon: 'lucide:mail', value: email, href: `mailto:${email}` },
-].filter((contact): contact is { label: string; icon: string; value: string; href?: string } =>
-  Boolean(contact),
-);
+const address = `${addressLine}, ${cityStateZip}`;
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
 
-/** "Dr. Avery Morgan" reads as "AM" rather than "DA". */
-const monogram = (value: string) =>
-  value
-    .replace(/\b(dr|drs|mr|mrs|ms)\.?\s/gi, '')
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase() ?? '')
-    .join('');
+type Contact = {
+  label: string;
+  icon: string;
+  value: string;
+  href?: string;
+  external?: boolean;
+};
+
+const contacts: Contact[] = [
+  {
+    label: 'Address',
+    icon: 'lucide:map-pin',
+    value: address,
+    href: directionsHref,
+    external: true,
+  },
+  { label: 'Phone', icon: 'lucide:phone', value: phone, href: telHref(phone) },
+];
+
+if (fax) {
+  contacts.push({ label: 'Fax', icon: 'lucide:printer', value: fax });
+}
 ---
 
 <Section background={background} spacing={spacing}>
-  <Container width={width} gap="lg">
-    <div class="grid w-full gap-10 md:grid-cols-[minmax(0,1fr)_20rem] md:items-start">
-      <div class="flex flex-col gap-5">
-        {
-          region && (
-            <p class="text-ink-brand text-xs font-normal tracking-wide uppercase">{region}</p>
-          )
-        }
+  <Container width={width} gap="md">
+    <Heading level={1} size="xl">{name}</Heading>
+    <p class="text-accent-500 tracking-eyebrow text-xs font-semibold uppercase">
+      {name}, North Carolina
+    </p>
 
-        <Heading level={1}>{name}</Heading>
-
-        <p class="text-ink-muted max-w-reading text-lg">{addressLine}, {cityStateZip}</p>
-
-        <dl class="flex flex-col gap-4">
-          {
-            contacts.map((contact) => (
-              <div class="flex items-start gap-3">
-                <Icon
-                  name={contact.icon}
-                  class="text-ink-brand mt-1 size-5 shrink-0"
-                  aria-hidden="true"
-                />
-                <div class="flex flex-col">
-                  <dt class="text-ink-muted text-xs tracking-wide uppercase">{contact.label}</dt>
-                  <dd class="font-medium">
-                    {contact.href ? (
-                      <a href={contact.href} class="text-ink-brand no-underline hover:underline">
-                        {contact.value}
-                      </a>
-                    ) : (
-                      contact.value
-                    )}
-                  </dd>
-                </div>
-              </div>
-            ))
-          }
-        </dl>
-
-        {hours && <p class="text-ink-muted text-sm">{hours}</p>}
-      </div>
-
+    <ul class="flex w-full flex-col gap-4 md:flex-row md:flex-wrap md:gap-8">
       {
-        doctors.length > 0 && (
-          <ul class="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
-            {doctors.map((doctor) => (
-              <Card as="li" variant="elevated">
-                {doctor.photo ? (
-                  // First child so Card's full-bleed `img:first-child` rule
-                  // makes the portrait a banner across the card top. The 4:5
-                  // aspect ratio + top anchoring keeps the full head in frame.
-                  <img
-                    src={doctor.photo}
-                    alt=""
-                    loading="lazy"
-                    class="aspect-[4/5] w-full object-cover object-top"
-                  />
-                ) : (
-                  <div
-                    class="bg-brand-50 text-ink-brand font-heading flex aspect-[4/5] w-full items-center justify-center rounded-lg text-4xl"
-                    aria-hidden="true"
-                  >
-                    {monogram(doctor.name)}
-                  </div>
-                )}
-
-                <div class="flex flex-col gap-1">
-                  <Heading level={2} size="sm">
-                    {doctor.href ? (
-                      <a href={doctor.href} class="text-ink-base no-underline hover:underline">
-                        {doctor.name}
-                      </a>
-                    ) : (
-                      doctor.name
-                    )}
-                  </Heading>
-                  {(doctor.credentials || doctor.role) && (
-                    <p class="text-ink-muted text-sm">
-                      {[doctor.credentials, doctor.role].filter(Boolean).join(' · ')}
-                    </p>
-                  )}
-                </div>
-              </Card>
-            ))}
-          </ul>
-        )
+        contacts.map((contact) => (
+          <li class="flex items-start gap-3">
+            <Icon
+              name={contact.icon}
+              class="text-accent-500 mt-1 size-5 shrink-0"
+              aria-hidden="true"
+            />
+            <div class="flex flex-col">
+              <p class="text-xs tracking-wide text-white/70 uppercase">{contact.label}</p>
+              {contact.href ? (
+                <a
+                  href={contact.href}
+                  class="text-ink-inverse font-medium no-underline hover:underline"
+                  {...(contact.external ? { rel: 'noopener noreferrer', target: '_blank' } : {})}
+                >
+                  {contact.value}
+                </a>
+              ) : (
+                <p class="font-medium">{contact.value}</p>
+              )}
+            </div>
+          </li>
+        ))
       }
-    </div>
+    </ul>
   </Container>
 </Section>

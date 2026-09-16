@@ -16,6 +16,8 @@ interface Props extends BlockProps {
   query?: string;
   zoom?: number;
   height?: string;
+  /** Display phone for the Call link; defaults to the practice 800 number. */
+  phone?: string;
 }
 
 const {
@@ -30,19 +32,42 @@ const {
   query = formattedAddress,
   zoom = 15,
   height = '420px',
+  bare = false,
+  phone,
 } = Astro.props;
 
 const embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
+
+const telHref = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
+};
+
+const callLabel = phone ?? site.business.phone;
+const callHref = phone ? telHref(phone) : `tel:${site.business.phoneHref}`;
 ---
 
-<Section background={background} spacing={spacing}>
-  <Container width={width} align={align} gap="lg">
+<Section
+  as={bare ? 'div' : 'section'}
+  background={background}
+  spacing={bare ? 'none' : spacing}
+  class={bare ? 'flex h-full min-h-80 flex-col' : undefined}
+>
+  <Container
+    width={width}
+    align={align}
+    gap="lg"
+    class:list={[bare && 'mx-0! h-full max-w-none! flex-1 px-0!']}
+  >
     <BlockHeader eyebrow={eyebrow} title={title} body={body} level={titleLevel} />
 
     <div
-      class="map-facade border-line-base bg-surface-muted relative w-full overflow-hidden rounded-lg border"
-      style={`height:${height}`}
+      class:list={[
+        'map-facade border-line-base bg-surface-muted relative w-full overflow-hidden rounded-lg border',
+        bare && 'min-h-80 flex-1',
+      ]}
+      style={bare ? undefined : `height:${height}`}
       data-src={embedSrc}
     >
       <button
@@ -55,14 +80,18 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
       </button>
     </div>
 
-    <div class="flex flex-wrap gap-4 text-sm">
-      <a href={directionsHref} rel="noopener noreferrer" target="_blank" class="text-ink-brand">
-        Get directions
-      </a>
-      <a href={`tel:${site.business.phoneHref}`} class="text-ink-brand">
-        Call {site.business.phone}
-      </a>
-    </div>
+    {
+      !bare && (
+        <div class="flex flex-wrap gap-4 text-sm">
+          <a href={directionsHref} rel="noopener noreferrer" target="_blank" class="text-ink-brand">
+            Get directions
+          </a>
+          <a href={callHref} class="text-ink-brand">
+            Call {callLabel}
+          </a>
+        </div>
+      )
+    }
   </Container>
 </Section>
 

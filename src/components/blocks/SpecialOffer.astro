@@ -1,0 +1,66 @@
+---
+/**
+ * Site-wide current special: image on one side, offer copy and two actions
+ * on the other. The whole card is not a single link — two CTAs live inside.
+ */
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Card from '../ui/Card.astro';
+import Heading from '../ui/Heading.astro';
+import Prose from '../ui/Prose.astro';
+import Button from '../ui/Button.astro';
+import type { BlockProps } from './types';
+
+interface Props extends Pick<BlockProps, 'background' | 'spacing' | 'width'> {
+  name: string;
+  expiration?: string;
+  href: string;
+  cta: string;
+  image: string;
+  imageAlt?: string;
+}
+
+const {
+  background = 'base',
+  spacing = 'md',
+  width = 'page',
+  name,
+  expiration,
+  href,
+  cta,
+  image,
+  imageAlt = '',
+} = Astro.props;
+---
+
+<Section background={background} spacing={spacing}>
+  <Container width={width}>
+    <Card as="article" padded={false} hover={false} class="w-full">
+      <div class="grid w-full md:grid-cols-2">
+        <div class="bg-surface-muted min-h-64 md:min-h-full">
+          <img src={image} alt={imageAlt} loading="lazy" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="flex flex-col items-start gap-4 p-6 md:p-10">
+          <p
+            class="text-accent-500 tracking-eyebrow text-xs font-semibold uppercase"
+            data-slot="eyebrow"
+          >
+            Current special
+          </p>
+          <Heading level={2} size="lg">{name}</Heading>
+          {expiration && <p class="text-ink-muted text-sm">Offer ends {expiration}</p>}
+          <Prose>
+            <slot />
+          </Prose>
+          <div
+            class="mt-auto flex flex-wrap gap-3 pt-2 max-md:w-full max-md:flex-col max-md:[&_a]:w-full"
+          >
+            <Button href={href} variant="outline">Learn more</Button>
+            <Button href={cta} variant="primary">Book a FREE Consult</Button>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </Container>
+</Section>
