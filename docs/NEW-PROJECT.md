@@ -16,8 +16,8 @@ untouched, something is wrong with the starter, not the project.
 
 ## 2. Identity
 
-- `astro.config.mjs` → `site`: the production origin, no trailing slash.
-- `public/robots.txt` → the `Sitemap:` line.
+- `astro.config.mjs` → production origin fallback (`SITE_URL` overrides per environment).
+- GitHub Environments set `SITE_URL` and `ALLOW_INDEXING`; `robots.txt` is generated at build.
 - `src/config/site.ts` → name, tagline, description, NAP, hours, socials, and
   `business.schemaType` (pick the most specific match — `Plumber` beats
   `LocalBusiness`).

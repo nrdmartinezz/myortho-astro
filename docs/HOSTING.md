@@ -23,30 +23,84 @@ the same page.
 
 ## First-time server setup
 
+Two cPanel hosts, two GitHub Environments — never one shared FTP account.
+
+**Staging** is `https://site.myorthodontistnc.com`. Every push to `main` deploys here.
+**Production** is `https://myorthodontistnc.com`. It deploys only when you run the
+workflow by hand. Do not point production FTP at the live document root until you
+are ready to replace WordPress.
+
+For each host:
+
 1. Create the domain or subdomain in cPanel; note the document root
-   (usually `public_html/` or `public_html/subdomain/`).
+   (addon domains are often `~/site.myorthodontistnc.com/` rather than a folder
+   under `public_html/`).
 2. Issue the SSL certificate (AutoSSL) **before** the first deploy — `.htaccess`
    force-redirects to HTTPS and will loop against a missing certificate.
-3. Create an FTP account scoped to the document root.
-4. Add repository secrets in GitHub → Settings → Secrets → Actions:
+3. Create an FTP account **scoped to that document root** (trailing slash on the
+   home directory). Staging and production must not share an account.
+4. **First staging deploy overwrites whatever currently lives on
+   `site.myorthodontistnc.com`** (the Elementor preview). Confirm that is intended.
 
-   | Secret           | Value                                    |
-   | ---------------- | ---------------------------------------- |
-   | `FTP_SERVER`     | `ftp.example.com`                        |
-   | `FTP_USERNAME`   | The scoped FTP account                   |
-   | `FTP_PASSWORD`   | Its password                             |
-   | `FTP_SERVER_DIR` | `public_html/` (trailing slash required) |
+### GitHub Environments
 
-5. Update `site` in `astro.config.mjs` and the `Sitemap:` line in
-   `public/robots.txt` to the real domain.
+Create Environments named `staging` and `production` under
+Settings → Environments. Put secrets and variables **on the environment**, not at
+repository level. If FTP secrets already exist as repo secrets, move them onto the
+environments and delete the repo copies so a job cannot pick up the wrong target.
+
+Environment variables (`vars`):
+
+| Variable         | `staging`                           | `production`                   |
+| ---------------- | ----------------------------------- | ------------------------------ |
+| `SITE_URL`       | `https://site.myorthodontistnc.com` | `https://myorthodontistnc.com` |
+| `ALLOW_INDEXING` | `false`                             | `true`                         |
+
+Environment secrets:
+
+| Secret           | Value                                  |
+| ---------------- | -------------------------------------- |
+| `FTP_SERVER`     | `ftp.example.com`                      |
+| `FTP_USERNAME`   | The scoped FTP account for that host   |
+| `FTP_PASSWORD`   | Its password                           |
+| `FTP_SERVER_DIR` | Document root, trailing slash required |
+
+On `production`, enable required reviewers so a promote cannot run without
+approval. Leave production FTP unconfigured (or aimed at an unused directory)
+until WordPress cutover.
+
+`SITE_URL` is the build-time origin: canonicals, Open Graph, schema, and the
+sitemap all follow it. `ALLOW_INDEXING=false` forces `noindex`, emits a
+`Disallow: /` robots.txt, and skips analytics tags.
 
 ## Deploying
 
-`.github/workflows/deploy.yml` runs on every push to `main`: install → `verify`
-→ `build` → FTP upload of `dist/`. The `verify` gate means a type error or
-malformed frontmatter fails in CI instead of shipping.
+`.github/workflows/deploy.yml`:
 
-Manual fallback: `npm run build` and upload the contents of `dist/`.
+- **Push to `main`** → environment `staging` → FTPS to `site.myorthodontistnc.com`.
+- **Actions → Deploy → Run workflow** → choose `staging` or `production`. The
+  dropdown defaults to `staging`.
+
+Each run: install → `verify` → PHPMailer → `build` (with that environment's
+`SITE_URL` / `ALLOW_INDEXING`) → FTP upload of `dist/`. A type error or malformed
+frontmatter fails in CI instead of shipping.
+
+### Promote to live (after staging looks right)
+
+1. Open the Deploy workflow → Run workflow → target `production`.
+2. Approve the environment if reviewers are required.
+3. Confirm the live hostname, HTTPS, forms, and that `robots.txt` allows indexing.
+
+Until cutover, a production run would overwrite the live WordPress site. Do not
+flip `main` to auto-deploy production until that cutover is deliberate.
+
+Manual fallback:
+
+```bash
+SITE_URL=https://site.myorthodontistnc.com ALLOW_INDEXING=false npm run build
+```
+
+Then upload the contents of `dist/`.
 
 ## Forms & email (PHP mailer)
 
@@ -57,10 +111,14 @@ Server setup, once per site:
 
 1. **Secrets file, outside the document root.** Copy `public/api/config.example.php` to
    `~/private/site-mail.php` (rename per client, then update the first path in
-   `public/api/lib/mailer.php`). Keeping it outside `public_html/` means an FTP deploy never
-   overwrites or exposes it. Set at least `recaptcha_secret`, `notify_to`, `from_email`, and
-   `from_name`. Mail sends via PHP `mail()` by default; set `smtp_host`/`smtp_user`/`smtp_pass`
-   for authenticated SMTP (better deliverability on some hosts).
+   `public/api/lib/mailer.php`). The mailer walks three directories up from
+   `api/lib/mailer.php`, so an addon-domain docroot of `~/site.myorthodontistnc.com/`
+   still resolves to `~/private/site-mail.php`. Keeping it outside the web root means
+   an FTP deploy never overwrites or exposes it. Set at least `recaptcha_secret`,
+   `notify_to`, `from_email`, and `from_name`. Mail sends via PHP `mail()` by default;
+   set `smtp_host`/`smtp_user`/`smtp_pass` for authenticated SMTP (better
+   deliverability on some hosts). Staging forms return a graceful error until this
+   file exists on that host.
 2. **PHPMailer.** The deploy workflow runs `composer install --no-dev --working-dir=public/api`
    before the build, so `vendor/` ships inside `dist/api/`. If you deploy manually, run that
    command first. Composer must be available on the machine that builds.

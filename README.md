@@ -17,28 +17,28 @@ until a project needs one.
 | `src/config/navigation.ts`                   | Nav tree, header CTA, footer and legal links             | required   |
 | `tokens/*.json`                              | Replace the demo brand — theme regenerates on next build | required   |
 | `public/favicon.svg` + `src/assets/logo.svg` | Client marks                                             | required   |
-| `public/robots.txt`                          | Point the `Sitemap:` line at the real domain             | required   |
-| `astro.config.mjs` → `site`                  | Production origin, no trailing slash                     | required   |
+| `astro.config.mjs` → `SITE_URL` fallback     | Production origin, no trailing slash                     | required   |
+| GitHub Environments `staging` / `production` | `SITE_URL`, `ALLOW_INDEXING`, per-host FTP secrets       | to publish |
 | `site.ts` → `formEndpoint`                   | PHP form handler path (default `/api/submit.php`)        | required   |
 | `site.ts` → `recaptchaSiteKey`               | reCAPTCHA v3 site key — see `docs/FORMS-AND-EMAIL.md`    | optional   |
 | `site.ts` → `analytics` / `verification`     | Per-platform IDs — blank means that vendor ships nothing | optional   |
-| `.github/workflows/deploy.yml`               | FTP host/path secrets                                    | to publish |
+| `.github/workflows/deploy.yml`               | Push to `main` → staging; Run workflow → production      | to publish |
 | `_templates/collection/`                     | Copy only if the site needs a blog or similar            | optional   |
 
 ## Commands
 
-| Command              | Does                                                     |
-| -------------------- | -------------------------------------------------------- |
-| `npm run dev`        | Generates the theme, then starts the dev server on :4321 |
-| `npm run build`      | Generates the theme, then builds to `dist/`              |
-| `npm run verify`     | Generates the theme, then `astro check` + Prettier check |
-| `npm run format`     | Writes Prettier formatting                               |
-| `npm run audit`      | Lighthouse CI + pa11y against the built site             |
-| `npm run audit:deps` | OSV vulnerability report for `package-lock.json`         |
-| `npm run php:check`  | Verify a local PHP binary is found                       |
-| `npm run php:install`| Install PHPMailer into `public/api/vendor/` (Composer)   |
-| `npm run php:serve`  | Serve built `dist/` with PHP so `/api/submit.php` runs   |
-| `npm run php:dev`    | `build` + `php:install` + `php:serve` in one step        |
+| Command               | Does                                                     |
+| --------------------- | -------------------------------------------------------- |
+| `npm run dev`         | Generates the theme, then starts the dev server on :4321 |
+| `npm run build`       | Generates the theme, then builds to `dist/`              |
+| `npm run verify`      | Generates the theme, then `astro check` + Prettier check |
+| `npm run format`      | Writes Prettier formatting                               |
+| `npm run audit`       | Lighthouse CI + pa11y against the built site             |
+| `npm run audit:deps`  | OSV vulnerability report for `package-lock.json`         |
+| `npm run php:check`   | Verify a local PHP binary is found                       |
+| `npm run php:install` | Install PHPMailer into `public/api/vendor/` (Composer)   |
+| `npm run php:serve`   | Serve built `dist/` with PHP so `/api/submit.php` runs   |
+| `npm run php:dev`     | `build` + `php:install` + `php:serve` in one step        |
 
 Build the style guide into a production bundle with `STYLEGUIDE=1 npm run build`.
 
@@ -83,9 +83,15 @@ Responsive is **desktop-first** using Tailwind `max-*` variants. See `docs/RESPO
 
 ## Deploying
 
-Static output in `dist/` uploads as-is. `public/.htaccess` handles HTTPS, non-www, trailing
-slashes, compression, cache headers, and the 404. `trailingSlash: 'always'` + `build.format:
-'directory'` are pinned together — changing one without the other breaks URLs on Apache.
+Push to `main` FTPS-uploads `dist/` to staging (`https://site.myorthodontistnc.com`).
+Production (`https://myorthodontistnc.com`) is a manual **Actions → Deploy → Run
+workflow** with target `production` — do not run that until WordPress cutover.
+Environment `SITE_URL` / `ALLOW_INDEXING` drive canonicals, robots, and analytics;
+staging is noindex. See `docs/HOSTING.md`.
+
+`public/.htaccess` handles HTTPS, non-www, trailing slashes, compression, cache
+headers, and the 404. `trailingSlash: 'always'` + `build.format: 'directory'` are
+pinned together — changing one without the other breaks URLs on Apache.
 
 ## Forms & email
 

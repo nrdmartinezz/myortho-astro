@@ -4,16 +4,28 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      target:
+        description: Deploy target
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
 
 concurrency:
-  group: deploy
+  group: deploy-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'staging' }}
   cancel-in-progress: false
 
 jobs:
   deploy:
     name: Build and upload to cPanel
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'staging' }}
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
+      ALLOW_INDEXING: ${{ vars.ALLOW_INDEXING }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,6 +33,16 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+
+      - name: Confirm environment origin
+        run: |
+          echo "target=${{ github.event_name == 'workflow_dispatch' && inputs.target || 'staging' }}"
+          echo "SITE_URL=$SITE_URL"
+          echo "ALLOW_INDEXING=$ALLOW_INDEXING"
+          if [ -z "$SITE_URL" ]; then
+            echo "::error::SITE_URL is not set on this GitHub Environment (Settings → Environments)."
+            exit 1
+          fi
 
       - run: npm ci
 

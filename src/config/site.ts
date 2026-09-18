@@ -20,7 +20,10 @@ export type SchemaBusinessType =
   | 'RealEstateAgent';
 
 export interface SiteConfig {
-  /** Absolute origin, no trailing slash. Must match `site` in astro.config.mjs. */
+  /**
+   * Absolute origin, no trailing slash. Taken from astro.config `site`
+   * (`SITE_URL` at build time, production origin as the local fallback).
+   */
   url: string;
   name: string;
   legalName?: string;
@@ -87,8 +90,10 @@ export interface SiteConfig {
   consent: 'none' | 'banner';
 }
 
+const PRODUCTION_ORIGIN = 'https://myorthodontistnc.com';
+
 export const site: SiteConfig = {
-  url: 'https://myorthodontistnc.com',
+  url: (import.meta.env.SITE ?? PRODUCTION_ORIGIN).replace(/\/$/, ''),
   name: 'MyOrthodontistNC',
   legalName: 'MyOrthodontistNC',
   tagline: 'Delivering high-quality orthodontic care across North Carolina',
@@ -148,6 +153,9 @@ export const formattedAddress = [
 
 /** No configured ID means the analytics bundle is never mounted at all. */
 export const hasAnalytics = Object.values(site.analytics).some(Boolean);
+
+/** Staging / preview builds must not be indexed or emit production tags. */
+export const allowIndexing = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true';
 
 /** Formlync registration and virtual consult paths — used in hero and page CTAs. */
 export const bookHref = 'https://forms.formlync.com/myorthodontist/register';

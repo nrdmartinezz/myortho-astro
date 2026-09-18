@@ -1,5 +1,5 @@
 ---
-import { site } from '../../config/site';
+import { allowIndexing, site } from '../../config/site';
 
 interface Props {
   title?: string;
@@ -34,14 +34,15 @@ const pageTitle = !title
 
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
+const suppressIndex = noindex || !allowIndexing;
 ---
 
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-{noindex && <meta name="robots" content="noindex, nofollow" />}
-{!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
+{suppressIndex && <meta name="robots" content="noindex, nofollow" />}
+{!suppressIndex && <meta name="robots" content="index, follow, max-image-preview:large" />}
 
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={site.name} />
