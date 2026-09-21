@@ -9,7 +9,13 @@ const blogRedirects = JSON.parse(
   readFileSync(new URL('./src/data/wp-blog-redirects.json', import.meta.url), 'utf8'),
 );
 
-const EXCLUDED_FROM_SITEMAP = ['/thank-you/', '/styleguide/', '/request-consult/', '/patient-portal/'];
+const EXCLUDED_FROM_SITEMAP = [
+  '/thank-you/',
+  '/styleguide/',
+  '/request-consult/',
+  '/patient-portal/',
+  '/book-appointment/',
+];
 const PRODUCTION_ORIGIN = 'https://myorthodontistnc.com';
 
 const siteUrl = (process.env.SITE_URL ?? PRODUCTION_ORIGIN).replace(/\/$/, '');
@@ -30,6 +36,7 @@ export default defineConfig({
   redirects: {
     ...blogRedirects,
     '/request-consult/': 'https://forms.formlync.com/myorthodontist/register',
+    '/book-appointment/': 'https://forms.formlync.com/myorthodontist/register',
     '/patient-portal/': 'https://moray.cloud9ortho.com/portal/LoginAccount/Login',
   },
   integrations: [
