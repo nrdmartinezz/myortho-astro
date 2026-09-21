@@ -8,7 +8,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 export type FieldType = 'text' | 'email' | 'tel' | 'url' | 'date' | 'textarea' | 'select' | 'radio';
 
-interface Props extends Omit<HTMLAttributes<'input'>, 'class' | 'type' | 'name'> {
+interface Props extends Omit<HTMLAttributes<'input'>, 'class' | 'type' | 'name' | 'required'> {
   name: string;
   label: string;
   type?: FieldType;
@@ -17,6 +17,7 @@ interface Props extends Omit<HTMLAttributes<'input'>, 'class' | 'type' | 'name'>
   error?: string;
   options?: { label: string; value: string }[];
   rows?: number;
+  required?: boolean;
   class?: string;
 }
 
@@ -96,7 +97,7 @@ const controlClass =
             return (
               <label
                 for={optionId}
-                class="border-line-base inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border bg-surface-base px-4 py-2"
+                class="border-line-base bg-surface-base inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border px-4 py-2"
               >
                 <input
                   id={optionId}
