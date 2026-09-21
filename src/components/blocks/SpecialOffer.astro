@@ -10,10 +10,11 @@ import Heading from '../ui/Heading.astro';
 import Prose from '../ui/Prose.astro';
 import Button from '../ui/Button.astro';
 import type { BlockProps } from './types';
+import { formatExpiration } from '../../lib/specials';
 
 interface Props extends Pick<BlockProps, 'background' | 'spacing' | 'width'> {
   name: string;
-  expiration?: string;
+  expiration?: string | Date;
   href: string;
   cta: string;
   image: string;
@@ -31,6 +32,8 @@ const {
   image,
   imageAlt = '',
 } = Astro.props;
+
+const offerEnds = formatExpiration(expiration);
 ---
 
 <Section background={background} spacing={spacing}>
@@ -49,7 +52,7 @@ const {
             Current special
           </p>
           <Heading level={2} size="lg">{name}</Heading>
-          {expiration && <p class="text-ink-muted text-sm">Offer ends {expiration}</p>}
+          {offerEnds && <p class="text-ink-muted text-sm">Offer ends {offerEnds}</p>}
           <Prose>
             <slot />
           </Prose>
