@@ -3,6 +3,7 @@
  * nav today; `MegaMenu` and `MobileNav` read the same tree in Phase 4, so the
  * upgrade is additive rather than a rewrite.
  */
+import { patientPortalHref } from './site';
 
 export interface NavLink {
   label: string;
@@ -113,7 +114,7 @@ export const navigation: NavigationConfig = {
             links: [
               { label: 'Insurance & Financing Info', href: '/insurance/' },
               { label: 'Orthodontic FAQs', href: '/faqs/' },
-              { label: 'Patient Portal', href: '/patient-portal/' },
+              { label: 'Patient Portal', href: patientPortalHref },
               { label: 'Office Policies', href: '/office-policies/' },
               { label: 'Orthodontic Emergencies', href: '/orthodontic-emergencies/' },
               { label: 'Tooth Wisdom Blog', href: '/blog/' },
@@ -152,7 +153,7 @@ export const navigation: NavigationConfig = {
         { label: 'Braces in North Carolina', href: '/types-of-braces/' },
         { label: 'Invisalign in North Carolina', href: '/types-of-invisalign/' },
         { label: 'Meet the Doctors', href: '/doctors/' },
-        { label: 'Patient Portal', href: '/patient-portal/' },
+        { label: 'Patient Portal', href: patientPortalHref },
         { label: 'Patient Forms', href: '/patient/' },
         { label: 'New Patient Info', href: '/patient/' },
         { label: 'Locations', href: '/locations/' },

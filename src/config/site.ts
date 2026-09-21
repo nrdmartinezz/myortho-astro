@@ -161,6 +161,9 @@ export const allowIndexing = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true';
 export const bookHref = 'https://forms.formlync.com/myorthodontist/register';
 export const virtualHref = bookHref;
 
+/** Cloud9 Ortho patient portal login. */
+export const patientPortalHref = 'https://moray.cloud9ortho.com/portal/LoginAccount/Login';
+
 export const phoneAction = {
   icon: 'lucide:phone' as const,
   label: site.business.phone,

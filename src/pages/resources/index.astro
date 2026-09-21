@@ -2,6 +2,7 @@
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
 import Prose from '../../components/ui/Prose.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import { patientPortalHref } from '../../config/site';
 ---
 
 <SubpageLayout
@@ -47,7 +48,7 @@ import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
         icon: 'lucide:file-text',
         title: 'Patient Forms & Portal',
         body: 'Access your patient portal and complete new-patient forms before you arrive.',
-        href: '/patient-portal/',
+        href: patientPortalHref,
       },
       {
         icon: 'lucide:clipboard-list',

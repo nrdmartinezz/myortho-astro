@@ -3,6 +3,7 @@ import SubpageLayout from '../../layouts/SubpageLayout.astro';
 import Prose from '../../components/ui/Prose.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
+import { patientPortalHref } from '../../config/site';
 ---
 
 <SubpageLayout
@@ -56,7 +57,7 @@ import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
         icon: 'lucide:file-text',
         title: 'Complete your forms',
         body: 'We collect some information in advance so your visit runs smoothly. Fill out your new-patient forms online before you arrive.',
-        href: '/patient-portal/',
+        href: patientPortalHref,
         ctaLabel: 'Go to patient forms',
       },
       {
