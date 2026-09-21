@@ -29,7 +29,7 @@ const positioned = sticky !== 'static';
 ---
 
 <div class="utility">
-  <div class="px-gutter container w-full">
+  <div class="utility-inner px-gutter mx-auto w-full xl:max-w-page">
     <span class="utility-message text-xs font-medium text-neutral-300 max-md:hidden">
       {site.tagline}
     </span>
@@ -112,11 +112,10 @@ const positioned = sticky !== 'static';
     padding: 8px 0;
     justify-content: center;
     align-items: center;
-    .container {
+    .utility-inner {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      justify-self: center;
     }
   }
 
