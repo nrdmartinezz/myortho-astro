@@ -60,10 +60,13 @@ Environment secrets:
 
 | Secret           | Value                                  |
 | ---------------- | -------------------------------------- |
-| `FTP_SERVER`     | `ftp.example.com`                      |
-| `FTP_USERNAME`   | The scoped FTP account for that host   |
-| `FTP_PASSWORD`   | Its password                           |
-| `FTP_SERVER_DIR` | Document root, trailing slash required |
+| `FTP_HOST` | cPanel FTP hostname                    |
+| `FTP_USER` | The scoped FTP account for that host   |
+| `FTP_PW`   | Its password                           |
+
+The FTP account home must already be the document root — the workflow
+uploads to `./`. Prefer **Environment secrets** for these three (especially
+`FTP_PW`); variables work but are visible to anyone with write access.
 
 On `production`, enable required reviewers so a promote cannot run without
 approval. Leave production FTP unconfigured (or aimed at an unused directory)

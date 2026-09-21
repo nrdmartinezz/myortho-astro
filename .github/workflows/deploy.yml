@@ -57,12 +57,13 @@ jobs:
       - name: FTP deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_HOST || vars.FTP_HOST }}
+          username: ${{ secrets.FTP_USER || vars.FTP_USER }}
+          password: ${{ secrets.FTP_PW || vars.FTP_PW }}
           protocol: ftps
           local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # Account home is already the document root.
+          server-dir: ./
           # Keeps anything the server owns that the build does not produce.
           exclude: |
             **/.git*
