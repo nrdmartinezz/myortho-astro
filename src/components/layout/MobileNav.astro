@@ -54,110 +54,108 @@ const linkClass =
 
 {
   part === 'drawer' && (
-<div
-  id="mobile-nav"
-  hidden
-  class="bg-surface-base fixed inset-0 top-(--header-h) z-40 overflow-y-auto overscroll-contain md:hidden"
->
-  <Container
-    as="nav"
-    gap="none"
-    aria-label="Mobile"
-    class="py-4 pb-[max(2rem,env(safe-area-inset-bottom))]"
-  >
-    <ul class="flex w-full flex-col">
-      {
-        navigation.primary.map((item, index) => {
-          const sublinks =
-            item.panel?.kind === 'mega'
-              ? item.panel.columns.flatMap((column) => column.links)
-              : (item.panel?.links ?? []);
+    <div
+      id="mobile-nav"
+      hidden
+      class="bg-surface-base fixed inset-0 top-(--header-h) z-40 overflow-y-auto overscroll-contain md:hidden"
+    >
+      <Container
+        as="nav"
+        gap="none"
+        aria-label="Mobile"
+        class="py-4 pb-[max(2rem,env(safe-area-inset-bottom))]"
+      >
+        <ul class="flex w-full flex-col">
+          {navigation.primary.map((item, index) => {
+            const sublinks =
+              item.panel?.kind === 'mega'
+                ? item.panel.columns.flatMap((column) => column.links)
+                : (item.panel?.links ?? []);
 
-          if (sublinks.length === 0) {
+            if (sublinks.length === 0) {
+              return (
+                <li class="border-line-base border-b">
+                  <a
+                    href={item.href ?? '#'}
+                    aria-current={isCurrent(item.href ?? '') ? 'page' : undefined}
+                    class={linkClass}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            }
+
+            const panelId = `mobile-panel-${index}`;
+            const parentAlreadyListed = Boolean(
+              item.href && sublinks.some((link) => link.href === item.href),
+            );
+
             return (
               <li class="border-line-base border-b">
-                <a
-                  href={item.href ?? '#'}
-                  aria-current={isCurrent(item.href ?? '') ? 'page' : undefined}
-                  class={linkClass}
+                <button
+                  type="button"
+                  class="mobile-accordion text-ink-base flex min-h-12 w-full items-center justify-between gap-3 rounded-md px-2 text-left text-base hover:bg-neutral-100"
+                  aria-expanded="false"
+                  aria-controls={panelId}
                 >
                   {item.label}
-                </a>
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="size-5 shrink-0 transition-transform"
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <ul
+                  id={panelId}
+                  hidden
+                  class="border-line-base mb-2 ml-2 flex flex-col border-l pl-3"
+                >
+                  {item.href && !parentAlreadyListed && (
+                    <li>
+                      <a
+                        href={item.href}
+                        aria-current={isCurrent(item.href) ? 'page' : undefined}
+                        class={linkClass}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  )}
+                  {sublinks.map((link) => (
+                    <li>
+                      <a
+                        href={link.href}
+                        aria-current={isCurrent(link.href) ? 'page' : undefined}
+                        class={linkClass}
+                      >
+                        {link.icon && (
+                          <Icon
+                            name={link.icon}
+                            class="text-brand-600 size-5 shrink-0"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </li>
             );
-          }
+          })}
+        </ul>
 
-          const panelId = `mobile-panel-${index}`;
-          const parentAlreadyListed = Boolean(
-            item.href && sublinks.some((link) => link.href === item.href),
-          );
-
-          return (
-            <li class="border-line-base border-b">
-              <button
-                type="button"
-                class="mobile-accordion flex min-h-12 w-full items-center justify-between gap-3 rounded-md px-2 text-left text-base text-ink-base hover:bg-neutral-100"
-                aria-expanded="false"
-                aria-controls={panelId}
-              >
-                {item.label}
-                <Icon
-                  name="lucide:chevron-down"
-                  class="size-5 shrink-0 transition-transform"
-                  aria-hidden="true"
-                />
-              </button>
-
-              <ul
-                id={panelId}
-                hidden
-                class="border-line-base mb-2 ml-2 flex flex-col border-l pl-3"
-              >
-                {item.href && !parentAlreadyListed && (
-                  <li>
-                    <a
-                      href={item.href}
-                      aria-current={isCurrent(item.href) ? 'page' : undefined}
-                      class={linkClass}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                )}
-                {sublinks.map((link) => (
-                  <li>
-                    <a
-                      href={link.href}
-                      aria-current={isCurrent(link.href) ? 'page' : undefined}
-                      class={linkClass}
-                    >
-                      {link.icon && (
-                        <Icon
-                          name={link.icon}
-                          class="text-brand-600 size-5 shrink-0"
-                          aria-hidden="true"
-                        />
-                      )}
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          );
-        })
-      }
-    </ul>
-
-    <div class="mt-6 flex flex-col gap-3">
-      {navigation.cta && <Button href={navigation.cta.href}>{navigation.cta.label}</Button>}
-      <Button href={`tel:${site.business.phoneHref}`} variant="secondary">
-        <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
-        {site.business.phone}
-      </Button>
+        <div class="mt-6 flex flex-col gap-3">
+          {navigation.cta && <Button href={navigation.cta.href}>{navigation.cta.label}</Button>}
+          <Button href={`tel:${site.business.phoneHref}`} variant="secondary">
+            <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
+            {site.business.phone}
+          </Button>
+        </div>
+      </Container>
     </div>
-  </Container>
-</div>
   )
 }
 

@@ -6,3 +6,6 @@ package-lock.json
 
 # Planning docs are hand-formatted; leave them alone.
 .github/prompts
+
+# WordPress-imported posts; the importer's wrapping is not Prettier's.
+src/content/posts

@@ -58,11 +58,11 @@ Environment variables (`vars`):
 
 Environment secrets:
 
-| Secret           | Value                                  |
-| ---------------- | -------------------------------------- |
-| `FTP_HOST` | cPanel FTP hostname                    |
-| `FTP_USER` | The scoped FTP account for that host   |
-| `FTP_PW`   | Its password                           |
+| Secret     | Value                                |
+| ---------- | ------------------------------------ |
+| `FTP_HOST` | cPanel FTP hostname                  |
+| `FTP_USER` | The scoped FTP account for that host |
+| `FTP_PW`   | Its password                         |
 
 The FTP account home must already be the document root — the workflow
 uploads to `./`. Prefer **Environment secrets** for these three (especially

@@ -398,7 +398,11 @@ const insuranceLogos = [
     /* 750×937 flyer: cap width so the full image fits the viewport with gutters. */
     .home-offer-link {
       display: block;
-      width: min(36rem, calc(100vw - 2 * var(--spacing-gutter)), calc((100svh - 2 * var(--spacing-gutter)) * 750 / 937));
+      width: min(
+        36rem,
+        calc(100vw - 2 * var(--spacing-gutter)),
+        calc((100svh - 2 * var(--spacing-gutter)) * 750 / 937)
+      );
     }
 
     .home-offer-link :global(.home-offer-image) {

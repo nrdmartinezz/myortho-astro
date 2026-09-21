@@ -163,11 +163,11 @@ Use inline CSS — email clients strip `<style>` blocks inconsistently.
 
 ## Form surfaces
 
-| `form_type`         | Component                          | Notification template                    |
-| ------------------- | ---------------------------------- | ---------------------------------------- |
-| `contact`           | `ContactBlock.astro`               | `notification-contact.html`              |
-| `refer-a-friend`    | `ReferralForm.astro` (`friend`)    | `notification-refer-a-friend.html`       |
-| `doctor-referral`   | `ReferralForm.astro` (`doctor`)    | `notification-doctor-referral.html`      |
+| `form_type`       | Component                       | Notification template               |
+| ----------------- | ------------------------------- | ----------------------------------- |
+| `contact`         | `ContactBlock.astro`            | `notification-contact.html`         |
+| `refer-a-friend`  | `ReferralForm.astro` (`friend`) | `notification-refer-a-friend.html`  |
+| `doctor-referral` | `ReferralForm.astro` (`doctor`) | `notification-doctor-referral.html` |
 
 `refer-a-friend` and `doctor-referral` are allowed by default (same as `contact`),
 so they work before `site-mail.php` lists them under `forms`.

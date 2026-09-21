@@ -55,13 +55,7 @@ const legendClass = 'mb-1 px-0 text-lg font-semibold';
 
   <div class="absolute left-[-9999px]" aria-hidden="true">
     <label for={`${formId}-gotcha`}>Leave this field empty</label>
-    <input
-      type="text"
-      id={`${formId}-gotcha`}
-      name="_gotcha"
-      tabindex="-1"
-      autocomplete="off"
-    />
+    <input type="text" id={`${formId}-gotcha`} name="_gotcha" tabindex="-1" autocomplete="off" />
   </div>
 
   {
@@ -70,8 +64,18 @@ const legendClass = 'mb-1 px-0 text-lg font-semibold';
         <fieldset class={fieldsetClass}>
           <legend class={legendClass}>Patient</legend>
           <div class="grid gap-4 sm:grid-cols-2">
-            <Field name="patient_first_name" label="Patient's first name" autocomplete="off" required />
-            <Field name="patient_last_name" label="Patient's last name" autocomplete="off" required />
+            <Field
+              name="patient_first_name"
+              label="Patient's first name"
+              autocomplete="off"
+              required
+            />
+            <Field
+              name="patient_last_name"
+              label="Patient's last name"
+              autocomplete="off"
+              required
+            />
             <Field
               name="email"
               label="Patient's email"
@@ -79,7 +83,13 @@ const legendClass = 'mb-1 px-0 text-lg font-semibold';
               autocomplete="email"
               required
             />
-            <Field name="date_of_birth" label="Date of birth" type="date" autocomplete="bday" required />
+            <Field
+              name="date_of_birth"
+              label="Date of birth"
+              type="date"
+              autocomplete="bday"
+              required
+            />
             <Field
               name="parent_name"
               label="Responsible party / parent"

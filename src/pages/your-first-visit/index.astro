@@ -29,28 +29,36 @@ import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
     </p>
   </Prose>
 
-  <ServicesGrid bare background="base" columns={3} eyebrow="What Happens" title="Your first visit, step by step" titleLevel={2} items={[
-    {
-      icon: 'lucide:smile',
-      title: '1. A warm welcome',
-      body: 'You are greeted by a friendly team and settled in so your consultation starts on a relaxed, unhurried note.',
-    },
-    {
-      icon: 'lucide:clipboard-list',
-      title: '2. Exam & records',
-      body: 'A thorough 30-minute exam gives us insight into your needs. We may take diagnostic records — x-rays and digital scans — to build an accurate treatment plan.',
-    },
-    {
-      icon: 'lucide:file-text',
-      title: '3. Options & financing',
-      body: 'We walk through your treatment options, timeline, and costs, and review the payment and financing plans that best fit your budget.',
-    },
-    {
-      icon: 'lucide:calendar',
-      title: '4. Starting treatment',
-      body: 'Once your questions are answered and your plan is set, we schedule the next steps so you can start your journey toward a healthier smile.',
-    },
-  ]} />
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="What Happens"
+    title="Your first visit, step by step"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:smile',
+        title: '1. A warm welcome',
+        body: 'You are greeted by a friendly team and settled in so your consultation starts on a relaxed, unhurried note.',
+      },
+      {
+        icon: 'lucide:clipboard-list',
+        title: '2. Exam & records',
+        body: 'A thorough 30-minute exam gives us insight into your needs. We may take diagnostic records — x-rays and digital scans — to build an accurate treatment plan.',
+      },
+      {
+        icon: 'lucide:file-text',
+        title: '3. Options & financing',
+        body: 'We walk through your treatment options, timeline, and costs, and review the payment and financing plans that best fit your budget.',
+      },
+      {
+        icon: 'lucide:calendar',
+        title: '4. Starting treatment',
+        body: 'Once your questions are answered and your plan is set, we schedule the next steps so you can start your journey toward a healthier smile.',
+      },
+    ]}
+  />
 
   <FeatureSplit
     bare
@@ -72,10 +80,11 @@ import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
     <h2>Thoughtful planning, better results</h2>
     <p>
       We believe in-depth planning leads to superior results and higher patient satisfaction, so we
-      take the time to analyze each patient&rsquo;s specific needs. To learn more about financing and
-      insurance, visit our <a href="/insurance/">insurance &amp; financing</a> page, or find a
-      convenient office on our <a href="/locations/">locations</a> page. You can also browse answers
-      on our <a href="/faqs/">FAQs</a> page.
+      take the time to analyze each patient&rsquo;s specific needs. To learn more about financing
+      and insurance, visit our <a href="/insurance/">insurance &amp; financing</a> page, or find a convenient
+      office on our <a href="/locations/">locations</a> page. You can also browse answers on our <a
+        href="/faqs/">FAQs</a
+      > page.
     </p>
   </Prose>
 </SubpageLayout>

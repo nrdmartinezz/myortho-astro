@@ -251,8 +251,14 @@ function offTopicReasons({ title, slug }) {
     [/\bgum disease\b|gingivitis|periodont/, 'gum / periodontal'],
     [/canker/, 'canker sores'],
     [/heart disease|diabetes|sepsis/, 'systemic / medical'],
-    [/cosmetic dentistr|veneer|dental crown|amalgam|oral surgery|dentist near me|find a dentist/, 'general / cosmetic dentistry'],
-    [/teeth whitening|plaque|cavity|cavities|tooth decay|chipped tooth|tooth loss|tooth enamel/, 'general dentistry'],
+    [
+      /cosmetic dentistr|veneer|dental crown|amalgam|oral surgery|dentist near me|find a dentist/,
+      'general / cosmetic dentistry',
+    ],
+    [
+      /teeth whitening|plaque|cavity|cavities|tooth decay|chipped tooth|tooth loss|tooth enamel/,
+      'general dentistry',
+    ],
   ];
   for (const [pattern, label] of checks) {
     if (pattern.test(hay)) reasons.push(ortho ? `${label} (title also mentions ortho)` : label);
@@ -368,7 +374,9 @@ async function fetchAllPosts() {
 
 async function fetchTags() {
   try {
-    const { data } = await fetchJson(`${WP_ORIGIN}/wp-json/wp/v2/tags?per_page=100&_fields=id,name`);
+    const { data } = await fetchJson(
+      `${WP_ORIGIN}/wp-json/wp/v2/tags?per_page=100&_fields=id,name`,
+    );
     return new Map(data.map((tag) => [tag.id, decodeEntities(tag.name)]));
   } catch {
     return new Map();
@@ -420,11 +428,19 @@ async function localizeImages(html, slug) {
     } catch {
       continue;
     }
-    if (!/wp-content\/uploads/i.test(url.pathname) && url.hostname.replace(/^www\./, '') !== 'myorthodontistnc.com') {
+    if (
+      !/wp-content\/uploads/i.test(url.pathname) &&
+      url.hostname.replace(/^www\./, '') !== 'myorthodontistnc.com'
+    ) {
       continue;
     }
-    const base = safeFileName(url.pathname.split('/').pop() || `image-${index}`) || `image-${index}`;
-    const destNoExt = join(IMAGES_DIR, slug, `${String(index).padStart(2, '0')}-${base.replace(/\.[a-z0-9]+$/i, '')}`);
+    const base =
+      safeFileName(url.pathname.split('/').pop() || `image-${index}`) || `image-${index}`;
+    const destNoExt = join(
+      IMAGES_DIR,
+      slug,
+      `${String(index).padStart(2, '0')}-${base.replace(/\.[a-z0-9]+$/i, '')}`,
+    );
     try {
       if (DRY_RUN) {
         const ext = extname(url.pathname) || '.jpg';
@@ -628,10 +644,7 @@ async function main() {
     const dest = join(POSTS_DIR, `${slug}.mdx`);
     const title = decodeEntities(post.title.rendered);
 
-    if (
-      !FORCE &&
-      ((await exists(dest)) || (await exists(join(POSTS_DIR, `${slug}.mdx`))))
-    ) {
+    if (!FORCE && ((await exists(dest)) || (await exists(join(POSTS_DIR, `${slug}.mdx`))))) {
       review.skippedExisting.push(slug);
       process.stdout.write(`  skip ${slug}\n`);
       continue;

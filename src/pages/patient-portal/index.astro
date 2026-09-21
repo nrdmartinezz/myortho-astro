@@ -5,7 +5,7 @@ import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
 ---
 
 <SubpageLayout
-  title="Patient Forms &amp; Portal"
+  title="Patient Forms & Portal"
   description="Complete your new-patient paperwork online and access your account before you arrive."
   eyebrow="New Patients"
   breadcrumbs={[
@@ -28,26 +28,35 @@ import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
     </p>
   </Prose>
 
-  <ServicesGrid bare background="base" columns={2} eyebrow="Get Started" title="What you can do online" titleLevel={2} items={[
-    {
-      icon: 'lucide:file-text',
-      title: 'New-patient forms',
-      body: 'Fill out your registration, health history, and consent forms digitally before your first appointment — available in English and Spanish.',
-    },
-    {
-      icon: 'lucide:laptop',
-      title: 'Patient portal access',
-      body: 'Sign in to review your account, appointments, and treatment details, and stay connected with your care team between visits.',
-    },
-  ]} />
+  <ServicesGrid
+    bare
+    background="base"
+    columns={2}
+    eyebrow="Get Started"
+    title="What you can do online"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:file-text',
+        title: 'New-patient forms',
+        body: 'Fill out your registration, health history, and consent forms digitally before your first appointment — available in English and Spanish.',
+      },
+      {
+        icon: 'lucide:laptop',
+        title: 'Patient portal access',
+        body: 'Sign in to review your account, appointments, and treatment details, and stay connected with your care team between visits.',
+      },
+    ]}
+  />
 
   <Prose>
     <h2>New to MyOrthodontist?</h2>
     <p>
-      If you&rsquo;re preparing for your first appointment, our <a href="/patient/">new patient
-      information</a> page covers what to bring and how to get ready. To learn about coverage and
-      payment plans, see our <a href="/insurance/">insurance &amp; financing</a> page, and find a
-      convenient office on our <a href="/locations/">locations</a> page.
+      If you&rsquo;re preparing for your first appointment, our <a href="/patient/"
+        >new patient information</a
+      > page covers what to bring and how to get ready. To learn about coverage and payment plans, see
+      our <a href="/insurance/">insurance &amp; financing</a> page, and find a convenient office on our
+      <a href="/locations/">locations</a> page.
     </p>
   </Prose>
 </SubpageLayout>

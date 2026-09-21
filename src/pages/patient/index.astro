@@ -24,8 +24,8 @@ import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
       orthodontics, we want every visit to be stress-free.
     </p>
     <p>
-      We&rsquo;re glad you&rsquo;re considering us. If you can&rsquo;t find what you&rsquo;re looking
-      for here, don&rsquo;t hesitate to reach out to an office near you.
+      We&rsquo;re glad you&rsquo;re considering us. If you can&rsquo;t find what you&rsquo;re
+      looking for here, don&rsquo;t hesitate to reach out to an office near you.
     </p>
   </Prose>
 
@@ -44,40 +44,48 @@ import FeatureSplit from '../../components/blocks/FeatureSplit.astro';
     ]}
   />
 
-  <ServicesGrid bare background="base" columns={3} eyebrow="Before You Arrive" title="A few things to know" titleLevel={2} items={[
-    {
-      icon: 'lucide:file-text',
-      title: 'Complete your forms',
-      body: 'We collect some information in advance so your visit runs smoothly. Fill out your new-patient forms online before you arrive.',
-      href: '/patient-portal/',
-      ctaLabel: 'Go to patient forms',
-    },
-    {
-      icon: 'lucide:clock',
-      title: 'Arrive a little early',
-      body: 'Getting here a few minutes early gives you time to settle in, wrap up any paperwork, and start your appointment relaxed.',
-    },
-    {
-      icon: 'lucide:credit-card',
-      title: 'Insurance & financing',
-      body: 'We honor many insurance plans and offer flexible financing. During your first visit we review the options that best fit your budget.',
-      href: '/insurance/',
-      ctaLabel: 'View insurance & financing',
-    },
-  ]} />
+  <ServicesGrid
+    bare
+    background="base"
+    columns={3}
+    eyebrow="Before You Arrive"
+    title="A few things to know"
+    titleLevel={2}
+    items={[
+      {
+        icon: 'lucide:file-text',
+        title: 'Complete your forms',
+        body: 'We collect some information in advance so your visit runs smoothly. Fill out your new-patient forms online before you arrive.',
+        href: '/patient-portal/',
+        ctaLabel: 'Go to patient forms',
+      },
+      {
+        icon: 'lucide:clock',
+        title: 'Arrive a little early',
+        body: 'Getting here a few minutes early gives you time to settle in, wrap up any paperwork, and start your appointment relaxed.',
+      },
+      {
+        icon: 'lucide:credit-card',
+        title: 'Insurance & financing',
+        body: 'We honor many insurance plans and offer flexible financing. During your first visit we review the options that best fit your budget.',
+        href: '/insurance/',
+        ctaLabel: 'View insurance & financing',
+      },
+    ]}
+  />
 
   <Prose>
     <h2>What to expect from our team</h2>
     <p>
       From your very first call, we do everything possible to support your orthodontic treatment —
-      accommodating your schedule, answering your questions, working with your insurance company, and
-      caring for your whole family. Expect a higher level of service and attention every step of the
-      way.
+      accommodating your schedule, answering your questions, working with your insurance company,
+      and caring for your whole family. Expect a higher level of service and attention every step of
+      the way.
     </p>
     <p>
       Still have questions? Our <a href="/faqs/">FAQs</a> page covers many of the things new patients
-      ask, and you can always contact us directly for anything else. To find a convenient office,
-      visit our <a href="/locations/">locations</a> page.
+      ask, and you can always contact us directly for anything else. To find a convenient office, visit
+      our <a href="/locations/">locations</a> page.
     </p>
   </Prose>
 </SubpageLayout>
