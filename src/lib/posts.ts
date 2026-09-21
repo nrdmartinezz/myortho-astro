@@ -2,12 +2,31 @@
  * Shared query helpers for the Tooth Wisdom blog.
  * Blocks stay props-only, so pages query here and pass results down.
  */
+import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { PostItem } from '../components/blocks/PostGrid.astro';
+import defaultKids from '../images/consultation-cta.jpg';
+import defaultInvisalign from '../images/invisalign/young-woman-aligners.jpg';
+import defaultBraces from '../images/services/metal-ceramic-braces.jpg';
+import defaultAdult from '../images/invisalign/adult-aligners.jpg';
+import defaultOral from '../images/invisalign/dream-smile.jpg';
 
 export type Entry = CollectionEntry<'posts'>;
 
 const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
+
+const DEFAULT_IMAGES: Record<string, ImageMetadata> = {
+  'Kids & Family': defaultKids,
+  Invisalign: defaultInvisalign,
+  Braces: defaultBraces,
+  'Adult Care': defaultAdult,
+  'Oral Health': defaultOral,
+};
+
+/** Category photo when a post has no hero — keeps listing cards the same height. */
+export function imageFor(entry: Entry): ImageMetadata {
+  return entry.data.heroImage ?? DEFAULT_IMAGES[entry.data.category ?? ''] ?? defaultOral;
+}
 
 export function hrefFor(entry: Entry): string {
   return `/blog/${entry.id}/`;
@@ -30,8 +49,8 @@ export function toPostItem(entry: Entry): PostItem {
     date: dateFormat.format(entry.data.publishDate),
     dateTime: entry.data.publishDate.toISOString().slice(0, 10),
     tag: entry.data.category,
-    image: entry.data.heroImage,
-    imageAlt: entry.data.heroImageAlt,
+    image: imageFor(entry),
+    imageAlt: entry.data.heroImageAlt || entry.data.title,
   };
 }
 
