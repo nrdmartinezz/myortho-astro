@@ -1,8 +1,13 @@
+import { readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
+
+const blogRedirects = JSON.parse(
+  readFileSync(new URL('./src/data/wp-blog-redirects.json', import.meta.url), 'utf8'),
+);
 
 const EXCLUDED_FROM_SITEMAP = ['/thank-you/', '/styleguide/', '/request-consult/'];
 const PRODUCTION_ORIGIN = 'https://myorthodontistnc.com';
@@ -23,12 +28,7 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory' },
   redirects: {
-    '/uncategorized/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/':
-      '/blog/your-childs-dental-health-journey-a-step-by-step-guide-from-myorthodontist-in-fayetteville-nc/',
-    '/uncategorized/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/':
-      '/blog/dental-sealants-a-simple-step-to-shield-your-childs-smile-from-cavities/',
-    '/uncategorized/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/':
-      '/blog/more-than-just-sugar-how-hidden-acids-in-your-childs-diet-threaten-their-enamel/',
+    ...blogRedirects,
     '/request-consult/': 'https://forms.formlync.com/myorthodontist/register',
   },
   integrations: [

@@ -23,7 +23,8 @@
     "php:install": "node scripts/php-install.mjs",
     "php:serve": "node scripts/php-serve.mjs",
     "php:dev": "npm run build && npm run php:install && npm run php:serve",
-    "new:entry": "node scripts/new-entry.mjs"
+    "new:entry": "node scripts/new-entry.mjs",
+    "import:wp-posts": "node scripts/import-wp-posts.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.0",
@@ -45,6 +46,8 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "start-server-and-test": "^2.1.2",
     "style-dictionary": "^5.4.4",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^5.9.3"
   },
   "overrides": {
