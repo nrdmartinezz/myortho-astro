@@ -12,7 +12,8 @@ import MapEmbed from '../../components/blocks/MapEmbed.astro';
 import LocationHero, { type LocationDoctor } from '../../components/blocks/LocationHero.astro';
 import SpecialOffer from '../../components/blocks/SpecialOffer.astro';
 import CTABanner from '../../components/blocks/CTABanner.astro';
-import { getPublished, related, type Entry } from '../../lib/locations';
+import NearbyLocations from '../../components/blocks/NearbyLocations.astro';
+import { getPublished, type Entry } from '../../lib/locations';
 import { atLocation, getPublished as getDoctors } from '../../lib/doctors';
 import { getCurrent } from '../../lib/specials';
 import { bookHref, virtualHref } from '../../config/site';
@@ -47,7 +48,6 @@ interface Props {
 
 const { entry, all, doctors } = Astro.props as unknown as Props;
 const { Content } = await render(entry);
-const nearby = related(all, entry);
 const special = await getCurrent();
 const { Content: SpecialContent } = special ? await render(special) : { Content: undefined };
 const address = `${entry.data.addressLine}, ${entry.data.cityStateZip}`;
@@ -223,33 +223,7 @@ const pageActions = [
     )
   }
 
-  {
-    nearby.length > 0 && (
-      <Section background="muted" spacing="md">
-        <Container gap="lg">
-          <Heading level={2}>Nearby locations</Heading>
-          <ul class="grid w-full gap-6 sm:grid-cols-3">
-            {nearby.map((item) => (
-              <Card as="li" variant="outlined">
-                <Heading level={3} size="sm">
-                  <a
-                    href={`/locations/${item.data.slug ?? item.id}/`}
-                    class="text-ink-base no-underline hover:underline"
-                    data-slot="cta"
-                  >
-                    <Icon name="lucide:map-pin" class="size-4" />
-
-                    {item.data.name}
-                  </a>
-                </Heading>
-                <p class="text-ink-muted text-sm">{item.data.cityStateZip}</p>
-              </Card>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-    )
-  }
+  <NearbyLocations current={entry} all={all} />
 
   <CTABanner
     background="inverse"

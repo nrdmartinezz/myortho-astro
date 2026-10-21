@@ -6,7 +6,7 @@
 import type { HTMLAttributes } from 'astro/types';
 
 export type SectionBackground =
-  'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient' | 'accent';
+  'base' | 'muted' | 'alt' | 'inverse' | 'brand' | 'gradient' | 'accent' | 'hero';
 export type SectionSpacing = 'none' | 'sm' | 'md' | 'lg';
 
 interface Props extends Omit<HTMLAttributes<'section'>, 'class'> {
@@ -36,6 +36,7 @@ const backgrounds: Record<SectionBackground, string> = {
   accent: 'bg-accent-500 text-ink-inverse',
   gradient:
     'text-ink-inverse bg-[linear-gradient(90deg,var(--color-accent-500)_0%,var(--color-brand-600)_100%)]',
+  hero: 'text-ink-inverse bg-[linear-gradient(90deg,var(--color-accent-500)_0%,var(--color-brand-600)_72.115%)]',
 };
 
 // Symmetric padding: a coloured band needs air on both sides. The seam between

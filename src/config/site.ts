@@ -122,6 +122,8 @@ export const site: SiteConfig = {
     facebook: 'https://facebook.com/example',
     instagram: 'https://instagram.com/example',
     linkedin: 'https://linkedin.com/company/example',
+    youtube: 'https://www.youtube.com/@myorthodontistnc',
+    tiktok: 'https://www.tiktok.com/@myorthodontistnc',
   },
 
   defaultOgImage: '/og-default.png',

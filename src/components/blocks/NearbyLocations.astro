@@ -1,0 +1,153 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import { distanceMiles, formatMiles } from '../../lib/geo';
+import { related, type Entry } from '../../lib/locations';
+
+interface Props {
+  current: Entry;
+  all: Entry[];
+}
+
+const { current, all } = Astro.props;
+const origin = current.data.coordinates;
+const offices = related(all, current).map((item) => {
+  const coordinates = item.data.coordinates;
+  const miles = origin && coordinates ? formatMiles(distanceMiles(origin, coordinates)) : undefined;
+  return { item, coordinates, miles };
+});
+const city = current.data.name;
+---
+
+{
+  offices.length > 0 && (
+    <Section background="muted" spacing="md" data-nearby data-city={city}>
+      <Container gap="lg">
+        <div class="flex w-full flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div class="flex flex-col gap-2">
+            <Heading level={2}>Nearby locations</Heading>
+            <p class="text-ink-muted text-sm" data-nearby-note aria-live="polite">
+              Closest offices to {city}.
+            </p>
+          </div>
+          <Button type="button" variant="outline" size="sm" data-nearby-locate>
+            Use my location
+          </Button>
+        </div>
+        <ul class="grid w-full gap-6 sm:grid-cols-3" data-nearby-list>
+          {offices.map(({ item, coordinates, miles }, index) => (
+            <Card
+              as="li"
+              variant="outlined"
+              data-office
+              data-id={item.id}
+              data-name={item.data.name}
+              data-lat={coordinates?.lat}
+              data-lng={coordinates?.lng}
+              hidden={index >= 3}
+            >
+              <Heading level={3} size="sm">
+                <a
+                  href={`/locations/${item.data.slug ?? item.id}/`}
+                  class="text-ink-base no-underline hover:underline"
+                  data-slot="cta"
+                >
+                  <Icon name="lucide:map-pin" class="size-4" />
+                  {item.data.name}
+                </a>
+              </Heading>
+              <p class="text-ink-muted text-sm">{item.data.cityStateZip}</p>
+              {miles && (
+                <p class="text-ink-muted text-sm" data-distance>
+                  {miles}
+                </p>
+              )}
+            </Card>
+          ))}
+        </ul>
+      </Container>
+    </Section>
+  )
+}
+
+<script>
+  import { distanceMiles, formatMiles, nearest, type Place } from '../../lib/geo';
+
+  type OfficeCard = Place & { card: HTMLElement };
+
+  function showClosest(section: HTMLElement, origin: { lat: number; lng: number }, note: string) {
+    const list = section.querySelector<HTMLElement>('[data-nearby-list]');
+    const noteNode = section.querySelector<HTMLElement>('[data-nearby-note]');
+    if (!list) return;
+
+    const cards = [...list.querySelectorAll<HTMLElement>('[data-office]')].map((card) => ({
+      id: card.dataset.id ?? '',
+      name: card.dataset.name ?? '',
+      lat: Number(card.dataset.lat),
+      lng: Number(card.dataset.lng),
+      card,
+    }));
+    const ranked = nearest(origin, cards);
+    const rankedIds = new Set(ranked.map((place) => place.id));
+
+    const placeCard = (place: OfficeCard, index: number) => {
+      list.append(place.card);
+      place.card.hidden = index >= 3;
+      const distance = place.card.querySelector('[data-distance]');
+      if (distance) distance.textContent = formatMiles(distanceMiles(origin, place));
+    };
+
+    ranked.forEach((place, index) => placeCard(place, index));
+    for (const place of cards) {
+      if (!rankedIds.has(place.id)) placeCard(place, 3);
+    }
+    if (noteNode) noteNode.textContent = note;
+  }
+
+  function locate(section: HTMLElement, button: HTMLButtonElement) {
+    const city = section.dataset.city ?? 'this office';
+    const unavailable = `Location unavailable. Showing the closest offices to ${city}.`;
+    if (!navigator.geolocation) {
+      const noteNode = section.querySelector('[data-nearby-note]');
+      if (noteNode) noteNode.textContent = unavailable;
+      button.hidden = true;
+      return;
+    }
+
+    button.disabled = true;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        showClosest(
+          section,
+          { lat: position.coords.latitude, lng: position.coords.longitude },
+          'Closest offices to you.',
+        );
+        button.hidden = true;
+      },
+      () => {
+        const noteNode = section.querySelector('[data-nearby-note]');
+        if (noteNode) noteNode.textContent = unavailable;
+        button.hidden = true;
+      },
+      { enableHighAccuracy: false, maximumAge: 60_000, timeout: 10_000 },
+    );
+  }
+
+  for (const section of document.querySelectorAll<HTMLElement>('[data-nearby]')) {
+    const button = section.querySelector<HTMLButtonElement>('[data-nearby-locate]');
+    if (!button) continue;
+    button.addEventListener('click', () => locate(section, button));
+
+    navigator.permissions
+      ?.query({ name: 'geolocation' })
+      .then((status) => {
+        if (status.state === 'granted') locate(section, button);
+        if (status.state === 'denied') button.hidden = true;
+      })
+      .catch(() => {});
+  }
+</script>

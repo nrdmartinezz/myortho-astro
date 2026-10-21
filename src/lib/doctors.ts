@@ -3,13 +3,32 @@ import type { Entry as LocationEntry } from './locations';
 
 export type Entry = CollectionEntry<'doctors'>;
 
+/** Final word of the display name, after a leading "Dr." */
+function lastName(name: string): string {
+  const withoutTitle = name.replace(/^(dr|drs)\.?\s+/i, '').trim();
+  return withoutTitle.split(/\s+/).at(-1) ?? name;
+}
+
+/** Owner first, staff by last name, locum tenens last. */
+function sortRank(entry: Entry): number {
+  if (entry.data.role === 'President/Founder') return 0;
+  if (/locum tenens/i.test(entry.data.role ?? '')) return 2;
+  return 1;
+}
+
 /** Drafts render in `dev` and disappear from production builds. */
 export async function getPublished(): Promise<Entry[]> {
   const entries = await getCollection('doctors', ({ data }) => {
     return import.meta.env.DEV || data.draft !== true;
   });
 
-  return entries.sort((a, b) => a.data.name.localeCompare(b.data.name));
+  return entries.sort((a, b) => {
+    const rank = sortRank(a) - sortRank(b);
+    if (rank !== 0) return rank;
+    return lastName(a.data.name).localeCompare(lastName(b.data.name), 'en', {
+      sensitivity: 'base',
+    });
+  });
 }
 
 /** Doctors declare the offices they visit by location display name, not slug. */

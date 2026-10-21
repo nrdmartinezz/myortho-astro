@@ -4,35 +4,40 @@ import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
 import ActionButton from './ActionButton.astro';
 import type { BlockAction } from './types';
-import type { SectionBackground, SectionSpacing } from '../ui/Section.astro';
+import type { SectionSpacing } from '../ui/Section.astro';
 
 interface Props {
   eyebrow?: string;
   title: string;
   body?: string;
   actions?: BlockAction[];
-  background?: SectionBackground;
   spacing?: SectionSpacing;
 }
 
-const { eyebrow, title, body, actions = [], background = 'muted', spacing = 'md' } = Astro.props;
+const { eyebrow, title, body, actions = [], spacing = 'md' } = Astro.props;
 ---
 
-<Section background={background} spacing={spacing}>
+<Section background="hero" spacing={spacing}>
   <Container gap="sm">
     {
       eyebrow && (
-        <p class="block-eyebrow tracking-eyebrow text-xs font-semibold uppercase">{eyebrow}</p>
+        <p class="block-eyebrow tracking-eyebrow text-xs leading-4 font-semibold uppercase">
+          {eyebrow}
+        </p>
       )
     }
-    <Heading level={1}>{title}</Heading>
-    {body && <p class="text-ink-muted max-w-reading text-lg">{body}</p>}
+    <Heading level={1} class="leading-none">{title}</Heading>
+    {body && <p class="max-w-[826px] text-lg leading-7 text-white">{body}</p>}
     {
       actions.length > 0 && (
         <div class="flex flex-wrap gap-3 max-md:w-full max-md:flex-col max-md:[&_a]:w-full">
-          {actions.map((action) => (
-            <ActionButton action={action} size="md" />
-          ))}
+          {actions.map((action) => {
+            // `outline` is navy-on-light. On this band it disappears — use the
+            // white outline (`secondary`) instead.
+            const variant = action.variant === 'outline' ? 'secondary' : action.variant;
+
+            return <ActionButton action={{ ...action, variant }} size="md" defaultVariant="navy" />;
+          })}
         </div>
       )
     }
