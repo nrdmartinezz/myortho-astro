@@ -24,11 +24,12 @@ ErrorDocument 404 /404.html
   # Virtual consult now lives on Formlync.
   RewriteRule ^request-consult/?$ https://forms.formlync.com/myorthodontist/register [R=301,L]
 
-  # Add the trailing slash in one hop so mod_dir doesn't chain a second redirect.
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !(.+)/$
-  RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,5}$
-  RewriteRule ^(.*)$ /$1/ [R=301,L]
+  # Add a trailing slash to extensionless, non-root paths only.  
+  RewriteCond %{REQUEST_URI} !^/$  
+  RewriteCond %{REQUEST_FILENAME} !-f  
+  RewriteCond %{REQUEST_URI} !/$  
+  RewriteCond %{REQUEST_URI} !\.[A-Za-z0-9]{2,5}$  
+  RewriteRule ^(.+)$ /$1/ [R=301,L]
 </IfModule>
 
 <IfModule mod_deflate.c>
