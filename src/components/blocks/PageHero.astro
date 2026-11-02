@@ -26,7 +26,7 @@ const { eyebrow, title, body, actions = [], spacing = 'md' } = Astro.props;
         </p>
       )
     }
-    <Heading level={1} class="leading-none">{title}</Heading>
+    <Heading level={1} class="text-ink-inverse leading-none">{title}</Heading>
     {body && <p class="max-w-[826px] text-lg leading-7 text-white">{body}</p>}
     {
       actions.length > 0 && (

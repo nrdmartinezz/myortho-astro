@@ -40,7 +40,7 @@ const colleagues = related(all, entry);
     { name: entry.data.name, href: `/doctors/${entry.id}/` },
   ]}
 >
-  <Section background="muted" spacing="md">
+  <Section background="hero" spacing="md">
     <Container width="narrow" layout={entry.data.photo ? 'row' : 'stack'} gap="lg">
       {
         entry.data.photo && (
@@ -52,15 +52,15 @@ const colleagues = related(all, entry);
         )
       }
       <div class="flex flex-col gap-2">
-        <Heading level={1}>{entry.data.name}</Heading>
+        <Heading level={1} class="text-ink-inverse">{entry.data.name}</Heading>
         {
           (entry.data.credentials || entry.data.role) && (
-            <p class="text-ink-muted text-sm">
+            <p class="text-sm text-white/80">
               {[entry.data.credentials, entry.data.role].filter(Boolean).join(' · ')}
             </p>
           )
         }
-        {entry.data.shortBio && <p class="text-ink-muted text-lg">{entry.data.shortBio}</p>}
+        {entry.data.shortBio && <p class="text-lg text-white/80">{entry.data.shortBio}</p>}
 
         {
           entry.data.specialties && entry.data.specialties.length > 0 && (
@@ -77,7 +77,7 @@ const colleagues = related(all, entry);
         {
           locations.length > 0 && (
             <div class="flex flex-col gap-2">
-              <p class="text-ink-muted text-xs font-semibold tracking-wide uppercase">
+              <p class="text-xs font-semibold tracking-wide text-white/80 uppercase">
                 Office locations
               </p>
               <ul class="flex flex-col gap-2">
@@ -85,11 +85,11 @@ const colleagues = related(all, entry);
                   <li>
                     <a
                       href={`/locations/${location.id}/`}
-                      class="text-ink-brand font-medium no-underline hover:underline"
+                      class="font-medium text-white no-underline hover:underline"
                     >
                       {location.data.name}
                     </a>
-                    <span class="text-ink-muted text-sm"> · {location.data.cityStateZip}</span>
+                    <span class="text-sm text-white/80"> · {location.data.cityStateZip}</span>
                   </li>
                 ))}
               </ul>

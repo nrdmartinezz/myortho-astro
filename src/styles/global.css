@@ -165,7 +165,8 @@
   [data-bg='brand'] .text-ink-muted,
   [data-bg='accent'] .text-ink-muted,
   [data-bg='inverse'] .text-ink-muted,
-  [data-bg='gradient'] .text-ink-muted {
+  [data-bg='gradient'] .text-ink-muted,
+  [data-bg='hero'] .text-ink-muted {
     color: rgb(255 255 255 / 0.85);
   }
 

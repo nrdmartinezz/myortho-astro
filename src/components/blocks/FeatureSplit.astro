@@ -15,6 +15,8 @@ interface Props extends BlockProps {
   actions?: BlockAction[];
   /** Media (image or `media` slot) sits on the right on desktop by default; small screens always stack media-first. */
   reverse?: boolean;
+  /** Draw an empty media well. Off by default so a text-only split does not leave a gray box. */
+  placeholder?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   actions = [],
   reverse = false,
   bare = false,
+  placeholder = false,
 } = Astro.props;
 
 const onDark =
@@ -40,6 +43,7 @@ const onDark =
   background === 'accent';
 
 const hasMediaSlot = Astro.slots.has('media');
+const showMedia = hasMediaSlot || Boolean(image) || placeholder;
 
 const BULLETS_PER_COLUMN = 5;
 const COLUMNS_PER_ROW = 3;
@@ -62,32 +66,38 @@ const bulletRows = chunk(chunk(bullets, BULLETS_PER_COLUMN), COLUMNS_PER_ROW);
     gap="lg"
     class:list={[bare && 'mx-0! max-w-none! px-0!']}
   >
-    <div
-      class:list={['w-full', !bare && 'md:w-1/2', !bare && (reverse ? 'md:order-2' : 'md:order-1')]}
-    >
-      {
-        hasMediaSlot ? (
-          <slot name="media" />
-        ) : image ? (
-          <Image
-            src={image}
-            alt={imageAlt}
-            widths={[480, 768, 1024]}
-            sizes={bare ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, 50vw'}
-            loading="lazy"
-            class="w-full rounded-lg object-cover"
-          />
-        ) : (
-          <div class="bg-surface-muted aspect-4/3 w-full rounded-lg" aria-hidden="true" />
-        )
-      }
-    </div>
+    {
+      showMedia && (
+        <div
+          class:list={[
+            'w-full',
+            !bare && 'md:w-1/2',
+            !bare && (reverse ? 'md:order-2' : 'md:order-1'),
+          ]}
+        >
+          {hasMediaSlot ? (
+            <slot name="media" />
+          ) : image ? (
+            <Image
+              src={image}
+              alt={imageAlt}
+              widths={[480, 768, 1024]}
+              sizes={bare ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, 50vw'}
+              loading="lazy"
+              class="w-full rounded-lg object-cover"
+            />
+          ) : (
+            <div class="bg-surface-muted aspect-4/3 w-full rounded-lg" aria-hidden="true" />
+          )}
+        </div>
+      )
+    }
 
     <div
       class:list={[
         'flex w-full flex-col items-start gap-5',
-        !bare && 'md:w-1/2',
-        !bare && (reverse ? 'md:order-1' : 'md:order-2'),
+        !bare && showMedia && 'md:w-1/2',
+        !bare && showMedia && (reverse ? 'md:order-1' : 'md:order-2'),
       ]}
     >
       {

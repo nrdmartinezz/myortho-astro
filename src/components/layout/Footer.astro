@@ -7,6 +7,7 @@ import { getPublished } from '../../lib/locations';
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import logo from '../../images/White MyOrtho Logo-Trans (2).png';
+import diversityBadge from '../../images/awards/leaders-in-diversity-2024.png';
 
 const socialIcons: Record<string, string> = {
   facebook: 'lucide:facebook',
@@ -170,14 +171,14 @@ const about =
           </div>
         </nav>
 
-        <div class="bg-brand-800/50 rounded-lg border border-white/15 p-4">
-          <p
-            class="bg-accent-500 text-brand-800 inline-flex rounded-full px-2.5 py-0.5 text-[0.65rem] font-semibold tracking-wide uppercase"
-          >
-            Award
-          </p>
-          <p class="text-ink-inverse mt-2 font-semibold">Triangle Business Journal</p>
-          <p class="text-sm text-neutral-400">Leaders in Diversity — 2024</p>
+        <div class="bg-brand-800/50 w-fit rounded-lg border border-white/15 p-4">
+          <Image
+            src={diversityBadge}
+            alt="Triangle Business Journal Leaders in Diversity award, 2024, MyOrthodontist"
+            widths={[160, 240, 320]}
+            sizes="160px"
+            class="h-auto w-40"
+          />
         </div>
       </div>
     </div>

@@ -55,17 +55,17 @@ const suggestions = related(all, entry);
     { name: entry.data.title, href: hrefFor(entry) },
   ]}
 >
-  <Section background="muted" spacing="md">
+  <Section background="hero" spacing="md">
     <Container gap="sm">
-      <p class="text-ink-muted text-sm">
+      <p class="text-sm text-white/80">
         <time datetime={entry.data.publishDate.toISOString()}>
           {dateFormat.format(entry.data.publishDate)}
         </time>
         <span> · {readingTime(entry.body)}</span>
         {entry.data.author && <span> · {entry.data.author}</span>}
       </p>
-      <Heading level={1}>{entry.data.title}</Heading>
-      <p class="text-ink-muted max-w-reading text-lg">{entry.data.description}</p>
+      <Heading level={1} class="text-ink-inverse">{entry.data.title}</Heading>
+      <p class="max-w-reading text-lg text-white/80">{entry.data.description}</p>
     </Container>
   </Section>
 
