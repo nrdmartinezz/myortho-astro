@@ -45,7 +45,7 @@ interface Props {
 const { entry, all, locations, allLocations } = Astro.props;
 const copy = profileCopy(entry.body);
 const Content = copy.structured ? undefined : (await render(entry)).Content;
-const colleagues = related(all, entry);
+const colleagues = related(all, entry, all.length);
 const crumbs = [
   { name: 'Home', href: '/' },
   { name: 'Doctors', href: '/doctors/' },
@@ -259,11 +259,17 @@ const telHref = (value: string) => {
           <Heading level={2} size="lg">
             More of our doctors…
           </Heading>
-          <ul class="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul class="doctor-scroll flex w-full min-w-0 snap-x snap-mandatory gap-6 overflow-x-auto pb-2">
             {colleagues.map((item) => {
               const city = officeCity(item);
               return (
-                <Card as="li" variant="outlined" padded={false} hover={false} class="w-full">
+                <Card
+                  as="li"
+                  variant="outlined"
+                  padded={false}
+                  hover={false}
+                  class="w-[min(85vw,20rem)] shrink-0 snap-start"
+                >
                   <div class="flex h-full w-full flex-1 items-stretch">
                     <div class="relative w-2/5 shrink-0 self-stretch">
                       {item.data.photo ? (
@@ -312,3 +318,28 @@ const telHref = (value: string) => {
     )
   }
 </BaseLayout>
+
+<style>
+  .doctor-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent-500) var(--color-brand-100);
+  }
+
+  .doctor-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .doctor-scroll::-webkit-scrollbar-track {
+    background: var(--color-brand-100);
+    border-radius: var(--radius-full);
+  }
+
+  .doctor-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-accent-500);
+    border-radius: var(--radius-full);
+  }
+
+  .doctor-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-600);
+  }
+</style>
