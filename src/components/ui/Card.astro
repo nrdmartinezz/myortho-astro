@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-export type CardVariant = 'plain' | 'outlined' | 'elevated' | 'inverse';
+export type CardVariant = 'plain' | 'outlined' | 'elevated' | 'inverse' | 'navy';
 
 interface Props extends Omit<HTMLAttributes<'div'>, 'class'> {
   as?: 'div' | 'article' | 'li';
@@ -26,6 +26,7 @@ const variants: Record<CardVariant, string> = {
   outlined: 'border-line-base bg-surface-base border',
   elevated: 'bg-surface-base shadow-md',
   inverse: 'card-inverse border',
+  navy: 'card-inverse card-navy border',
 };
 ---
 
@@ -62,7 +63,7 @@ const variants: Record<CardVariant, string> = {
     border-radius: inherit;
   }
 
-  .card-face :global(img:first-child) {
+  .card-face > :global(img:first-child) {
     display: block;
     width: 100%;
     object-fit: cover;
@@ -70,7 +71,7 @@ const variants: Record<CardVariant, string> = {
     border-top-right-radius: inherit;
   }
 
-  .card-padded :global(img:first-child) {
+  .card-padded > :global(img:first-child) {
     width: calc(100% + 3rem);
     max-width: none;
     margin-block-start: -1.5rem;
@@ -129,5 +130,18 @@ const variants: Record<CardVariant, string> = {
 
   .card-inverse :global(p) {
     color: rgb(255 255 255 / 0.72);
+  }
+
+  /* Solid navy panel for light pages. Inverse stays frosted for dark bands. */
+  .card-navy,
+  .card-navy .card-face {
+    background-color: var(--color-surface-inverse);
+    border-color: var(--color-surface-inverse);
+  }
+
+  .card-navy :global([data-slot='icon']) {
+    color: var(--color-ink-inverse);
+    background-color: var(--color-accent-500);
+    border-color: var(--color-accent-500);
   }
 </style>

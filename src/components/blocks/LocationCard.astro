@@ -1,0 +1,141 @@
+---
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  name: string;
+  region: string;
+  addressLine: string;
+  cityStateZip: string;
+  phone: string;
+  fax?: string;
+  email: string;
+  href: string;
+}
+
+const { name, region, addressLine, cityStateZip, phone, fax, email, href } = Astro.props;
+
+/** Content stores display numbers like "(919) 782-9588"; `tel:` wants E.164. */
+const telHref = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  return `tel:+${digits.length === 10 ? `1${digits}` : digits}`;
+};
+
+const address = `${addressLine}, ${cityStateZip}`;
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+---
+
+<li
+  class="location-card flex h-full flex-col gap-6 rounded-lg border border-[#f3f4f6] bg-surface-base px-[21px] py-[25px] shadow-[0_1px_2px_rgba(12,12,13,0.05)]"
+>
+  <div class="flex items-center justify-between gap-3">
+    <span
+      class="bg-accent-500/10 text-brand-600 rounded-full px-2.5 py-1 text-xs leading-4 font-semibold"
+    >
+      {region}
+    </span>
+    <span
+      class="border-accent-500/30 bg-accent-500/15 flex shrink-0 items-center justify-center rounded-md border p-[11px]"
+    >
+      <Icon name="lucide:map-pin" class="text-accent-500 size-4 shrink-0" aria-hidden="true" />
+    </span>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-1.5">
+      <Heading level={2} balance={false} class="location-card-title text-brand-600">
+        {name}
+      </Heading>
+      <p class="text-accent-500/60 text-sm leading-5 font-bold tracking-[1.4px] uppercase">
+        North Carolina Office
+      </p>
+    </div>
+
+    <ul class="flex flex-col gap-4">
+      <li class="flex items-start gap-2.5">
+        <Icon
+          name="lucide:map-pin"
+          class="text-accent-500 mt-0.5 size-4 shrink-0"
+          aria-hidden="true"
+        />
+        <p class="text-ink-base text-sm leading-5">
+          {addressLine}<br />
+          {cityStateZip}
+        </p>
+      </li>
+      <li class="flex items-start gap-2.5">
+        <Icon name="lucide:phone" class="text-accent-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />
+        <a href={telHref(phone)} class="text-ink-base text-sm leading-5 underline">
+          {phone}
+        </a>
+      </li>
+      {
+        fax && (
+          <li class="flex items-start gap-2.5">
+            <Icon
+              name="lucide:printer"
+              class="text-accent-500 mt-0.5 size-4 shrink-0"
+              aria-hidden="true"
+            />
+            <p class="text-ink-base text-sm leading-5">{fax}</p>
+          </li>
+        )
+      }
+      <li class="flex min-w-0 items-start gap-2.5">
+        <Icon name="lucide:send" class="text-accent-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />
+        <a href={`mailto:${email}`} class="text-ink-base min-w-0 text-sm leading-5 break-words underline">
+          {email}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-[9px]">
+    <Button href={href} variant="navy" size="sm" class="location-card-primary">
+      View Office Page
+      <Icon name="lucide:send" class="size-4 shrink-0" aria-hidden="true" />
+    </Button>
+    <Button
+      href={directionsHref}
+      variant="outline"
+      size="sm"
+      class="location-card-directions"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Directions
+      <Icon name="lucide:map-pin" class="size-4 shrink-0" aria-hidden="true" />
+    </Button>
+  </div>
+</li>
+
+<style>
+  .location-card :global(.location-card-title) {
+    font-size: 36px;
+    line-height: 41.4px;
+    letter-spacing: -0.72px;
+  }
+
+  .location-card :global(a.location-card-primary),
+  .location-card :global(a.location-card-directions) {
+    gap: 8px;
+    min-height: 0;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 1.44px;
+  }
+
+  .location-card :global(a.location-card-primary) {
+    padding: 12px 16px;
+    background-image: none;
+    background-color: var(--color-brand-600);
+  }
+
+  .location-card :global(a.location-card-directions) {
+    padding: 12px 28px;
+    border-color: var(--color-brand-700);
+  }
+</style>

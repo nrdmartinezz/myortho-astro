@@ -16,6 +16,8 @@ interface Props extends BlockProps {
   query?: string;
   zoom?: number;
   height?: string;
+  /** Drop the map frame's border and radius so a parent card can clip it. */
+  flush?: boolean;
   /** Display phone for the Call link; defaults to the practice 800 number. */
   phone?: string;
 }
@@ -31,10 +33,14 @@ const {
   titleLevel = 2,
   query = formattedAddress,
   zoom = 15,
-  height = '420px',
+  height,
+  flush = false,
   bare = false,
   phone,
 } = Astro.props;
+
+/** Bare maps stay content-sized unless a caller asks for a fixed frame. */
+const frameHeight = height ?? (bare ? undefined : '420px');
 
 const embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
@@ -52,7 +58,11 @@ const callHref = phone ? telHref(phone) : `tel:${site.business.phoneHref}`;
   as={bare ? 'div' : 'section'}
   background={background}
   spacing={bare ? 'none' : spacing}
-  class={bare ? 'flex h-full min-h-80 flex-col' : undefined}
+  class={bare
+    ? frameHeight
+      ? 'flex w-full flex-col'
+      : 'flex h-full min-h-80 w-full flex-col'
+    : undefined}
 >
   <Container
     width={width}
@@ -64,10 +74,11 @@ const callHref = phone ? telHref(phone) : `tel:${site.business.phoneHref}`;
 
     <div
       class:list={[
-        'map-facade border-line-base bg-surface-muted relative w-full overflow-hidden rounded-lg border',
-        bare && 'min-h-80 flex-1',
+        'map-facade bg-surface-muted relative w-full overflow-hidden',
+        flush ? 'rounded-none border-0' : 'border-line-base rounded-lg border',
+        bare && !frameHeight && 'min-h-80 flex-1',
       ]}
-      style={bare ? undefined : `height:${height}`}
+      style={frameHeight ? `height:${frameHeight}` : undefined}
       data-src={embedSrc}
     >
       <div

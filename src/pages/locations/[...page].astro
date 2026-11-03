@@ -4,8 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/blocks/PageHero.astro';
 import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
-import Card from '../../components/ui/Card.astro';
-import Heading from '../../components/ui/Heading.astro';
+import LocationCard from '../../components/blocks/LocationCard.astro';
 import { bookHref, virtualHref, phoneAction } from '../../config/site';
 import { getPublished, type Entry } from '../../lib/locations';
 
@@ -52,19 +51,16 @@ const { page } = Astro.props;
       <ul class="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           page.data.map((entry) => (
-            <Card as="li" variant="outlined">
-              <p class="text-ink-muted text-sm">{entry.data.region}</p>
-              <Heading level={2} size="md">
-                <a
-                  href={`/locations/${entry.id}/`}
-                  class="text-ink-base no-underline hover:underline"
-                >
-                  {entry.data.name}
-                </a>
-              </Heading>
-              <p class="text-ink-muted">{entry.data.cityStateZip}</p>
-              <p class="text-ink-muted text-sm">{entry.data.hours}</p>
-            </Card>
+            <LocationCard
+              name={entry.data.name}
+              region={entry.data.region}
+              addressLine={entry.data.addressLine}
+              cityStateZip={entry.data.cityStateZip}
+              phone={entry.data.phone}
+              fax={entry.data.fax}
+              email={entry.data.email}
+              href={`/locations/${entry.id}/`}
+            />
           ))
         }
       </ul>
