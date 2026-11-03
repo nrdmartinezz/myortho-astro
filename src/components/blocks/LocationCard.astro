@@ -27,7 +27,7 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
 ---
 
 <li
-  class="location-card flex h-full flex-col gap-6 rounded-lg border border-[#f3f4f6] bg-surface-base px-[21px] py-[25px] shadow-[0_1px_2px_rgba(12,12,13,0.05)]"
+  class="location-card bg-surface-base flex h-full flex-col gap-6 rounded-lg border border-[#f3f4f6] px-[21px] py-[25px] shadow-[0_1px_2px_rgba(12,12,13,0.05)]"
 >
   <div class="flex items-center justify-between gap-3">
     <span
@@ -65,7 +65,11 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
         </p>
       </li>
       <li class="flex items-start gap-2.5">
-        <Icon name="lucide:phone" class="text-accent-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />
+        <Icon
+          name="lucide:phone"
+          class="text-accent-500 mt-0.5 size-4 shrink-0"
+          aria-hidden="true"
+        />
         <a href={telHref(phone)} class="text-ink-base text-sm leading-5 underline">
           {phone}
         </a>
@@ -83,8 +87,15 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
         )
       }
       <li class="flex min-w-0 items-start gap-2.5">
-        <Icon name="lucide:send" class="text-accent-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />
-        <a href={`mailto:${email}`} class="text-ink-base min-w-0 text-sm leading-5 break-words underline">
+        <Icon
+          name="lucide:send"
+          class="text-accent-500 mt-0.5 size-4 shrink-0"
+          aria-hidden="true"
+        />
+        <a
+          href={`mailto:${email}`}
+          class="text-ink-base min-w-0 text-sm leading-5 break-words underline"
+        >
           {email}
         </a>
       </li>

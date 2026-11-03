@@ -266,26 +266,24 @@ const telHref = (value: string) => {
                 <Card as="li" variant="outlined" padded={false} hover={false} class="w-full">
                   <div class="flex h-full w-full flex-1 items-stretch">
                     <div class="relative w-2/5 shrink-0 self-stretch">
-                      {
-                        item.data.photo ? (
-                          <img
-                            src={item.data.photo}
-                            alt=""
-                            loading="lazy"
-                            class="absolute inset-0 h-full w-full object-cover object-top"
+                      {item.data.photo ? (
+                        <img
+                          src={item.data.photo}
+                          alt=""
+                          loading="lazy"
+                          class="absolute inset-0 h-full w-full object-cover object-top"
+                        />
+                      ) : (
+                        <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-neutral-50 px-2 text-center">
+                          <Icon
+                            name="lucide:user"
+                            class="text-ink-muted size-8"
+                            aria-hidden="true"
                           />
-                        ) : (
-                          <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-neutral-50 px-2 text-center">
-                            <Icon
-                              name="lucide:user"
-                              class="text-ink-muted size-8"
-                              aria-hidden="true"
-                            />
-                            <p class="text-ink-muted text-xs font-medium">Doctor Photo</p>
-                          </div>
-                        )
-                      }
-                      <div class="aspect-4/5 w-full" aria-hidden="true"></div>
+                          <p class="text-ink-muted text-xs font-medium">Doctor Photo</p>
+                        </div>
+                      )}
+                      <div class="aspect-4/5 w-full" aria-hidden="true" />
                     </div>
                     <div class="flex min-w-0 flex-1 flex-col items-start justify-center gap-3 p-4">
                       <div class="flex flex-col gap-1">
