@@ -131,7 +131,7 @@ export const site: SiteConfig = {
   defaultOgImage: '/og-default.png',
 
   formEndpoint: '/api/submit.php',
-  recaptchaSiteKey: '',
+  recaptchaSiteKey: '6Ld4PR0uAAAAACq421UrkqOKsRJdAiDJFVUwTZKm',
 
   analytics: {
     ga4: '',

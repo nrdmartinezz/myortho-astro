@@ -1,23 +1,20 @@
 <?php
 /**
  * Copy to config.local.php for local testing, or to ~/private/site-mail.php
- * on the server (outside public_html). Rename the private file per client project
- * (e.g. peninsula-pavers-mail.php) and update the path in lib/mailer.php.
- * Never commit real credentials.
+ * on the server (outside the document root). The mailer reads that path from
+ * lib/mailer.php. Never commit real credentials.
  *
  * Mail transport: uses PHP mail() by default (like WordPress). Set smtp_host, smtp_user,
  * and smtp_pass to switch to authenticated SMTP — useful when mail() deliverability is poor.
  */
 return [
     'recaptcha_secret' => 'YOUR_RECAPTCHA_SECRET_KEY',
-    'notify_to' => 'leads@example.com',
-    // Or as an array:
-    // 'notify_to' => ['owner@example.com', 'sales@example.com'],
-    'from_email' => 'noreply@example.com',
-    'from_name' => 'Example Business',
-    'site_url' => 'https://example.com',
-    'site_phone' => '(555) 010-4477',
-    'site_phone_href' => '+15550104477',
+    'notify_to' => 'info@myorthodontistnc.com',
+    'from_email' => 'info@myorthodontistnc.com',
+    'from_name' => 'MyOrthodontist',
+    'site_url' => 'https://myorthodontistnc.com',
+    'site_phone' => '1-800-MY-ORTHO',
+    'site_phone_href' => '+18006967846',
     'timezone' => 'America/New_York',
 
     // Optional SMTP — leave blank to use PHP mail() on the host.
@@ -26,10 +23,6 @@ return [
     'smtp_user' => '',
     'smtp_pass' => '',
 
-    // Copy these keys into ~/private/site-mail.php for MyOrthodontist:
-    // notify_to info@myorthodontistnc.com, from_name MyOrthodontist,
-    // from_email on myorthodontistnc.com, site_phone 1-800-MY-ORTHO,
-    // site_phone_href +18006967846. Leave SMTP blank to use PHP mail().
     'forms' => [
         'contact' => [
             'subject' => 'New enquiry — MyOrthodontist',
