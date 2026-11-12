@@ -104,7 +104,7 @@ const args = new Set(process.argv.slice(2));
 const DRY_RUN = args.has('--dry-run');
 const FORCE = args.has('--force');
 const SKIP_IMAGES = args.has('--skip-images');
-const limitArg = process.argv.find((value, i, all) => all[i - 1] === '--limit');
+const limitArg = process.argv.find((_value, i, all) => all[i - 1] === '--limit');
 const LIMIT = limitArg ? Number(limitArg) : Infinity;
 
 const turndown = new TurndownService({

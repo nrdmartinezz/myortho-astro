@@ -5,7 +5,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
 import Heading from '../../components/ui/Heading.astro';
-import Prose from '../../components/ui/Prose.astro';
 import Card from '../../components/ui/Card.astro';
 import Button from '../../components/ui/Button.astro';
 import MapEmbed from '../../components/blocks/MapEmbed.astro';
@@ -47,7 +46,6 @@ interface Props {
 }
 
 const { entry, all, doctors } = Astro.props as unknown as Props;
-const { Content } = await render(entry);
 const special = await getCurrent();
 const { Content: SpecialContent } = special ? await render(special) : { Content: undefined };
 const address = `${entry.data.addressLine}, ${entry.data.cityStateZip}`;
@@ -199,14 +197,6 @@ const pageActions = [
       </Section>
     )
   }
-
-  <!-- <Section background="muted" spacing="md">
-    <Container width="narrow">
-      <Prose>
-        <Content />
-      </Prose>
-    </Container>
-  </Section> -->
 
   {
     special && SpecialContent && (
