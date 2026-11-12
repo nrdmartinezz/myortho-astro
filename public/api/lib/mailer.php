@@ -296,6 +296,7 @@ function sendMail(
     ?string $replyTo = null,
     ?string $replyToName = null,
     string|array|null $cc = null,
+    string|array|null $bcc = null,
 ): void {
     $mail = new PHPMailer(true);
     $recipients = parseEmailList($to);
@@ -303,6 +304,8 @@ function sendMail(
     if ($recipients === []) {
         throw new RuntimeException('No valid recipient addresses.');
     }
+
+    $alreadySent = $recipients;
 
     try {
         configureMailer($mail, $config);
@@ -314,8 +317,18 @@ function sendMail(
 
         if ($cc !== null) {
             foreach (parseEmailList($cc) as $address) {
-                if (!in_array($address, $recipients, true)) {
+                if (!in_array($address, $alreadySent, true)) {
                     $mail->addCC($address);
+                    $alreadySent[] = $address;
+                }
+            }
+        }
+
+        if ($bcc !== null) {
+            foreach (parseEmailList($bcc) as $address) {
+                if (!in_array($address, $alreadySent, true)) {
+                    $mail->addBCC($address);
+                    $alreadySent[] = $address;
                 }
             }
         }

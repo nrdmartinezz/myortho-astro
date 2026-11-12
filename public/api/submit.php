@@ -197,6 +197,7 @@ try {
         $replyTo,
         $replyToName,
         $recipients['cc'],
+        $config['bcc'] ?? null,
     );
 
     if ($formMail['send_autoreply']) {
