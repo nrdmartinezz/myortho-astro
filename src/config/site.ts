@@ -58,6 +58,7 @@ export interface SiteConfig {
     x?: string;
     youtube?: string;
     tiktok?: string;
+    pinterest?: string;
   };
 
   /** Absolute or site-relative path to the fallback Open Graph image. */
@@ -119,9 +120,10 @@ export const site: SiteConfig = {
   },
 
   social: {
-    facebook: 'https://facebook.com/example',
-    instagram: 'https://instagram.com/example',
-    linkedin: 'https://linkedin.com/company/example',
+    facebook: 'https://www.facebook.com/MyOrthodontistNC',
+    instagram: 'https://www.instagram.com/myorthodontistnc/',
+    linkedin: 'https://www.linkedin.com/company/the-happy-tooth---urban-oasis-dental-group',
+    pinterest: 'https://www.pinterest.com/thehappytooth/',
     youtube: 'https://www.youtube.com/@myorthodontistnc',
     tiktok: 'https://www.tiktok.com/@myorthodontistnc',
   },

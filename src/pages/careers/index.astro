@@ -2,6 +2,9 @@
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
 import Prose from '../../components/ui/Prose.astro';
 import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import Button from '../../components/ui/Button.astro';
+
+const jobsHref = 'https://jobs.saltdentalpartners.com/careersmarketplace';
 ---
 
 <SubpageLayout
@@ -65,17 +68,21 @@ import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
     ]}
   />
 
-  <Prose>
-    <h2>How to apply</h2>
-    <p>
-      Ready to join the team? We would love to hear from you. Reach out to the office you are
-      interested in or contact our team to learn about current openings — new opportunities open up
-      regularly across our locations.
-    </p>
-    <p>
-      MyOrthodontist NC is a SALT Dental Partners affiliate, and SALT Dental Partners manages career
-      opportunities on our behalf. When you connect with us, we will point you toward the current
-      list of open positions and the right next step to apply.
-    </p>
-  </Prose>
+  <div class="flex flex-col items-start gap-6">
+    <Prose>
+      <h2>How to apply</h2>
+      <p>
+        Ready to join the team? Current openings are posted on the SALT Dental Partners job board.
+        New opportunities open up regularly across our locations.
+      </p>
+      <p>
+        MyOrthodontist NC is a SALT Dental Partners affiliate, and SALT Dental Partners manages
+        career opportunities on our behalf.
+      </p>
+    </Prose>
+
+    <Button href={jobsHref} target="_blank" rel="noopener noreferrer" size="lg">
+      See Current Open Positions
+    </Button>
+  </div>
 </SubpageLayout>

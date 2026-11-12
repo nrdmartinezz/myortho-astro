@@ -1,6 +1,7 @@
 ---
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import Prose from '../../components/ui/Prose.astro';
+import { site } from '../../config/site';
 ---
 
 <SubpageLayout
@@ -8,15 +9,43 @@ import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
   description="Our commitment to making the MyOrthodontist website usable for everyone."
   showCtaBanner={false}
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Accessibility',
-      href: '/accessibility/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Accessibility', href: '/accessibility/' },
   ]}
 >
-  <PlaceholderProse />
+  <Prose>
+    <h2>General</h2>
+    <p>
+      This website strives to ensure that its services are accessible to people with disabilities.
+      This website has invested a significant amount of resources to help ensure that its website is
+      made easier to use and more accessible for people with disabilities, with the strong belief
+      that every person has the right to live with dignity, equality, comfort and independence.
+    </p>
+
+    <h2>Disclaimer</h2>
+    <p>
+      This website continues its efforts to constantly improve the accessibility of its site and
+      services in the belief that it is our collective moral obligation to allow seamless,
+      accessible and unhindered use also for those of us with disabilities.
+    </p>
+    <p>
+      Despite our efforts to make all pages and content on our website fully accessible, some
+      content may not have yet been fully adapted to the strictest accessibility standards. This may
+      be a result of not having found or identified the most appropriate technological solution.
+    </p>
+
+    <h2>We’re here for you</h2>
+    <p>
+      If you are experiencing difficulty with any content on our website or require assistance with
+      any part of our site, please contact us during normal business hours as detailed below and we
+      will be happy to assist.
+    </p>
+
+    <h2>Contact us</h2>
+    <p>
+      If you wish to report an accessibility issue, have any questions or need assistance, please
+      call <a href={`tel:${site.business.phoneHref}`}>{site.business.phone}</a> or
+      <a href="/contact/">contact a MyOrthodontist office</a> near you today.
+    </p>
+  </Prose>
 </SubpageLayout>

@@ -1,25 +1,63 @@
 ---
-import SubpageLayout from '../../layouts/SubpageLayout.astro';
-import PlaceholderProse from '../../components/content/PlaceholderProse.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/blocks/PageHero.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Prose from '../../components/ui/Prose.astro';
+import ContactBlock from '../../components/blocks/ContactBlock.astro';
+import { site } from '../../config/site';
+import { getPublished } from '../../lib/locations';
+
+const locations = await getPublished();
+const locationNames = locations.map((location) => location.data.name);
 ---
 
-<SubpageLayout
+<BaseLayout
   title="Contact Us"
   description="Reach our team by phone, email, or visit one of 14 North Carolina locations."
   breadcrumbs={[
-    {
-      name: 'Home',
-      href: '/',
-    },
-    {
-      name: 'Resources',
-      href: '/resources/',
-    },
-    {
-      name: 'Contact',
-      href: '/contact/',
-    },
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources/' },
+    { name: 'Contact', href: '/contact/' },
   ]}
 >
-  <PlaceholderProse />
-</SubpageLayout>
+  <PageHero
+    eyebrow="North Carolina · MyOrthodontist"
+    title="Contact Us"
+    body="Call, email, or send a note. We will help you reach the office that is most convenient."
+  />
+
+  <Section background="base" spacing="md">
+    <Container>
+      <Prose>
+        <h2>How to reach us</h2>
+        <p>
+          Call
+          <a href={`tel:${site.business.phoneHref}`}>{site.business.phone}</a>
+          or email
+          <a href={`mailto:${site.business.email}`}>{site.business.email}</a>.
+        </p>
+        <p>
+          Most offices are open Monday–Thursday, 8:30 am–5:00 pm, and Friday, 9:00 am–2:00 pm. Hours
+          can vary by location — check the office you plan to visit on our
+          <a href="/locations/">locations page</a> before you come in.
+        </p>
+      </Prose>
+    </Container>
+  </Section>
+
+  <ContactBlock
+    background="alt"
+    eyebrow="Send a message"
+    title="Tell us how we can help"
+    body="Choose the office that is most convenient. A member of our team will follow up, usually the same business day."
+    services={locationNames}
+    selectLabel="Preferred Location"
+    selectName="location"
+    offices={locations.map((location) => ({
+      name: location.data.name,
+      phone: location.data.phone,
+      href: `/locations/${location.data.slug ?? location.id}/`,
+    }))}
+  />
+</BaseLayout>

@@ -26,19 +26,31 @@ return [
     'smtp_user' => '',
     'smtp_pass' => '',
 
+    // Copy these keys into ~/private/site-mail.php for MyOrthodontist:
+    // notify_to info@myorthodontistnc.com, from_name MyOrthodontist,
+    // from_email on myorthodontistnc.com, site_phone 1-800-MY-ORTHO,
+    // site_phone_href +18006967846. Leave SMTP blank to use PHP mail().
     'forms' => [
         'contact' => [
-            'subject' => 'New enquiry — Example Business',
+            'subject' => 'New enquiry — MyOrthodontist',
             'notification' => 'notification-contact.html',
-            // Autoreply disabled by default — set send_autoreply => true to enable.
+            'autoreply' => 'autoreply.html',
+            'autoreply_subject' => 'We received your message — MyOrthodontist',
+            'send_autoreply' => true,
         ],
         'refer-a-friend' => [
             'subject' => 'New friend referral',
             'notification' => 'notification-refer-a-friend.html',
+            'autoreply' => 'autoreply-refer-a-friend.html',
+            'autoreply_subject' => 'We received your referral — MyOrthodontist',
+            'send_autoreply' => true,
         ],
         'doctor-referral' => [
             'subject' => 'New doctor referral',
             'notification' => 'notification-doctor-referral.html',
+            'autoreply' => 'autoreply-doctor-referral.html',
+            'autoreply_subject' => 'We received your referral — MyOrthodontist',
+            'send_autoreply' => true,
         ],
     ],
 

@@ -106,6 +106,7 @@ function requiredFieldsForForm(string $formType): array
             'home_phone',
             'referring_dentist_name',
             'referring_dentist_phone',
+            'referring_dentist_email',
             'reason_for_referral',
             'cleared_for_treatment',
             'location',
@@ -202,19 +203,19 @@ function getFormMailSettings(array $config, string $formType): array
             'source_label' => 'Contact form',
             'subject' => "New enquiry — {$fromName}",
             'autoreply_subject' => "We received your message — {$fromName}",
-            'send_autoreply' => false,
+            'send_autoreply' => true,
         ],
         'refer-a-friend' => [
             'source_label' => 'Refer a friend',
             'subject' => 'New friend referral',
             'autoreply_subject' => "We received your referral — {$fromName}",
-            'send_autoreply' => false,
+            'send_autoreply' => true,
         ],
         'doctor-referral' => [
             'source_label' => 'Doctor referral',
             'subject' => 'New doctor referral',
             'autoreply_subject' => "We received your referral — {$fromName}",
-            'send_autoreply' => false,
+            'send_autoreply' => true,
         ],
     ];
 
@@ -222,7 +223,7 @@ function getFormMailSettings(array $config, string $formType): array
         'source_label' => $formType,
         'subject' => "New submission — {$fromName}",
         'autoreply_subject' => "Thank you for contacting {$fromName}",
-        'send_autoreply' => false,
+        'send_autoreply' => true,
     ];
 
     $custom = $config['forms'][$formType] ?? [];
@@ -233,7 +234,7 @@ function getFormMailSettings(array $config, string $formType): array
     } elseif (array_key_exists('send_autoreply', $config)) {
         $merged['send_autoreply'] = (bool) $config['send_autoreply'];
     } else {
-        $merged['send_autoreply'] = false;
+        $merged['send_autoreply'] = true;
     }
 
     return $merged;

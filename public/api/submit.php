@@ -83,7 +83,7 @@ foreach (requiredFieldsForForm($formType) as $field) {
 
 assertValidEmail(postedString('email'), true);
 assertValidEmail(postedString('friend_email'), false);
-assertValidEmail(postedString('referring_dentist_email'), false);
+assertValidEmail(postedString('referring_dentist_email'), $formType === 'doctor-referral');
 
 $formMail = getFormMailSettings($config, $formType);
 $fromName = (string) ($config['from_name'] ?? 'Site');
@@ -200,9 +200,16 @@ try {
     );
 
     if ($formMail['send_autoreply']) {
+        $autoreplyEmail = $email;
+        $autoreplyName = $name;
+        if ($formType === 'doctor-referral') {
+            $autoreplyEmail = postedString('referring_dentist_email');
+            $autoreplyName = postedString('referring_dentist_name');
+        }
+
         $autoreplyTemplate = resolveTemplateForForm($config, $formType, 'autoreply');
         $autoreplyHtml = renderTemplate($autoreplyTemplate, [
-            'name' => escapeHtml($name),
+            'name' => escapeHtml($autoreplyName),
             'site_name' => escapeHtml($fromName),
             'site_phone' => escapeHtml((string) ($config['site_phone'] ?? '')),
             'site_phone_href' => escapeHtml((string) ($config['site_phone_href'] ?? '')),
@@ -210,8 +217,8 @@ try {
 
         sendMail(
             $config,
-            $email,
-            $name,
+            $autoreplyEmail,
+            $autoreplyName,
             $autoreplySubject,
             $autoreplyHtml,
             parseEmailList($config['notify_to'])[0],

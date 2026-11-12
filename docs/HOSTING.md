@@ -125,13 +125,16 @@ Server setup, once per site:
 2. **PHPMailer.** The deploy workflow runs `composer install --no-dev --working-dir=public/api`
    before the build, so `vendor/` ships inside `dist/api/`. If you deploy manually, run that
    command first. Composer must be available on the machine that builds.
-3. **reCAPTCHA v3 (optional).** Put the site key in `src/config/site.ts` (`recaptchaSiteKey`) and
-   the matching secret in the server config (`recaptcha_secret`); add the domain in the Google
-   reCAPTCHA admin.
-4. **Verify.** After deploy, submit each form on the live site and confirm the notification lands
-   (check spam). A missing/incomplete server config returns a graceful "Form is temporarily
-   unavailable" instead of sending. If mail lands in spam, configure SPF/DKIM in
-   cPanel → Email Deliverability.
+3. **reCAPTCHA v3.** Required before a form can send. Create one key pair that allows
+   `site.myorthodontistnc.com` and `myorthodontistnc.com`. Put the site key in
+   `src/config/site.ts` (`recaptchaSiteKey`) and the matching secret in the server config
+   (`recaptcha_secret`).
+4. **Verify on staging before production.** Submit the contact form, refer-a-friend, and
+   doctor referral on `https://site.myorthodontistnc.com`. Each should send a confirmation
+   to the person who submitted and a notification to the practice (the selected office, with
+   `info@myorthodontistnc.com` copied, for referrals). A missing config returns "Form is
+   temporarily unavailable". If mail lands in spam, configure SPF/DKIM in
+   cPanel → Email Deliverability. Do not promote to production until this check passes.
 
 ## What `.htaccess` does
 

@@ -104,16 +104,17 @@ Configure per form under the `forms` key:
 ],
 ```
 
-| Key                 | Purpose                                                  |
-| ------------------- | -------------------------------------------------------- |
-| `notification`      | Template file for the team email                         |
-| `autoreply`         | Template file for the customer email                     |
-| `subject`           | Team notification subject line                           |
-| `autoreply_subject` | Customer autoreply subject line                          |
-| `send_autoreply`    | `true` to send customer confirmation (default **false**) |
+| Key                 | Purpose                                                                                                           |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `notification`      | Template file for the team email                                                                                  |
+| `autoreply`         | Template file for the customer email                                                                              |
+| `subject`           | Team notification subject line                                                                                    |
+| `autoreply_subject` | Customer autoreply subject line                                                                                   |
+| `send_autoreply`    | `true` to send a confirmation to the submitter. Contact, refer-a-friend, and doctor-referral default to **true**. |
 
 A global `'send_autoreply' => true/false` at the top level applies when a form does not
-override it.
+override it. When neither the form nor the global key is set, those three forms still
+send a confirmation.
 
 ### Template resolution
 
@@ -150,24 +151,29 @@ Referral templates also receive the extra fields posted by that form
 (`friend_name`, `patient_first_name`, `cleared_for_treatment`, and so on).
 Empty values render as an em dash.
 
-**Autoreply** (`autoreply.html`):
+**Autoreply** (`autoreply.html`, plus `autoreply-refer-a-friend.html` and
+`autoreply-doctor-referral.html` when those files exist):
 
-| Placeholder           | Content              |
-| --------------------- | -------------------- |
-| `{{name}}`            | Submitter name       |
-| `{{site_name}}`       | Business name        |
-| `{{site_phone}}`      | Phone display string |
-| `{{site_phone_href}}` | Phone tel: href      |
+| Placeholder           | Content                                                  |
+| --------------------- | -------------------------------------------------------- |
+| `{{name}}`            | Person who submitted (dentist name on a doctor referral) |
+| `{{site_name}}`       | Business name                                            |
+| `{{site_phone}}`      | Phone display string                                     |
+| `{{site_phone_href}}` | Phone tel: href                                          |
+
+Confirmations do not repeat clinical details. A doctor referral confirmation is
+addressed to `referring_dentist_email`, not the patient. Refer-a-friend confirmation
+goes to the referrer, not the friend.
 
 Use inline CSS — email clients strip `<style>` blocks inconsistently.
 
 ## Form surfaces
 
-| `form_type`       | Component                       | Notification template               |
-| ----------------- | ------------------------------- | ----------------------------------- |
-| `contact`         | `ContactBlock.astro`            | `notification-contact.html`         |
-| `refer-a-friend`  | `ReferralForm.astro` (`friend`) | `notification-refer-a-friend.html`  |
-| `doctor-referral` | `ReferralForm.astro` (`doctor`) | `notification-doctor-referral.html` |
+| `form_type`       | Component                       | Notification template               | Confirmation template            |
+| ----------------- | ------------------------------- | ----------------------------------- | -------------------------------- |
+| `contact`         | `ContactBlock.astro`            | `notification-contact.html`         | `autoreply.html`                 |
+| `refer-a-friend`  | `ReferralForm.astro` (`friend`) | `notification-refer-a-friend.html`  | `autoreply-refer-a-friend.html`  |
+| `doctor-referral` | `ReferralForm.astro` (`doctor`) | `notification-doctor-referral.html` | `autoreply-doctor-referral.html` |
 
 `refer-a-friend` and `doctor-referral` are allowed by default (same as `contact`),
 so they work before `site-mail.php` lists them under `forms`.
@@ -225,12 +231,30 @@ fill in the optional SMTP fields in `config.local.php`.
 
 ## Production checklist
 
-1. Create `~/private/site-mail.php` on the server (rename per client — update `lib/mailer.php`).
-2. Set `recaptcha_secret`, `notify_to`, `from_email`, `from_name`.
-3. Configure `forms` — templates, subjects, autoreply per form.
-4. Deploy via CI (push to `main`) — PHPMailer installs automatically.
-5. Submit each form on the live site; confirm notifications arrive in inbox (not spam).
-6. If deliverability is poor, enable SMTP or configure SPF/DKIM in cPanel → Email Deliverability.
+Do this on **staging** (`https://site.myorthodontistnc.com`) and confirm mail before any
+production promote. A production deploy overwrites the live WordPress site.
+
+1. Create one reCAPTCHA v3 key pair that allows both `site.myorthodontistnc.com` and
+   `myorthodontistnc.com`. Put the site key in `src/config/site.ts` (`recaptchaSiteKey`)
+   and the secret in `~/private/site-mail.php`. Forms stay unavailable until both are set.
+2. Create `~/private/site-mail.php` from `public/api/config.example.php`. For this practice:
+   - `notify_to`: `info@myorthodontistnc.com` (contact notifications, and the CC on referrals)
+   - `from_email`: an address on `myorthodontistnc.com`
+   - `from_name`: `MyOrthodontist`
+   - `site_url`: the host you are testing
+   - `site_phone`: `1-800-MY-ORTHO`
+   - `site_phone_href`: `+18006967846`
+   - Leave `smtp_host`, `smtp_user`, and `smtp_pass` blank so PHP `mail()` is used
+   - `send_autoreply`: `true` on `contact`, `refer-a-friend`, and `doctor-referral`
+3. Referral notifications go **to** the selected office in `location-emails.php` and **CC**
+   `notify_to`. Contact notifications go to `notify_to` only. Doctor-referral confirmations
+   go to the referring dentist, not the patient.
+4. Deploy via CI (push to `main` deploys staging) — PHPMailer installs automatically.
+5. Submit contact, refer-a-friend, and doctor referral on staging. Each submission should
+   produce a confirmation to the person who submitted and a notification to the practice.
+   Check spam. Turn on SPF/DKIM in cPanel → Email Deliverability if messages are filtered.
+6. Only after that check passes, run the production deploy workflow. Do not point production
+   FTP at the WordPress document root until then.
 
 ## Security
 
